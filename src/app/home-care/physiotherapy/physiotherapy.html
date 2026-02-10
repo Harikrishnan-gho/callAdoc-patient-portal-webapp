@@ -1,0 +1,86 @@
+<form #bookingForm="ngForm" (ngSubmit)="confirmBooking(bookingForm)">
+    <div class="form-grid pt-3">
+
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Current condition / Area of pain</mat-label>
+            <input matInput [(ngModel)]="patientDetails.condition" name="condition" required>
+        </mat-form-field>
+        <div class="d-flex gap-1 flex-half">
+            <mat-form-field appearance="outline" class="flex-time">
+                <mat-label>Estimated session needed</mat-label>
+                <mat-select [(ngModel)]="patientDetails.duration" name="Duration" required>
+                    <mat-option value="1 hour">1 hour</mat-option>
+                    <mat-option value="2 hour">2 hour</mat-option>
+                    <mat-option value="3 hour">3 hour</mat-option>
+                    <mat-option value="4 hour">4 hour</mat-option>
+                    <mat-option value="5 hour">5 hour</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Patient Name</mat-label>
+            <input matInput [(ngModel)]="patientDetails.name" name="patientName" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Doctor's Referal notes</mat-label>
+            <input matInput [(ngModel)]="patientDetails.doctorNotes" name="doctorNotes" required>
+        </mat-form-field>
+
+        <div class="d-flex gap-2 align-items-start">
+            <mat-form-field appearance="outline" class="flex-half">
+                <mat-label>Date</mat-label>
+                <input matInput [matDatepicker]="picker" [(ngModel)]="patientDetails.date" name="date" required>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <div class="d-flex gap-1 flex-half">
+
+                <mat-form-field appearance="outline" class="flex-time">
+                    <mat-label>Hour</mat-label>
+                    <mat-select [(ngModel)]="patientDetails.hour" name="hour" required>
+                        <mat-option *ngFor="let h of hours" [value]="h">{{ h }}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="flex-time">
+                    <mat-label>Minutes</mat-label>
+                    <mat-select [(ngModel)]="patientDetails.minute" name="minute" required>
+                        <mat-option *ngFor="let m of minutes" [value]="m">{{ m }}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="flex-time">
+                    <mat-label>AM/PM</mat-label>
+                    <mat-select [(ngModel)]="patientDetails.ampm" name="ampm" required>
+                        <mat-option value="AM">AM</mat-option>
+                        <mat-option value="PM">PM</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+            </div>
+        </div>
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Contact Number</mat-label>
+            <span class="country-code" matPrefix>+968&nbsp;</span>
+            <input matInput type="text" maxlength="8" [(ngModel)]="patientDetails.phone" name="phone" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Home Address</mat-label>
+            <textarea matInput rows="3" [(ngModel)]="patientDetails.address" name="address" required>
+      </textarea>
+        </mat-form-field>
+
+        <div class="actions d-flex justify-end gap-3 mt-3">
+            <button mat-stroked-button color="warn" type="button" (click)="closePopup()">
+                Cancel
+            </button>
+
+            <button mat-flat-button color="primary" type="submit" [disabled]="bookingForm.invalid">
+                Confirm Booking
+            </button>
+        </div>
+
+    </div>
+</form>

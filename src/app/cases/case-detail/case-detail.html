@@ -1,0 +1,208 @@
+@if(id!= "0")
+{
+
+<div class="  border bg-white  x-noscroll">
+    <div class="section-title bb ">
+        <table class="w100 p10">
+            <tr>
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <td class="wicon"><i class="bi bi-person-wheelchair fs-3 "></i></td>
+                        <td class="left">
+                            Case Detail
+                        </td>
+                    </div>
+
+                    <div class="d-flex gap-2 align-items-center">
+                        <div>
+                            @if(caseprv["sts"] ==1 ){
+                            <td class="center">
+                                <button matButton="filled" color="" class="play-button" (click)="submit()">
+                                    Submit Review
+                                </button>
+                            </td>
+                            }
+                        </div>
+                        <div>
+                            <td class="right pr10"> <gho-help HelpTag=""> </gho-help></td>
+                        </div>
+                    </div>
+                </div>
+
+            </tr>
+        </table>
+    </div>
+    <div class="p20" style="border-bottom: 1px solid;">
+        <div class=" row ">
+            <div class="col-sm-3">
+                <div class="data-label text99">Patient </div>
+                <div class="fw-semibold "> {{ caseprv["Patient"] }} </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="data-label text99">Requested Specialty </div>
+                <div class=" fw-semibold"> {{ caseprv["Specialty"] }} </div>
+            </div>
+
+            <div class="col-sm-3">
+                <div class="data-label text99">Ethnicity </div>
+                <div class="fw-semibold "> {{ caseprv["Ethnicity"] }} </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="data-label text99">Occupation </div>
+                <div class="fw-semibold "> {{ caseprv["Occupation"] }} </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="data-label text99">Assigned Date </div>
+                <div class="fw-semibold "> {{ caseprv["DateAssigned"] }} </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="data-label text99">Time Allowed </div>
+                <div class="fw-semibold "> {{ caseprv["TimeAllowed"] }} </div>
+            </div>
+
+            <div class="col-sm-3">
+                <div class="data-label text99">Due Date </div>
+                <div class="fw-semibold "> {{ caseprv["DueDate"] }} </div>
+            </div>
+
+            <div class="col-sm-3">
+                <div class="data-label text99">Submitted Date </div>
+                <div class="fw-semibold "> {{ caseprv["SubmittedDate"] }} </div>
+            </div>
+        </div>
+    </div>
+
+    <div class=" pt10 x-noscroll">
+
+        <mat-tab-group class="responsive-tabs" mat-stretch-tabs="false" mat-align-tabs="start" animationDuration="0ms">
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <span class="tab-label">
+                        <i class="bi bi-info-square"></i>
+                        <span class="tab-text">Diagnosis</span>
+                    </span>
+                </ng-template>
+                <div class="p-3">
+                    <div class="fw-bold text-blue mb-2">
+                        Diagnosis or Current Medical Condition
+                    </div>
+                    <div class="data-label">
+                        {{ caseprv?.['MedicalSummary'] ?? '' }}
+                    </div>
+
+                    <div class="mt-4">
+                        <p class="fw-bold text-blue">Medications</p>
+                        @for (mp of mediprv; track mp) {
+                        <div class="mb-2 p-2 border rounded bg-light">
+                            <div class="fw-semibold">{{ mp['MedicationName'] }}</div>
+                            <small class="text-muted">
+                                {{ mp['StartPeriod'] }} – {{ mp['EndPeriod'] }}
+                            </small>
+                        </div>
+                        }
+                    </div>
+                </div>
+            </mat-tab>
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <span class="tab-label">
+                        <i class="bi bi-folder"></i>
+                        <span class="tab-text">Docs</span>
+                    </span>
+                </ng-template>
+
+                <div class="p-3">
+                    <p class="fw-bold text-blue">Medical Documents</p>
+                    @for (d of docs; track d) {
+                    <div class="d-flex justify-content-between align-items-center
+                    p-2 mb-2 border rounded bg-light">
+                        <a [href]="d['_url']" target="_blank" class="small">
+                            {{ d['FileName'] }}
+                        </a>
+                    </div>
+                    }
+                </div>
+            </mat-tab>
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <span class="tab-label">
+                        <i class="bi bi-file-text"></i>
+                        <span class="tab-text">Summary</span>
+                    </span>
+                </ng-template>
+
+                <table class="w100 bg-light">
+                    <tr>
+                        <td class="data-label text-blue pl10 pointer"
+                            (click)="opensummary(caseprv['SummaryOfRecords'] )">
+                            <u class=""> Provide a concise overview of medical records and diagnoses
+                                reviewed.</u>
+                        </td>
+
+                        <td> <span class="edit-btn" (click)="opensummary(caseprv['SummaryOfRecords'] )">Edit/Add </span>
+                        </td>
+
+                        <td class="right pr10"> <gho-help HelpTag="REVSUMMARY"> </gho-help></td>
+                    </tr>
+                </table>
+
+                <div class="p-3">
+
+
+                    <div>
+                        {{ caseprv['SummaryOfRecords'] }}
+                    </div>
+                </div>
+            </mat-tab>
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <span class="tab-label">
+                        <i class="bi bi-question-circle"></i>
+                        <span class="tab-text">Q&A</span>
+                    </span>
+                </ng-template>
+
+                <table class="w100 bg-light">
+                    <tr>
+                        <td class="pl10">All the questions must be answerd prior to submit this review </td>
+                        <td class="right pr10"> <gho-help HelpTag="REVQUESTIONS"> </gho-help></td>
+                    </tr>
+                </table>
+
+                <div class="p-3">
+                    @for (qp of qprv; track qp) {
+                    <div class="mb-3">
+                        <div class="text-blue fw-semibold pointer" (click)="openquestion(qp)">
+                            <u>{{ qp['Question'] }}</u>
+                        </div>
+                        <div>Answer: {{ qp['Answer'] }}</div>
+                        <div class="text-muted">Support: {{ qp['Support'] }}</div>
+                    </div>
+                    }
+                </div>
+            </mat-tab>
+            <mat-tab>
+                <ng-template mat-tab-label>
+                    <span class="tab-label">
+                        <i class="bi bi-check2-square"></i>
+                        <span class="tab-text">Attestations</span>
+                    </span>
+                </ng-template>
+
+                <div class="p-3">
+                    @for (ats of atts; track ats) {
+                    <div class="mb-3">
+                        <mat-checkbox [checked]="ats['s'] != 0" (change)="saveatt($event, ats['id'])">
+                            <span class="fw-semibold text-blue">{{ ats['t'] }}</span>
+                        </mat-checkbox>
+                        <div class="ms-4 text-muted">{{ ats['d'] }}</div>
+                    </div>
+                    }
+                </div>
+            </mat-tab>
+
+        </mat-tab-group>
+    </div>
+    <br>
+</div>
+}

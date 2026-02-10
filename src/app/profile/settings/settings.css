@@ -1,0 +1,32 @@
+.settings-profile{
+    border: 1px dashed;
+
+}
+.percentatge-wrapper{
+    position: relative;
+}
+.personal-info {
+    justify-content: space-between;
+}
+.number{
+    position: absolute;
+    bottom: 12px;
+    left: 15px;
+    font-weight: 600;
+    font-size: larger;
+}
+.settings-profile{
+    justify-content: space-between;
+}
+.profile-img{
+   width: 75px;
+   height: 75px;
+   border-radius: 50%;
+}
+.heading{
+    font-weight: 500;
+    font-size: large;
+}
+.backIcon{
+    cursor: pointer;
+}

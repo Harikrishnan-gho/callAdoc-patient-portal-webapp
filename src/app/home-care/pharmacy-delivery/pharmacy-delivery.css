@@ -1,0 +1,67 @@
+.form-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.d-flex {
+  display: flex;
+  gap: 12px;
+}
+
+.full-width {
+  flex: 1;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.flex-half {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Time dropdowns inside time container */
+.flex-time {
+  flex: 1; /* Split remaining time container equally */
+  min-width: 0; /* Avoid overflow */
+}
+
+
+.actions {
+  display: flex;
+  justify-content: flex-end; /* aligns buttons to the right */
+  gap: 12px; /* space between buttons */
+  margin-top: 16px;
+}
+.country-code {
+  color: #555;
+  margin-left: 15px;
+}
+
+.upload-box {
+  border: 2px dashed #cfd8dc;
+  border-radius: 8px;
+  padding: 24px;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+
+.upload-box:hover {
+  border-color: #3f51b5;
+}
+
+.doc-icon {
+  color: #757575;
+}
+
+.loader-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000; 
+}

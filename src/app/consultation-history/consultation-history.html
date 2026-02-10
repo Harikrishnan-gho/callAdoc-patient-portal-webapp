@@ -1,0 +1,64 @@
+<div class="container specialty-page">
+    <div class="sticky-header ">
+        <mat-form-field appearance="outline" class="w-100 ">
+            <mat-label>Search doctor name</mat-label>
+            <mat-icon matPrefix class="me-2">search</mat-icon>
+            <input (input)="onSearchHistory($event)" matInput />
+
+        </mat-form-field>
+    </div>
+</div>
+<div class="container  border-round">
+    <div class="row px-1 ">
+        <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" class="compact-tabs" [(selectedIndex)]="tbidx">
+            <!-- TAB 0: Consultations -->
+            <mat-tab label="Consultations">
+                @for(item of consultations;track item){
+                <div class="list-container mt-1"  (click)="openDetails(item)"
+                    style="cursor: pointer;">
+                    <div class="specialty-item p-2">
+                        <div class="d-flex gap-4 p-2">
+                            <div>
+                                <img class="doctorImg" [src]=item._urlDocImg alt="Dr.img">
+                            </div>
+                            <div>
+                                <span class="doctorName">{{ item.Doctor }}</span><br>
+                                <span class="Consultations">{{ item.Designation }}</span><br>
+                                <span class="date">{{ item.AppointmentDate }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <mat-divider></mat-divider>
+                </div>
+            }
+            </mat-tab>
+            <!-- TAB 1: Details -->
+            <mat-tab label="Details">
+                <div class="p-3">
+                    <!-- When consultation is selected -->
+                    <ng-container *ngIf="selectedConsultation; else selectMessage">
+                        <h3>{{ selectedConsultation.Doctor }}</h3>
+                        <p>{{ selectedConsultation.Designation }}</p>
+
+                        <p class="fs-5 fw-semibold mt-3">Summary of record</p>
+                        <p>
+                            The patient attended a scheduled consultation with
+                            {{ selectedConsultation.Doctor }} on {{ selectedConsultation.AppointmentDate }}.
+                            The visit was primarily for follow-up evaluation and review.
+                        </p>
+                        <p class="text-muted">{{ selectedConsultation.AppointmentDate }}</p>
+                    </ng-container>
+                    <!-- When nothing is selected -->
+                    <ng-template #selectMessage>
+                        <div class="text-center text-muted mt-5">
+                            <mat-icon class="mb-2">info</mat-icon>
+                            <p class="fw-semibold">Please select a consultation</p>
+                        </div>
+                    </ng-template>
+
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+</div>

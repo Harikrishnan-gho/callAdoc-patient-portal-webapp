@@ -1,0 +1,67 @@
+<form #contactForm="ngForm" (ngSubmit)="saveEmergencyContact(contactForm)">
+
+  <div class="form-grid mt-3">
+
+    <mat-form-field appearance="outline">
+      <mat-label>Enter full name </mat-label>
+      <input
+        matInput
+        name="name"
+        [(ngModel)]="contactDetails.FirstName"
+        required>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Relationship </mat-label>
+      <mat-select
+        name="relation"
+        [(ngModel)]="contactDetails.Relationship"
+        required>
+        <mat-option value="Father">Father</mat-option>
+        <mat-option value="Mother">Mother</mat-option>
+        <mat-option value="Brother">Brother</mat-option>
+        <mat-option value="Sister">Sister</mat-option>
+        <mat-option value="Friend">Friend</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Contact Number </mat-label>
+      <span class="country-code" matPrefix>+968&nbsp;</span>
+      <input
+        matInput
+        type="text"
+        maxlength="8"
+        name="phone"
+        [(ngModel)]="contactDetails.Phone"
+        required>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Email</mat-label>
+      <input
+        matInput
+        name="email"
+        [(ngModel)]="contactDetails.Email">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-span">
+      <mat-label>Address</mat-label>
+      <textarea
+        matInput
+        name="address"
+        [(ngModel)]="contactDetails.Address1">
+      </textarea>
+    </mat-form-field>
+
+    <div class="save-btn-wrapper">
+      <button class="save-btn"
+        mat-flat-button
+        color="primary"
+        type="submit">
+        Save Contact
+      </button>
+    </div>
+
+  </div>
+</form>

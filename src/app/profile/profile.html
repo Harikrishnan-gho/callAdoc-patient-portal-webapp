@@ -1,0 +1,117 @@
+<!-- navbar -->
+<div class="d-flex main-heading mx-3">
+  <div class="d-flex gap-2">
+  </div>
+  <div>
+    <mat-icon (click)="openSettings()" class="settings">settings</mat-icon>
+  </div>
+</div>
+
+<div class="loader-overlay" *ngIf="isUploading">
+  <mat-progress-spinner diameter="40" mode="indeterminate"></mat-progress-spinner>
+</div>
+
+<!-- Profile upload -->
+@for(item of personalDetails;track item){
+<div class="d-flex profile-upload">
+  <div class="profile-wrapper">
+    <img *ngIf="previewImage || item._url; else defaultIcon" class="profile-img" [src]="previewImage || item._url"
+      alt="Profile" />
+
+    <ng-template #defaultIcon>
+      <i class="bi bi-person-circle default-icon"></i>
+    </ng-template>
+
+    <div class="edit-icon" (click)="fileInput.click()">
+      <mat-icon>edit</mat-icon>
+    </div>
+
+    <input type="file" #fileInput accept="image/*" hidden (change)="onImageChange($event)" />
+  </div>
+</div>
+
+<h4 class="text-center"> {{ item.FirstName}}</h4>
+<p class="text-center"> + 968 {{ item.Phone}}</p>
+}
+<!-- manage account -->
+<h5>Manage Account</h5>
+<div class="border-round mt-3 p-2">
+  <div class="d-flex gap-4 personal-info" (click)="goToPersonalInfo()">
+    <div class="d-flex p-2 gap-4">
+      <mat-icon class="p-1 text-secondary">person</mat-icon>
+      <div>
+        <h5 class="heading">Personal Information</h5>
+        <p class="text-secondary">Manage your account details</p>
+      </div>
+    </div>
+    <div class="pt-4">
+      <mat-icon>chevron_right</mat-icon>
+
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="d-flex gap-4 personal-info" (click)="linkedAccount()">
+    <div class="d-flex p-2 gap-4">
+      <mat-icon class="my-2 mx-1 text-primary">link</mat-icon>
+      <div>
+        <h5 class="heading">Linked Accounts</h5>
+        <p class="text-secondary">Sync your accounts easily</p>
+      </div>
+    </div>
+    <div class="pt-4">
+      <mat-icon>chevron_right</mat-icon>
+
+    </div>
+  </div>
+</div>
+
+<!-- Account control -->
+<h5 class="mt-4">Account Control</h5>
+<div class="border-round mt-3 p-2">
+  <div class="d-flex gap-4 personal-info" (click)="logout()">
+    <div class="d-flex p-2 gap-4">
+      <mat-icon class="my-2 mx-1">logout</mat-icon>
+      <div>
+        <h5 class="heading">LogOut</h5>
+        <p class="text-secondary">Sign out from your account safely.</p>
+      </div>
+    </div>
+    <div class="pt-4">
+      <mat-icon>chevron_right</mat-icon>
+
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="d-flex gap-4 personal-info" (click)="openDialog(deleteDialog)">
+    <div class="d-flex p-2 gap-4">
+      <mat-icon class="p-1 text-danger">delete</mat-icon>
+      <div>
+        <h5 class="heading">Delete Account</h5>
+        <p class="text-secondary">Close your account permanently.</p>
+      </div>
+    </div>
+    <div class="pt-4">
+      <mat-icon>chevron_right</mat-icon>
+    </div>
+  </div>
+  <ng-template #deleteDialog>
+    <div class="p-3">
+      <div class="py-1">
+        <img class="apollo-logo" src="apollo-logo.png" alt="">
+      </div>
+      <h2 mat-dialog-title class="p-3">Delete Account?</h2>
+
+      <mat-dialog-content>
+        <p class="px-3">Are you sure you want to delete your account? This action cannot be undone.</p>
+      </mat-dialog-content>
+
+      <mat-dialog-actions align="end">
+        <button mat-button (click)="dialogRef.close()" class="px-3 py-2 border-round">Cancel</button>
+        <button mat-raised-button color="warn" (click)="deleteAccount()" class=" delete-btn border-round px-3 py-2">
+          Delete
+        </button>
+      </mat-dialog-actions>
+    </div>
+  </ng-template>
+
+</div>

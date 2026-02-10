@@ -1,0 +1,209 @@
+<div class="login-container">
+    <div class="left-panel">
+        <div class="login-form">
+
+            <div class="logo">
+                <img src="logo/calladoc-logo.png" alt="Logo">
+            </div>
+
+            <div class="main-title">Welcome To CallAdoc</div>
+            <div class="sub-title">
+                A trusted digital health companion for residents and visitors in Oman.
+            </div>
+
+            <!-- LOGIN MODE -->
+            @if (mode == "L") {
+            <mat-form-field class="w100" appearance="outline">
+                <mat-label>Phone</mat-label>
+
+                <span class="country-code" matPrefix>+968&nbsp;</span>
+
+                <input matInput type="text" [(ngModel)]="usr.id" placeholder="XXXXXXXX" maxlength="8">
+            </mat-form-field>
+
+
+            <mat-form-field class="w100" appearance="outline">
+                <mat-label>Password</mat-label>
+                <input matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="usr.pwd">
+                <button mat-icon-button matSuffix type="button" (click)="hide = !hide">
+                    <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+                </button>
+            </mat-form-field>
+
+            <button class="loginBtn w100 mt20" (click)="loginclick()">Login</button>
+
+
+            <div class="mt20">
+                Don't have an account...?
+                <div class="pt10">
+                    <button mat-stroked-button (click)="actn(1)">Create Account</button>
+                </div>
+            </div>
+            }
+
+            @if (mode == "F") {
+            <h6>Get password for Trusted name in Medical Opinion</h6>
+
+            <mat-form-field class="w100" appearance="outline">
+                <mat-label>Email</mat-label>
+                <input matInput type="text" [(ngModel)]="usr.id">
+            </mat-form-field>
+
+            <div class="d-flex justify-content-center">
+                <p class="text-primary fw-semibold">OR</p>
+            </div>
+
+
+            <mat-form-field class="w100" appearance="outline">
+                <mat-label>Phone</mat-label>
+                <input matInput type="text" [(ngModel)]="usr.ph">
+            </mat-form-field>
+
+            <mat-form-field class="w100" appearance="outline">
+                <mat-label>Country</mat-label>
+                <mat-select [(ngModel)]="usr.cntry">
+                    @for (c of cntrys; track c) {
+                    <mat-option [value]="c.D">{{c.T}}</mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+
+            <button class="w100 mt10" mat-flat-button (click)="forgot()">Get Password Reset Instructions</button>
+
+            <div class="mt20">
+                Already have an account?
+                <a class="forgot-link" (click)="actn(2)">Sign In</a>
+            </div>
+            }
+
+            @if(mode=="P")
+            {
+
+            <div class="logo-title-row">
+                <!-- <img class="logo-img" src="logo.png" alt="Logo"> -->
+                <h6>Create new password for Trusted name in Medical Opinion</h6>
+            </div>
+
+            <div class=" p10"></div>
+            <div class="">
+                <div class="">
+                    <mat-form-field class="w100" appearance="outline">
+                        <mat-label>New Password</mat-label>
+                        <input [type]="hide ? 'password' : 'text'" matInput type="password" [(ngModel)]="usr.pwd">
+                        <button mat-icon-button matSuffix type="button" (click)="hide = !hide">
+                            <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+                        </button>
+                    </mat-form-field>
+                </div>
+
+                <div class="">
+                    <mat-form-field class="w100" appearance="outline">
+                        <mat-label>Confirm Password</mat-label>
+                        <input [type]="hideConfirmPassword ? 'password' : 'text'" matInput type="password"
+                            [(ngModel)]="usr.fname">
+                        <button mat-icon-button matSuffix type="button"
+                            (click)="hideConfirmPassword = !hideConfirmPassword">
+                            <mat-icon>{{ hideConfirmPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+                        </button>
+                    </mat-form-field>
+                </div>
+                <button matButton="filled" (click)="submitnewpwd()">Submit</button>
+                <div class=" p10 right"> <button matButton="" (click)="actn(3)" mat-stroked-button>Token expired try
+                        again ! </button></div>
+            </div>
+            }
+
+
+
+            <!-- OTP MODE -->
+            <!-- @if (mode == "O") {
+            <h6>Enter your 6-digit code {{dbmsg}}</h6>
+
+            <div class="otp-inputs">
+                @for (r of otp; track r[0]; let i = $index) {
+                <mat-form-field>
+                    <input #otpInput matInput maxlength="1" [(ngModel)]="otp[i]" (input)="onInput($event, i)"
+                        (keydown)="onKeyDown($event, i)">
+
+                </mat-form-field>
+                }
+            </div>
+
+            <button mat-flat-button class="w100" (click)="submitOtp()">Submit OTP</button>
+
+            <div class="resend-section">
+                <span>Didn’t receive code?</span>
+                <button class="resend-btn" [disabled]="timer>0" (click)="resendOtp()">
+                    Resend {{ timer > 0 ? "(" + timer + "s)" : "" }}
+                </button>
+            </div>
+            } -->
+
+            <!-- SIGNUP MODE -->
+            @if (mode == "S") {
+            <h6>Create a New Account</h6>
+
+            <mat-form-field class="w100" appearance="outline">
+                <mat-label>Name</mat-label>
+                <input matInput type="text" [(ngModel)]="usr.fullname">
+            </mat-form-field>
+
+
+            <mat-form-field class="w100" appearance="outline">
+                <mat-label>Date of Birth</mat-label>
+                <input matInput type="date" [(ngModel)]="usr.dob">
+            </mat-form-field>
+
+            <mat-form-field class="w100" appearance="outline">
+                <mat-label>Gender</mat-label>
+                <mat-select [(ngModel)]="usr.gender">
+                    <mat-option value="M">Male</mat-option>
+                    <mat-option value="F">Female</mat-option>
+                    <mat-option value="O">Other</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <!-- <mat-form-field class="w100" appearance="outline">
+                <mat-label>Phone</mat-label>
+                <input matInput type="text" [(ngModel)]="usr.ph">
+            </mat-form-field> -->
+
+            <mat-form-field class="w100" appearance="outline">
+                <mat-label>Phone</mat-label>
+                <span class="country-code" matPrefix>+968&nbsp;</span>
+                <input matInput type="text" [(ngModel)]="usr.ph" placeholder="XXXXXXXX" maxlength="8">
+            </mat-form-field>
+
+
+            <mat-form-field class="w100" appearance="outline">
+                <mat-label>Password</mat-label>
+                <input matInput type="password" [(ngModel)]="usr.pwd">
+            </mat-form-field>
+
+            <button class="w100 mt20" mat-flat-button color="primary" (click)="signupclick()">Signup</button>
+
+            <div class="mt20">
+                Already have an account?
+                <button mat-stroked-button (click)="actn(2)">Sign In</button>
+            </div>
+            }
+
+        </div>
+    </div>
+
+
+
+    <div class="right-panel mobile-hide">
+        <div class="right-content">
+            <p class="right-text">
+                As a healthcare beacon in Oman, we set new quality standards, with facilities spanning Muscat
+            </p>
+            <img src="login-photo.png" class="right-image" alt="side image">
+
+        </div>
+
+
+    </div>
+
+
+</div>

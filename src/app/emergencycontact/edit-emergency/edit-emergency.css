@@ -1,0 +1,78 @@
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+mat-form-field {
+  width: 100%;
+}
+.full-span {
+  grid-column: span 2;
+}
+
+.country-code {
+  color: #555;
+  margin-left: 15px;
+}
+
+/* Mobile view */
+@media (max-width: 768px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .full-span {
+    grid-column: span 1;
+  }
+}
+.save-btn-wrapper {
+  grid-column: span 2;       /* take full row */
+  display: flex;
+  justify-content: center;   /* center horizontally */
+  margin-top: 10px;
+   background-color: rgba(12, 125, 161, 1);
+    cursor: pointer;
+     padding: 5px;
+}
+
+.save-btn{
+    border: none;
+    background-color: transparent;
+    color: white;
+}
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+/* Material fields full width */
+mat-form-field {
+  width: 100%;
+}
+
+/* Address spans full row */
+.full-span {
+  grid-column: 1 / -1;
+}
+
+/* Center Save button */
+.save-btn-wrapper {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+/* Tablet */
+@media (max-width: 900px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.mat-mdc-dialog-content {
+  max-height: 65vh;
+  overflow-y: auto;
+}

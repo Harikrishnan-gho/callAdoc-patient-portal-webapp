@@ -1,0 +1,28 @@
+.settings-profile{
+    justify-content: space-between;
+}
+.profile-img{
+   width: 75px;
+   height: 75px;
+   border-radius: 50%;
+}
+.verified{
+    font-size: medium;
+}
+.account-primary{
+    color: rgba(11, 125, 161, 1);
+    background-color: rgba(150, 184, 243, 0.18);
+    border-radius: 10%;
+    /* padding: 10%; */
+}
+.linkAccount{
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+.secondaryAcc{
+    justify-content: space-between;
+}
+.backIcon{
+    cursor: pointer;
+}

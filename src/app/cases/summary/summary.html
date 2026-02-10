@@ -1,0 +1,18 @@
+<div class="p10 ">
+    <table class="w100">
+        <tr>
+            <td class="data-label p10">Medical Record Summary</td>
+            <td (click)="close()" class=" p10 right pointer"> <i class="bi bi-x-circle fs-3 red"></i> </td>
+        </tr>
+    </table>
+    <mat-dialog-content class="y-noscroll">
+        <div class="w100 ">
+            <textarea rows="15" class="border w100" [(ngModel)]="data" placeholder="Enter medical record summary">
+          </textarea>
+        </div>
+
+        <div class="actions right">
+            <button matButton="filled" color="primary" (click)="save()">Save Summary of medical records</button>
+        </div>
+    </mat-dialog-content>
+</div>

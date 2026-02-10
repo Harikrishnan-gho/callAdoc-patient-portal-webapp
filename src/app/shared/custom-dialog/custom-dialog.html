@@ -1,0 +1,34 @@
+<div class="dialog-popup" *ngIf="show">
+  <div class="popup-content">
+
+    <!-- HEADER -->
+    <div class="popup-header">
+      <div>
+        <h4 class="mb-0">{{ heading }}</h4>
+        <p class="text-muted mb-0" *ngIf="subheading">
+          {{ subheading }}
+        </p>
+      </div>
+      <button class="close-btn" (click)="onClose()">&times;</button>
+    </div>
+
+    <!-- BODY -->
+    <div class="popup-body">
+      <ng-content></ng-content>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="popup-footer" *ngIf="!hideActions">
+      <div class="actions d-flex gap-3">
+        <button mat-stroked-button color="warn" (click)="onSecondaryClick()">
+          {{ secondaryBtnText }}
+        </button>
+
+        <button mat-flat-button color="primary" (click)="onPrimaryClick()">
+          {{ primaryBtnText }}
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,43 @@
+.MedicationCard {
+  border: solid 1px #0C7DA1;
+  border-left-width: 10px;
+  border-radius: 10px;
+  padding: 15px;
+}
+
+.medication-img {
+  width: 100%;
+  max-width: 120px;
+  height: 100px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.medications {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.addMedicationBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 10px 16px;
+  border-radius: 6px;
+  background-color: #0c79a5;
+  color: #ffffff;
+  border: none;
+
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.2;
+  cursor: pointer;
+}
+
+.addMedicationBtn mat-icon {
+  font-size: 18px;
+  height: 18px;
+  width: 18px;
+}

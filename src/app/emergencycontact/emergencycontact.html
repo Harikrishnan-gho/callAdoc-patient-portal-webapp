@@ -1,0 +1,235 @@
+<style>
+    .title {
+        color: rgb(236, 64, 64);
+        text-align: center;
+        justify-content: center;
+        margin-bottom: 1rem;
+    }
+
+    .call-img {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 1rem;
+    }
+
+    .addNew {
+        background-color: #0B7DA1;
+        color: #fff;
+        padding: 8px 14px;
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    .primary {
+        background-color: rgba(12, 125, 161, 0.09);
+        color: rgba(12, 125, 161, 1);
+        padding: 8px 14px;
+        border: none;
+        border-radius: 10px;
+        /* cleaner than % */
+        cursor: pointer;
+        display: inline-flex;
+
+        gap: 8px;
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    .add {
+        background-color: #fff;
+        color: #0B7DA1;
+        width: 22px;
+        height: 22px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        /* perfect circle */
+        font-weight: bold;
+    }
+
+    .contact-card h5 {
+        margin-bottom: 6px;
+        font-weight: 600;
+    }
+
+    .contact-card p {
+        margin-bottom: 4px;
+        font-size: 14px;
+        color: #444;
+    }
+
+    .contact-name {
+        font-size: large;
+        color: black;
+    }
+
+    .contact-card {
+        height: 100%;
+        border: 1px solid #ddd;
+        border-radius: 12px;
+        padding: 16px;
+        background-color: #fcfcfc;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .contact-left {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .primaryacc {
+        justify-content: center;
+        align-items: center;
+    }
+
+    .primaryIcon {
+        background-color: #dee5e7;
+        border-radius: 10%;
+        padding: 5px;
+    }
+
+    .dot {
+        height: 7px;
+        width: 7px;
+        margin-top: 8px;
+        margin-left: 3px;
+        background-color: #0B7DA1;
+        border-radius: 50%;
+        display: inline-block;
+    }
+
+    .primaryName {
+        font-size: large;
+        font-weight: bold;
+    }
+
+    .primaryPhone {
+        color: gray;
+        font-size: small;
+        font-weight: 400;
+    }
+</style>
+
+<h2 class="title">Emergency help needed?</h2>
+<div class="call-img">
+    <img src="call-icon.svg" alt="Call Icon" />
+</div>
+
+<!-- ADD NEW CONTACT -->
+<div class="w-100 w-md-50 p-3 d-flex justify-content-center align-items-center">
+    <div class="addNew-div text-center" (click)="openEmergencyContact()">
+        <button class="addEmergencyBtn">
+             <mat-icon>add</mat-icon>
+            Add new contact
+        </button>
+    </div>
+</div>
+<!-- PRIMARY CONTACT -->
+@for (contact of emergencyContacts; track contact) {
+<div>
+    <div>
+        @if (contact.ContactPrefernce === "Primary") {
+        <div class="d-flex primaryacc gap-2">
+            <div class="primaryName">
+                {{ contact.FirstName }} <br>
+                <span class="primaryPhone">+968 {{ contact.Phone}}</span>
+            </div>
+            <span class="primaryIcon d-flex gap-1">
+                <span class="dot"></span> Primary
+            </span>
+        </div>
+        }
+    </div>
+
+
+</div>
+}
+<!-- ALL CONTACTS -->
+<p class="fs-5 mt-3">Your emergency contacts</p>
+<div class="container mt-3">
+    <div class="row g-4">
+
+        @for (contact of emergencyContacts; track contact) {
+        <div class="col-12 col-md-6 col-lg-4">
+
+            <div class="contact-card">
+
+                <!-- LEFT -->
+                <div class="contact-left">
+                    <h5 class="contact-name">{{ contact.FirstName }}</h5>
+                    <p class="text-secondary">+968 {{ contact.Phone}}</p>
+                    <p class="text-secondary">{{ contact.Relationship}}</p>
+                </div>
+
+                <!-- RIGHT -->
+                <div class="dots">
+
+                    @if (contact.ContactPrefernce === "Primary") {
+                    <span class="primaryIcon d-flex gap-1">
+                        <span class="dot"></span> Primary
+                    </span>
+                    }
+                    <div class="flex-col">
+                        <button mat-icon-button [matMenuTriggerFor]="menu">
+                            <mat-icon>more_horiz</mat-icon>
+                        </button>
+
+                        <!-- Menu -->
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item (click)="setPrimaryContact(contact)">
+                                <mat-icon>star_border</mat-icon>
+                                <span>Set as Primary</span>
+                            </button>
+                            <button mat-menu-item (click)="editContact(contact)">
+                                <mat-icon>edit</mat-icon>
+                                <span>Edit</span>
+                            </button>
+                            <button mat-menu-item (click)="deleteContact(contact)">
+                                <mat-icon>delete</mat-icon>
+                                <span>Delete</span>
+                            </button>
+                        </mat-menu>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+        }
+
+    </div>
+</div>
+
+<app-custom-dialog [show]="showEmergencyContactPopup" heading="Add Emergency contact"
+    subheading="This contact will be used in case of medical emergiencies or important updates." [hideActions]="true"
+    (close)="closeEmergencyContact()">
+
+    <app-add-emergency-contact (close)="closeEmergencyContact($event)">
+
+    </app-add-emergency-contact>
+
+</app-custom-dialog>
+<app-custom-dialog [show]="showEditContactPopup" heading="Update Emergency contact"
+    subheading="This contact will be used in case of medical emergiencies or important updates." [hideActions]="true"
+    (close)="closeEditContact()">
+
+    <app-add-emergency-contact (close)="closeEditContact($event)">
+
+    </app-add-emergency-contact>
+
+</app-custom-dialog>

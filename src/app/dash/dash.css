@@ -1,0 +1,111 @@
+.service-card {
+  height: 200px;   /* change as needed */
+}
+.pharmacy-card{
+  
+  background-color: #B9DDDC;
+}
+.general-card{
+  background-color: #CBB9F9;
+}
+.nursing-card{
+  background-color: #BBCCF4;
+}
+.physiotherpy-card{
+  background-color: #FFDDC5;
+}
+
+.lab-card{
+  background-color: #F2B8D7;
+}
+
+.specialty-card{
+  background-color: #d2f3f5;
+}
+.medicine-card{
+  background-color: #C9E5FF;
+}
+.workoutImg{
+  height: 130px;
+}
+.carousel-container {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  height: 400px; 
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.slide {
+  display: none;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;   
+}
+
+.slide.active {
+  display: block;
+}
+
+
+.prev, .next {
+  position: absolute;
+  top: 50%; 
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.5);
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.prev { left: 10px; }
+.next { right: 10px; }
+
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+@media (max-width: 768px) {
+  .carousel { height: 200px; }
+  .prev, .next { padding: 6px 10px; }
+}
+
+.specialty-card {
+  background-color: #d2f3f5;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.specialty-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* Image container */
+.specialty-card .img-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+/* Image control */
+.specialty-card .img-wrapper img {
+  max-width: 50px;      /* scales with screen size */
+  max-height: 50px;
+  object-fit: contain;
+}
+
+/* Card text */
+.specialty-card p {
+  font-size: 0.9rem;
+  word-break: break-word;
+}

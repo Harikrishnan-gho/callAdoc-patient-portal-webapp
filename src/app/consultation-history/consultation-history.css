@@ -1,0 +1,35 @@
+.sticky-header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    padding: 10px 0;
+
+}
+.date {
+    justify-content: end;
+    font-size: medium;
+    color: gray;
+}
+.compact-tabs .mat-mdc-tab {
+  min-width: auto !important;
+  padding: 0 12px;
+}
+
+.doctorImg {
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+}
+
+.Consultations {
+    color: gray;
+    font-size: small;
+}
+
+.doctorName {
+    font-weight: 700;
+    font-size: medium;
+}
+/* .main-body{
+    border: 1px solid ;
+}  */

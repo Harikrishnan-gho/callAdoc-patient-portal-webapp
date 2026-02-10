@@ -1,0 +1,154 @@
+ .text-blue {
+    color: #667EFA;
+}
+/* ============================= */
+/* GLOBAL FIXES */
+/* ============================= */
+
+* {
+  box-sizing: border-box;
+}
+
+.w100 {
+  width: 100%;
+}
+
+.x-noscroll {
+  overflow-x: hidden;
+}
+
+/* ============================= */
+/* ANGULAR MATERIAL TAB FIXES */
+/* ============================= */
+
+/* Enable horizontal scroll for tab header */
+.mat-mdc-tab-header {
+  overflow-x: auto !important;
+  overflow-y: hidden;
+  white-space: nowrap;
+  scrollbar-width: thin; /* Firefox */
+}
+
+/* Hide pagination arrows */
+.mat-mdc-tab-header-pagination {
+  display: none !important;
+}
+
+/* Smooth scrolling on touch devices */
+.mat-mdc-tab-header::-webkit-scrollbar {
+  height: 4px;
+}
+
+.mat-mdc-tab-header::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 10px;
+}
+
+/* ============================= */
+/* TAB LABEL STYLING */
+/* ============================= */
+
+.mat-mdc-tab {
+  min-width: auto !important;
+  padding: 10px 14px !important;
+  font-size: 14px;
+}
+
+.mat-mdc-tab-label-content {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+/* Icon size control */
+.mat-mdc-tab-label-content i {
+  font-size: 16px;
+  padding: 0 !important;
+}
+
+/* ============================= */
+/* TAB BODY CONTENT */
+/* ============================= */
+
+.mat-mdc-tab-body-wrapper {
+  width: 100%;
+}
+
+.mat-mdc-tab-body-content {
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-bottom: 12px;
+}
+
+/* ============================= */
+/* MOBILE OPTIMIZATION */
+/* ============================= */
+
+@media (max-width: 1024px) {
+  .mat-mdc-tab {
+    font-size: 13px;
+    padding: 8px 10px !important;
+  }
+
+  .mat-mdc-tab-label-content i {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 768px) {
+
+  /* Reduce tab height */
+  .mat-mdc-tab {
+    font-size: 12px;
+    padding: 6px 8px !important;
+  }
+
+  /* Limit tab content height for internal scroll */
+  .mat-mdc-tab-body-content {
+    max-height: calc(100vh - 260px);
+  }
+
+  /* Prevent full-page horizontal scroll */
+  body {
+    overflow-x: hidden;
+  }
+}
+
+@media (max-width: 576px) {
+
+  /* Compact tabs */
+  .mat-mdc-tab {
+    font-size: 11px;
+    padding: 6px !important;
+  }
+
+  .mat-mdc-tab-label-content {
+    gap: 4px;
+  }
+}
+
+/* ============================= */
+/* OPTIONAL QUALITY IMPROVEMENTS */
+/* ============================= */
+
+/* Reduce icon spacing */
+.bi {
+  margin-right: 4px;
+}
+
+/* Better table responsiveness */
+table {
+  width: 100%;
+  max-width: 100%;
+}
+
+.table {
+  overflow-x: auto;
+}
+
+/* Prevent content overflow */
+img,
+iframe {
+  max-width: 100%;
+}

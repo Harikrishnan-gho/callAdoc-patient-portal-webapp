@@ -1,0 +1,176 @@
+@if (caseData) {
+
+<div class="case-details">
+    <div>
+        <div class="row">
+            <div class="col-md-3 col-sm-6 ">
+                <p class="mb-1 text-muted">Patient</p>
+                <p class="fw-semibold">{{ patientDetails.Patient }}</p>
+            </div>
+
+            <div class="col-md-3 col-sm-6">
+                <p class="mb-1 text-muted">Requested Specialty</p>
+                <p class="fw-semibold">{{ patientDetails.Specialty }}</p>
+            </div>
+
+            <div class="col-md-3 col-sm-6">
+                <p class="mb-1 text-muted">Ethnicity</p>
+                <p class="fw-semibold">{{ patientDetails.Ethnicity }}</p>
+            </div>
+
+            <div class="col-md-3 col-sm-6">
+                <p class="mb-1 text-muted">Occupation</p>
+                <p class="fw-semibold">{{ patientDetails.Occupation }}</p>
+            </div>
+
+            <div class="col-md-3 col-sm-6">
+                <p class="mb-1 text-muted">Assigned Date</p>
+                <p class="fw-semibold">{{ patientDetails.DateAssigned }}</p>
+            </div>
+
+            <div class="col-md-3 col-sm-6">
+                <p class="mb-1 text-muted">Time Allowed</p>
+                <p class="fw-semibold">{{ patientDetails.TimeAllowed }}</p>
+            </div>
+
+            <div class="col-md-3 col-sm-6">
+                <p class="mb-1 text-muted">Due Date</p>
+                <p class="fw-semibold">{{ patientDetails.DueDate }}</p>
+            </div>
+
+            <div class="col-md-3 col-sm-6">
+                <p class="mb-1 text-muted">Submitted Date</p>
+                <p class="fw-semibold">{{ patientDetails.SubmittedDate }}</p>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- SUMMARY -->
+    <div class="medical-summary">
+        <h2>Summary</h2>
+        <p>{{ patientDetails.MedicalSummary }}</p>
+    </div>
+
+    <div class="medical-summary">
+        <h2>Medical Records</h2>
+        <div class="card-section">
+
+            @if (!patientRecords || patientRecords.length === 0) {
+            <p class="p-muted">No medical records available.</p>
+            } @else {
+
+            @for (r of patientRecords; track r) {
+
+            <div class="card-content">
+
+                @if (!isAudio(r.extension)) {
+                <p class="file-name" (click)="openFile(r._url)">
+                    {{ r.FileName }}
+                </p>
+                }
+                @else {
+                <div class="audio-file">
+                    <p class="file-name" (click)="r.showAudio = !r.showAudio">
+                        {{ r.FileName }}
+                    </p>
+
+                    @if (r.showAudio) {
+                    <audio controls [src]="r._url"></audio>
+                    }
+                </div>
+                }
+
+            </div>
+            }
+            }
+
+        </div>
+    </div>
+
+    <!-- MEDICATIONS -->
+    <div class="medical-summary">
+        <h2>Current Medications</h2>
+
+        @if (!medications || medications.length === 0) {
+        <p class="p-muted">No medications available.</p>
+        } @else {
+        <div class="medication">
+            @for (m of medications; track m) {
+            <div class="d-flex">
+                <p>{{ m.MedicationName }}</p>
+                <p class="p-muted">{{ m.StartPeriod }}</p> -
+                <p class="p-muted">{{ m.EndPeriod }}</p>
+            </div>
+            }
+        </div>
+        }
+    </div>
+
+    <!-- QUESTIONS -->
+    <div class="medical-summary">
+        <h2>Questions</h2>
+
+        @if (!queries || queries.length === 0) {
+        <p class="p-muted">No questions available.</p>
+        } @else {
+        <div class="queries">
+            @for (q of queries; track q) {
+            <div class="query-item">
+                <p class="question">
+                    <strong>Q:</strong> {{ q.Question }}
+                </p>
+
+                <p><span class="p-muted">Ans:</span> {{ q.Answer || 'N/A' }}</p>
+                <p><span class="p-muted">Sup:</span> {{ q.Support || 'N/A' }}</p>
+            </div>
+            }
+        </div>
+        }
+    </div>
+
+    <div class="medical-summary">
+        <h2>Summary of Medical Records</h2>
+        <p>{{ patientDetails.SummaryOfRecords }}</p>
+    </div>
+    <div class="card-section">
+
+        @if (reviewerRecords?.length > 0) {
+
+        @for (r of reviewerRecords; track r) {
+
+        <div class="card-content">
+            @if (!isAudio(r.extension)) {
+            <p class="file-name" (click)="openFile(r._url)">
+                {{ r.FileName }}
+            </p>
+            }
+
+            @else {
+            <div class="audio-file">
+                <p class="file-name" (click)="r.showAudio = !r.showAudio">
+                    {{ r.FileName }}
+                </p>
+
+                @if (r.showAudio) {
+                <audio controls [src]="r._url"></audio>
+                }
+            </div>
+            }
+        </div>
+        }
+
+        } @else {
+
+        <p class="p-muted">No medical records available.</p>
+
+        }
+
+    </div>
+</div>
+
+} @else {
+
+<p>No case selected</p>
+
+}

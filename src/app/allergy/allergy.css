@@ -1,0 +1,53 @@
+.allergyCard {
+    border: solid 1px #0C7DA1;
+    border-left-width: 10px;
+    border-radius: 10px;
+    padding: 15px;
+}
+
+.contentCard {
+    background-color: white;
+    border: dashed 1px;
+    padding: 15px;
+    border-radius: 10px;
+    max-width: 250px;
+    width: 250px;
+}
+
+.contentCard p {
+    font-size: smaller;
+    font-weight: 200;
+}
+
+.contentCard span {
+    font-size: medium;
+    font-weight: 500;
+}
+
+.contents {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+}
+
+
+.addAlergyBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 6px;
+  background-color: #0c79a5;
+  color: #ffffff;
+  border: none;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.2;
+  cursor: pointer;
+}
+
+.addAlergyBtn mat-icon {
+  font-size: 18px;
+  height: 18px;
+  width: 18px;
+}

@@ -1,0 +1,15 @@
+.subTitle{
+    color: gray;
+}
+.service-section {
+    align-items: center;
+    justify-content: space-between;
+}
+.sub-heading{
+    font-size: medium;
+    font-weight: 700;
+}
+.apollo-details{
+    color: rgb(39, 139, 246);
+    font-style: italic;
+}

@@ -1,0 +1,36 @@
+.form-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.d-flex {
+  display: flex;
+  gap: 12px;
+}
+.full-width {
+  flex: 1;
+}
+.flex-1 {
+  flex: 1;
+}
+.flex-half {
+  flex: 1; 
+  min-width: 0; 
+}
+.flex-time {
+  flex: 1; 
+  min-width: 0;
+}
+.mat-datepicker-content {
+  z-index: 2000 !important;
+}
+.actions {
+  display: flex;
+  justify-content: flex-end; 
+  gap: 12px; 
+  margin-top: 16px;
+}
+.country-code {
+  color: #555;
+  margin-left: 15px;
+}

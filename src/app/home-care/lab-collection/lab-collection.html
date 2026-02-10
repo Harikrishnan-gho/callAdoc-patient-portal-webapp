@@ -1,0 +1,104 @@
+<div class="loader-overlay" *ngIf="isLoadingFileUpload">
+    <mat-progress-spinner mode="indeterminate" diameter="50">
+    </mat-progress-spinner>
+</div>
+<form #bookingForm="ngForm" (ngSubmit)="confirmBooking(bookingForm)">
+    <div class="form-grid pt-3">
+
+        <div class="py-2">
+            <label class="fw-semibold">
+                Upload Doctor's Request/Prescription
+            </label>
+
+            <div class="upload-box mt-2 d-flex flex-column align-items-center justify-content-center"
+                (click)="fileInput.click()">
+                <input type="file" #fileInput hidden accept="image/*,application/pdf"
+                    (change)="onFileSelected($event)" />
+                <mat-icon class="doc-icon mb-2">description</mat-icon>
+
+                <button mat-raised-button color="primary" type="button"
+                    (click)="$event.stopPropagation(); fileInput.click()">
+                    <mat-icon>upload</mat-icon>
+                    Upload File
+                </button>
+
+                <p class="text-muted fs-6 mt-2">
+                    (Supported formats: PDF, JPEG, DCM)
+                </p>
+
+
+                <span *ngIf="selectedFileName" class="file-name text-muted mt-1">
+                    {{ selectedFileName }}
+                </span>
+            </div>
+        </div>
+
+
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Test Required (e.g.,CBC, Lipid Panal)</mat-label>
+            <input matInput [(ngModel)]="patientDetails.tests" name="doctorNotes" required>
+        </mat-form-field>
+
+        <div class="d-flex gap-2 align-items-start">
+            <mat-form-field appearance="outline" class="flex-half">
+                <mat-label>Date</mat-label>
+                <input matInput [matDatepicker]="picker" [(ngModel)]="patientDetails.date" name="date" required>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <div class="d-flex gap-1 flex-half">
+
+                <mat-form-field appearance="outline" class="flex-time">
+                    <mat-label>Hour</mat-label>
+                    <mat-select [(ngModel)]="patientDetails.hour" name="hour" required>
+                        <mat-option *ngFor="let h of hours" [value]="h">{{ h }}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="flex-time">
+                    <mat-label>Minutes</mat-label>
+                    <mat-select [(ngModel)]="patientDetails.minute" name="minute" required>
+                        <mat-option *ngFor="let m of minutes" [value]="m">{{ m }}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="flex-time">
+                    <mat-label>AM/PM</mat-label>
+                    <mat-select [(ngModel)]="patientDetails.ampm" name="ampm" required>
+                        <mat-option value="AM">AM</mat-option>
+                        <mat-option value="PM">PM</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+            </div>
+        </div>
+
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Patient Name</mat-label>
+            <input matInput [(ngModel)]="patientDetails.name" name="patientName" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Contact Number</mat-label>
+            <span class="country-code" matPrefix>+968&nbsp;</span>
+            <input matInput type="text" maxlength="8" [(ngModel)]="patientDetails.phone" name="phone" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Home Address</mat-label>
+            <textarea matInput rows="3" [(ngModel)]="patientDetails.address" name="address" required>
+      </textarea>
+        </mat-form-field>
+
+        <div class="actions d-flex justify-end gap-3 mt-3">
+            <button mat-stroked-button color="warn" type="button" (click)="closePopup()">
+                Cancel
+            </button>
+
+            <button mat-flat-button color="primary" type="submit" [disabled]="bookingForm.invalid">
+                Confirm Booking
+            </button>
+        </div>
+
+    </div>
+</form>

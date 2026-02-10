@@ -1,0 +1,46 @@
+<div class="d-flex justify-content-end">
+    <button class="addAlergyBtn" (click)="addAllergy()">
+        <mat-icon>add</mat-icon>
+        Add Allergy
+    </button>
+</div>
+
+<p class="text-muted">
+    Add your allergies to help our doctors keep you safe
+</p>
+
+<div class="d-flex gap-5 flex-wrap">
+    @for(allergy of allergies; track allergy) {
+    <div class="allergyCard">
+
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center gap-2">
+                <h4 class="mb-0">{{allergy['AllergyName']}}</h4>
+                <mat-chip>
+                    {{allergy['Severity']}}
+                </mat-chip>
+            </div>
+
+            <div class="d-flex gap-1">
+                <button mat-icon-button color="primary" (click)="editAllergy(allergy)">
+                    <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button color="warn" (click)="deleteAllergy(allergy['ID'],allergy['AllergyName'])">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </div>
+        </div>
+
+        <div class="contents mt-2">
+            <div class="contentCard">
+                <p>Reaction</p>
+                <span>{{allergy['AllergicReaction']}}</span>
+            </div>
+            <div class="contentCard">
+                <p>Diagnosed At</p>
+                <span>{{allergy['ReportedInstitution']}}</span>
+            </div>
+        </div>
+    </div>
+    }
+</div>

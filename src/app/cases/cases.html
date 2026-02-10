@@ -1,0 +1,118 @@
+<style>
+  .mat-mdc-tab-labels {
+    display: flex;
+    flex-wrap: wrap !important;
+    overflow-x: hidden !important;
+  }
+
+  .mat-mdc-tab-label {
+    flex: 1 1 auto !important;
+  }
+</style>
+
+<div class="row">
+  <div class="col-sm-12 p10">
+
+    <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" class="border-round" [(selectedIndex)]="tbidx">
+
+      <!-- LIST TAB -->
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <i class="bi bi-list-columns fs-4 blue p10"></i>
+          List {{ listtitle }}
+        </ng-template>
+
+        <div class="v100 p10 pt20 pb20 x-noscroll">
+          <div class="row p10">
+
+            <!-- OPEN / CLOSED RADIO -->
+            <div class="col-sm-4">
+              <mat-radio-group class="horizontal-radio-group" (change)="getlist($event)">
+                <mat-radio-button value="6" checked>Open Cases</mat-radio-button>
+                <mat-radio-button value="7">Closed Cases</mat-radio-button>
+              </mat-radio-group>
+            </div>
+
+            <!-- FILTER -->
+            <div class="col-sm-4">
+
+              <mat-label>Filter : </mat-label>
+              <input matInput class="input" (keyup)="applyFilter($event)" placeholder="" #input>
+
+            </div>
+
+            <div class="col-sm-3"></div>
+          </div>
+
+
+          <!-- DATA TABLE -->
+          <div class="col-sm-12">
+            <table mat-table [dataSource]="dataSource" class="border">
+
+              <ng-container matColumnDef="Patient Name">
+                <th mat-header-cell *matHeaderCellDef> Patient Name </th>
+                <td mat-cell *matCellDef="let element">
+                  {{ element["Patient Name"] || element.PatientName }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="Age">
+                <th mat-header-cell *matHeaderCellDef> Age </th>
+                <td mat-cell *matCellDef="let element"> {{ element.Age }} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="TimeAllowed">
+                <th mat-header-cell *matHeaderCellDef> Time Allowed </th>
+                <td mat-cell *matCellDef="let element"> {{ element.TimeAllowed }} {{ element.TimeUsed }} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="DueDate">
+                <th mat-header-cell *matHeaderCellDef> Due Date </th>
+                <td mat-cell *matCellDef="let element"> {{ element.DueDate }} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="Priority">
+                <th mat-header-cell *matHeaderCellDef> Priority </th>
+                <td mat-cell *matCellDef="let element"> {{ element.Priority }} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="Status">
+                <th mat-header-cell *matHeaderCellDef> Status </th>
+                <td mat-cell *matCellDef="let element"> {{ element.Status }} </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="columns"></tr>
+              <tr mat-row *matRowDef="let row; columns: columns;" (click)="onRowClick(row)"
+                [class.selected-row]="selectedRow === row">
+              </tr>
+
+            </table>
+
+            <mat-paginator [pageSize]="10" [length]="dataSource.data.length || 0" [pageSizeOptions]="[5, 10, 20]"
+              showFirstLastButtons="true">
+            </mat-paginator>
+          </div>
+        </div>
+      </mat-tab>
+
+      <!-- DETAIL TAB -->
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <i class="bi bi-info-square fs-4 green p10"></i>
+          Detail
+        </ng-template>
+
+        <div *ngIf="tbidx === 1">
+          <!-- OPEN CASE DETAILS -->
+          <rev-case-detail *ngIf="isOpenCase" [id]="caseReviewerId">
+          </rev-case-detail>
+
+          <!-- CLOSED CASE DETAILS -->
+          <app-closed-case-details *ngIf="!isOpenCase" [caseData]="selectedCase">
+          </app-closed-case-details>
+
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>

@@ -1,0 +1,69 @@
+<div class="loader-overlay" *ngIf="isLoadingFileUpload">
+    <mat-progress-spinner mode="indeterminate" diameter="50">
+    </mat-progress-spinner>
+</div>
+<form #bookingForm="ngForm" (ngSubmit)="confirmBooking(bookingForm)">
+    <div class="form-grid pt-3">
+
+        <div class="py-2">
+            <label class="fw-semibold">
+                Upload Prescription
+            </label>
+
+            <div class="upload-box mt-2 d-flex flex-column align-items-center justify-content-center"
+                (click)="fileInput.click()">
+                <input type="file" #fileInput hidden accept="image/*,application/pdf"
+                    (change)="onFileSelected($event)" />
+                <mat-icon class="doc-icon mb-2">description</mat-icon>
+
+                <button mat-raised-button color="primary" type="button"
+                    (click)="$event.stopPropagation(); fileInput.click()">
+                    <mat-icon>upload</mat-icon>
+                    Upload File
+                </button>
+
+                <p class="text-muted fs-6 mt-2">
+                    (Supported formats: PDF, JPEG, DCM)
+                </p>
+
+
+                <span *ngIf="selectedFileName" class="file-name text-muted mt-1">
+                    {{ selectedFileName }}
+                </span>
+            </div>
+        </div>
+
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Additional Notes</mat-label>
+            <input matInput [(ngModel)]="prescriptionDetails.additinalNotes" name="Additional Notes" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Patient Name</mat-label>
+            <input matInput [(ngModel)]="prescriptionDetails.name" name="patientName" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Contact Number</mat-label>
+            <span class="country-code" matPrefix>+968&nbsp;</span>
+            <input matInput type="text" maxlength="8" [(ngModel)]="prescriptionDetails.phone" name="phone" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Home Address</mat-label>
+            <textarea matInput rows="3" [(ngModel)]="prescriptionDetails.address" name="address" required>
+      </textarea>
+        </mat-form-field>
+
+        <div class="actions d-flex justify-end gap-3 mt-3">
+            <button mat-stroked-button color="warn" type="button" (click)="closePopup()">
+                Cancel
+            </button>
+
+            <button mat-flat-button color="primary" type="submit" [disabled]="bookingForm.invalid">
+                Confirm Booking
+            </button>
+        </div>
+
+    </div>
+</form>

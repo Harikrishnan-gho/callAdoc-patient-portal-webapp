@@ -1,0 +1,124 @@
+<style>
+    .heading {
+        cursor: pointer;
+    }
+</style><!--
+ navbar -->
+<div class="d-flex main-heading mx-3">
+    <div class="d-flex gap-2 heading" (click)="account()">
+        <mat-icon class="" >arrow_back</mat-icon>
+        <p>Account</p>
+    </div>
+
+</div>
+<h4 class="mt-1">Settings</h4>
+<!-- profile img section -->
+@for( item of personalDetails;track item){
+<div class="d-flex settings-profile p-3 border-round mt-4 ">
+    <div class="d-flex gap-3">
+        <div>
+            <img class="profile-img" [src]="item._url || defaultImage" alt="Profile" />
+        </div>
+        <div>
+            <h5> {{ item.FirstName}}</h5>
+            <p class="text-secondary backIcon" (click)="viewProfile()">View profile</p>
+        </div>
+    </div>
+    <div class="percentatge-wrapper">
+        <img src="percentatge.svg" alt="">
+        <div class="number">
+            <p>75%</p>
+        </div>
+    </div>
+</div>
+}
+<!-- Security & Privacy -->
+<h5 class="mt-4">Security & Privacy</h5>
+<div class="border-round mt-3 p-2">
+    <div class="d-flex gap-4 personal-info" (click)="ChangePassword()">
+        <div class="d-flex p-2 gap-4">
+            <img src="password.svg" alt="">
+            <div>
+                <h5 class="heading">Change Password</h5>
+                <p class="text-secondary">Reset your password anytime for safety.</p>
+            </div>
+        </div>
+        <div class="pt-4">
+            <mat-icon>chevron_right</mat-icon>
+
+        </div>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="d-flex gap-4 personal-info">
+        <div class="d-flex p-2 gap-4">
+            <img src="privacy.svg" alt="">
+            <div>
+                <h5 class="heading">Privacy Policy</h5>
+                <p class="text-secondary">Review our data protection practices.</p>
+            </div>
+        </div>
+        <div class="pt-4">
+            <mat-icon>chevron_right</mat-icon>
+
+        </div>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="d-flex gap-4 personal-info">
+        <div class="d-flex p-2 gap-4">
+            <img src="microphone.svg" alt="">
+            <div>
+                <h5 class="heading">Microphone Access</h5>
+                <p class="text-secondary">Allow app to use microphone.</p>
+            </div>
+        </div>
+        <div class="pt-4 me-4">
+            <mat-slide-toggle></mat-slide-toggle>
+        </div>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="d-flex gap-4 personal-info">
+        <div class="d-flex p-2 gap-4">
+            <img src="notifications.svg" alt="">
+            <div>
+                <h5 class="heading">Notifications</h5>
+                <p class="text-secondary">Allow app to send alerts.</p>
+            </div>
+        </div>
+        <div class="pt-4 me-4">
+            <mat-slide-toggle></mat-slide-toggle>
+
+        </div>
+    </div>
+</div>
+
+<!-- Information & Support -->
+<h5 class="mt-4">Information & Support</h5>
+<div class="border-round mt-3 p-2">
+    <div class="d-flex gap-4 personal-info">
+        <div class="d-flex p-2 gap-4">
+            <img src="about.svg" alt="">
+            <div>
+                <h5 class="heading">About</h5>
+                <p class="text-secondary">View app details.</p>
+            </div>
+        </div>
+        <div class="pt-4">
+            <mat-icon>chevron_right</mat-icon>
+
+        </div>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="d-flex gap-4 personal-info">
+        <div class="d-flex p-2 gap-4">
+            <img src="help.svg" alt="">
+            <div>
+                <h5 class="heading">Help</h5>
+                <p class="text-secondary">Contact us via email.</p>
+            </div>
+        </div>
+        <div class="pt-4">
+            <mat-icon>chevron_right</mat-icon>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,203 @@
+<style>
+  .doctor-card {
+    width: 100%;
+    max-width: 260px;
+    height: 320px;
+    padding: 16px;
+  }
+
+  .doctor-card mat-card-footer {
+    margin-top: auto;
+  }
+
+  .doctor-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .fallback-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: #e0e0e0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .fallback-img mat-icon {
+
+    color: #777;
+  }
+
+  mat-card-title {
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .designation {
+    font-size: 14px;
+    color: #666;
+    margin: 0;
+  }
+
+  .available-slots {
+    display: inline-block;
+    background: #e8f5e9;
+    color: #2e7d32;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 12px;
+  }
+
+  .star-yellow {
+    color: rgb(229, 229, 16);
+  }
+
+  :host {
+    display: block;
+    overflow-x: hidden;
+  }
+
+  ::ng-deep .mat-tab-body-content {
+    overflow-x: hidden !important;
+  }
+
+  .row {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .tab-content {
+    overflow-x: hidden;
+  }
+
+  .doctor-name {
+    font-weight: 600;
+    font-size: 14.5px;
+    margin-bottom: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .bookButton {
+    padding: 10px 16px;
+    border-radius: 6px;
+    background-color: #0c79a5;
+    color: #ffffff;
+    border: none;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.2;
+    cursor: pointer;
+  }
+
+  .experience-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #0c79a5;
+    color: white;
+    font-size: 11.5px;
+    font-weight: 600;
+    padding: 3px 7px;
+    border-radius: 8px;
+  }
+
+  .specialty-field {
+    flex: 0 0 20%;
+  }
+
+  .search-field {
+    flex: 0 0 80%;
+  }
+</style>
+
+<div class="row">
+  <div class="d-flex align-items-center gap-2 mb-2" *ngIf="!isDoctorRoute">
+
+    <mat-form-field appearance="outline" class="specialty-field">
+      <mat-label>Select Specialty</mat-label>
+      <mat-select [(value)]="selectedSpecialty" (selectionChange)="onSpecialtyChange($event.value)">
+        <mat-option [value]="null">All</mat-option>
+        @for (specialty of specialtyList; track specialty.ID) {
+        <mat-option [value]="specialty.ID.toString()">
+          {{ specialty.SpecialtyName }}
+        </mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="search-field">
+      <mat-label class="px-2">
+        <mat-icon matPrefix>search</mat-icon>
+        Search doctors
+      </mat-label>
+      <input class="px-4" (input)="onSearchDoctor($event)" matInput />
+    </mat-form-field>
+
+  </div>
+
+  <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" class="border-round" [(selectedIndex)]="tbidx">
+    <mat-tab label="Select Doctor">
+      <div class="row p10">
+        @for (item of filteredDoctors; track item.ID) {
+        <div class="col-sm-3 mb-3">
+          <mat-card appearance="outlined" class="doctor-card text-center">
+            <div class="experience-badge">{{ item.Experience }}+</div>
+            <div class="mb-3 d-flex justify-content-center">
+              @if (item._url) {
+              <img [src]="item._url" alt="Doctor" class="doctor-img" />
+              } @else {
+              <div class="fallback-img">
+                <mat-icon>person</mat-icon>
+              </div>
+              }
+            </div>
+
+            <mat-card-header class="justify-content-center p-0 mb-1">
+              <mat-card-title class="doctor-name">{{ item.Doctor }}</mat-card-title>
+            </mat-card-header>
+
+            <mat-card-content class="p-0">
+              <p class="designation">{{ item.Designation }}</p>
+              <div class="d-flex align-items-center justify-content-center gap-1 py-2">
+                <mat-icon class="star-yellow">star</mat-icon>
+                <span>{{ item.Rating }}</span>
+              </div>
+              <p class="available-slots">{{ item.AvailableSlots }} slots available</p>
+              <button class="bookButton" (click)="onAppointmentClick(item)">
+                Book Appointment
+              </button>
+            </mat-card-content>
+            <mat-card-footer>
+
+            </mat-card-footer>
+
+          </mat-card>
+
+        </div>
+        }
+      </div>
+
+    </mat-tab>
+
+    <mat-tab label="Choose Time Slot">
+
+      <doctor-details [docinfo]='selectedDoc'></doctor-details>
+      <doctor-schedule [doctor]="docid" (bookAppointment)="onBookAppointment($event)">
+      </doctor-schedule>
+    </mat-tab>
+
+    <mat-tab label="Confirm Appointment" [disabled]="!appointmentData">
+      <app-make-payment [appointmentData]="appointmentData">
+      </app-make-payment>
+    </mat-tab>
+
+  </mat-tab-group>
+</div>

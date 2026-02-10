@@ -1,0 +1,244 @@
+<div>
+  <welcome-section></welcome-section>
+</div>
+
+<div class="container py-4">
+  <div class="mb-4">
+    <p class="fs-4 fw-semibold mb-0">Home Care</p>
+    <p class="text-muted mb-0">Book trusted services at your doorstep</p>
+  </div>
+
+  <div class="row g-4">
+
+    <div class="col-12 col-md-4 service-card">
+      <div (click)="openGeneralPhysician()" class="general-card border rounded-4 p-3 h-100  ">
+        <div>
+          <p class="fw-semibold mb-1">General Physician</p>
+          <p class="text-muted mb-0">Book Home Service</p>
+        </div>
+        <div class="d-flex justify-content-center pt-4">
+          <img src="dashboard/lady-doctor.png" class="img-fluid" alt="Doctor">
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-12 col-md-4">
+      <div (click)="openPharmacyDelivery()" class="pharmacy-card border rounded-4 p-3 h-100  ">
+        <div>
+          <p class="fw-semibold mb-1">Pharmacy Delivery</p>
+          <p class="text-muted mb-0">Medicine at your door</p>
+        </div>
+        <div class="d-flex justify-content-center pt-4">
+          <img src="dashboard/nurses.png" class="img-fluid" alt="Doctor">
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="col-12 col-md-4">
+      <div (click)="openNursingServices()" class="nursing-card border rounded-4 p-3 h-100  ">
+        <div>
+          <p class="fw-semibold mb-1">Nursing Services</p>
+          <p class="text-muted mb-0">Support by your side</p>
+        </div>
+        <div class="d-flex justify-content-center pt-4">
+          <img src="dashboard/doctors.png" class="img-fluid" alt="Doctor">
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="row g-4 pt-3">
+    <div class="col-12 col-md-4 service-card">
+      <div (click)="openScheduleLabPopup()" class="lab-card border rounded-4 p-3 h-100  ">
+        <div>
+          <p class="fw-semibold mb-1">Lab Collection</p>
+          <p class="text-muted mb-0">Health checks from home</p>
+        </div>
+        <div class="mt-auto d-flex justify-content-center pt-4">
+          <img src="dashboard/lab.png" class="img-fluid" alt="Doctor">
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-8 service-card">
+      <div (click)="openshowPhysiotherapyPopup()" class="physiotherpy-card border rounded-4 p-3 h-100  ">
+        <div>
+          <p class="fw-semibold mb-1">Physiotherapy</p>
+          <p class="text-muted mb-0">Care at your comfort</p>
+        </div>
+        <div class=" d-flex justify-content-center pb-0">
+          <img src="dashboard/workout.png" class="workoutImg img-fluid" alt="Doctor">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="mb-4 py-3">
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center">
+      <p class="fs-4 fw-semibold mb-0">Find a Specialty</p>
+      <button (click)="navigateToSpecialty()" class="btn btn-link p-0">See all</button>
+    </div>
+    <div class="row g-3 g-md-4 pt-3">
+      <div (click)="getCardiologyDoctors('4')" class="col-6 col-sm-4 col-md-3 col-lg-2">
+        <div class="specialty-card border rounded-4 p-3 h-100 d-flex flex-column align-items-center text-center">
+          <div class="img-wrapper mb-2">
+            <img src="dashboard/heart.png" class="img-fluid" alt="Cardiology">
+          </div>
+          <p class="pt-2 mb-0 fw-medium">Cardiology</p>
+        </div>
+      </div>
+      <div (click)="getNeurologyDoctors('24')" class="col-6 col-sm-4 col-md-3 col-lg-2">
+        <div class="specialty-card border rounded-4 p-3 h-100 d-flex flex-column align-items-center text-center">
+          <div class="img-wrapper mb-2">
+            <img src="dashboard/brain.png" class="img-fluid" alt="Neurology">
+          </div>
+          <p class="pt-2 mb-0 fw-medium">Neurology</p>
+        </div>
+      </div>
+      <div (click)="getOncologyDoctors('27')" class="col-6 col-sm-4 col-md-3 col-lg-2">
+        <div class="specialty-card border rounded-4 p-3 h-100 d-flex flex-column align-items-center text-center">
+          <div class="img-wrapper mb-2">
+            <img src="dashboard/ribbon.png" class="img-fluid" alt="Oncology">
+          </div>
+          <p class="pt-2 mb-0 fw-medium">Oncology</p>
+        </div>
+      </div>
+      <div (click)="getOrthopaedicDoctors('29')" class="col-6 col-sm-4 col-md-3 col-lg-2">
+        <div class="specialty-card border rounded-4 p-3 h-100 d-flex flex-column align-items-center text-center">
+          <div class="img-wrapper mb-2">
+            <img src="dashboard/kidney.png" class="img-fluid" alt="Orthopaedic">
+          </div>
+          <p class="pt-2 mb-0 fw-medium">Orthopaedic</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="py-3">
+    <div class="row">
+      <div class="col-12">
+        <div class="medicine-card d-flex justify-content-between align-items-center rounded-4 p-4 ">
+          <div>
+            <p class="fw-semibold mb-1">Fast, safe and discounted.</p>
+            <p class="fs-4 fw-bold mb-2">Get Medicines Delivered</p>
+            <div class="d-inline-block bg-primary rounded px-3 py-2 mb-3">
+              <p class="text-light fw-semibold mb-0">15% OFF</p>
+            </div>
+            <div>
+              <button class="btn btn-light rounded">
+                Order Now
+              </button>
+            </div>
+          </div>
+          <div class="ms-3">
+            <img src="dashboard/delivery.png" class="img-fluid" style="max-width: 200px;" alt="Delivery">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="py-3">
+    <div>
+      <p class="fs-4 fw-semibold mb-2">Explore what's right for you.</p>
+    </div>
+
+    <div class="carousel-container">
+      <img *ngFor="let img of images; let i = index" [src]="img" class="slide" [class.active]="i === currentIndex"
+        alt="Advertisement">
+
+      <button class="prev" (click)="prev()">❮</button>
+      <button class="next" (click)="next()">❯</button>
+    </div>
+  </div>
+
+  <div class="py-4">
+    <div class="mb-3">
+      <p class="fs-4 fw-semibold mb-1">Learn Something New</p>
+      <p class="text-muted mb-0">Watch curated health & wellness videos</p>
+    </div>
+
+    <div class="row g-4">
+
+      <div class="col-12 col-md-4">
+        <div class="card h-100 border-0 shadow-sm rounded-4">
+          <div class="ratio ratio-16x9 rounded-top overflow-hidden">
+            <iframe src="https://www.youtube.com/embed/2A_Ty82cX0A" title="YouTube video" allowfullscreen>
+            </iframe>
+          </div>
+          <div class="card-body">
+            <p class="fw-semibold mb-1">Healthy Lifestyle Tips</p>
+            <p class="text-muted small mb-0">Simple habits for better health</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-4">
+        <div class="card h-100 border-0 shadow-sm rounded-4">
+          <div class="ratio ratio-16x9 rounded-top overflow-hidden">
+            <iframe src="https://www.youtube.com/embed/MuvKMldcat0" title="YouTube video" allowfullscreen>
+            </iframe>
+          </div>
+          <div class="card-body">
+            <p class="fw-semibold mb-1">Daily Fitness Routine</p>
+            <p class="text-muted small mb-0">Easy exercises at home</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-4">
+        <div class="card h-100 border-0 shadow-sm rounded-4">
+          <div class="ratio ratio-16x9 rounded-top overflow-hidden">
+            <iframe src="https://www.youtube.com/embed/CSjRBBqfhko" title="YouTube video" allowfullscreen>
+            </iframe>
+          </div>
+          <div class="card-body">
+            <p class="fw-semibold mb-1">Mental Wellness</p>
+            <p class="text-muted small mb-0">Reduce stress and anxiety</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+
+</div>
+
+<app-custom-dialog [show]="showGeneralPhysicianPopup" heading="Book a General Physician"
+  subheading="Book a physical consultation at your home with an Apollo General Physician" [hideActions]="true"
+  (close)="closeGeneralPhysician()">
+  <app-general-physician (close)="closeGeneralPhysician()"></app-general-physician>
+</app-custom-dialog>
+
+<app-custom-dialog [show]="showPharmacyDeliveryPopup" heading="Request For Pharmacy Delivery"
+  subheading="Request prescription medicines delivered directly to your location" [hideActions]="true"
+  (close)="closePharmacyDelivery()">
+  <app-pharmacy-delivery (close)="closePharmacyDelivery()"></app-pharmacy-delivery>
+</app-custom-dialog>
+
+
+<app-custom-dialog [show]="showNursingServicesPopup" heading="Book Home Nursing Services"
+  subheading="When your request is recived. Our team will reach out soon to schedule the service" [hideActions]="true"
+  (close)="closeNursingServices()">
+  <app-nursing-services (close)="closeNursingServices()"></app-nursing-services>
+</app-custom-dialog>
+
+<app-custom-dialog [show]="showPhysiotherapyPopup" heading="Book a Physiotherapy Session"
+  subheading="Recive personalised physical therapy tailored to your recovery" [hideActions]="true"
+  (close)="closeshowPhysiotherapyPopup()">
+  <app-physiotherapy (close)="closeshowPhysiotherapyPopup()"></app-physiotherapy>
+</app-custom-dialog>
+
+
+<app-custom-dialog [show]="showScheduleLabPopup" heading="Schedule Lab Sample Collection"
+  subheading="Book a phlebotomist to colloct your samples at home" [hideActions]="true"
+  (close)="closeScheduleLabPopup()">
+  <app-lab-collection (close)="closeScheduleLabPopup()"></app-lab-collection>
+</app-custom-dialog>

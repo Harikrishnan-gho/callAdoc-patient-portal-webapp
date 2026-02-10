@@ -1,0 +1,27 @@
+<div class="p10 ">
+    <table class="w100">
+        <tr>
+            <td class="data-label p10">{{ data.Question }} </td>
+            <td (click)="close()" class=" p10 right pointer"> <i class="bi bi-x-circle fs-3 red"></i> </td>
+        </tr>
+    </table>
+    <mat-dialog-content class="y-noscroll">
+        <div class="w100 ">
+            <mat-tab-group mat-align-tabs="start" mat-stretch-tabs="false">
+                <mat-tab label="Answer">
+                    <textarea rows="15" class="border w100" [(ngModel)]="data.Answer" placeholder="Enter your answer">
+          </textarea>
+                </mat-tab>
+                <mat-tab label="Support">
+                    <textarea rows="15" class="border w100" [(ngModel)]="data.Support"
+                        placeholder="Enter supporting info">
+          </textarea>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+
+        <div class="actions right">
+            <button matButton="filled" color="primary" (click)="save()">Save Answer & Support</button>
+        </div>
+    </mat-dialog-content>
+</div>

@@ -1,0 +1,139 @@
+
+<form class="m-4"
+  #contactForm="ngForm"
+  (ngSubmit)="updateProfile(contactForm)"
+  novalidate
+>
+<div class="text-center pb-2">
+    <h4 class="pb-1">Edit Emergency contact</h4>
+<p class="text-secondary">This contact will be used in case of medical emergiencies or important updates.</p>
+ 
+</div> 
+<div class="form-grid mt-3">
+
+    <!-- Full Name -->
+    <mat-form-field appearance="outline">
+      <mat-label>Enter full name</mat-label>
+
+      <input
+        matInput
+        name="name"
+        [(ngModel)]="name"
+        required
+        #nameCtrl="ngModel"
+      >
+
+      <mat-error *ngIf="nameCtrl.invalid && nameCtrl.touched">
+        Name is required
+      </mat-error>
+    </mat-form-field>
+
+
+    <!-- Relationship -->
+    <mat-form-field appearance="outline">
+      <mat-label>Relationship</mat-label>
+
+      <mat-select
+        name="relation"
+        [(ngModel)]="relation"
+        required
+        #relationCtrl="ngModel"
+      >
+
+        <mat-option value="Father">Father</mat-option>
+        <mat-option value="Mother">Mother</mat-option>
+        <mat-option value="Brother">Brother</mat-option>
+        <mat-option value="Sister">Sister</mat-option>
+        <mat-option value="Friend">Friend</mat-option>
+
+      </mat-select>
+
+      <mat-error *ngIf="relationCtrl.invalid && relationCtrl.touched">
+        Relationship is required
+      </mat-error>
+    </mat-form-field>
+
+
+    <!-- Phone -->
+    <mat-form-field appearance="outline">
+      <mat-label>Contact Number</mat-label>
+
+      <span matPrefix>+968&nbsp;</span>
+
+      <input
+        matInput
+        type="tel"
+        maxlength="8"
+        name="phone"
+        [(ngModel)]="phone"
+        required
+        pattern="[0-9]{8}"
+        #phoneCtrl="ngModel"
+      >
+
+      <mat-error *ngIf="phoneCtrl.invalid && phoneCtrl.touched">
+
+        <span *ngIf="phoneCtrl.errors?.['required']">
+          Phone number is required
+        </span>
+
+        <span *ngIf="phoneCtrl.errors?.['pattern']">
+          Must be 8 digits
+        </span>
+
+      </mat-error>
+
+    </mat-form-field>
+
+
+    <!-- Email -->
+    <mat-form-field appearance="outline">
+      <mat-label>Email</mat-label>
+
+      <input
+        matInput
+        type="email"
+        name="email"
+        [(ngModel)]="email"
+        email
+        #emailCtrl="ngModel"
+      >
+
+      <mat-error *ngIf="emailCtrl.invalid && emailCtrl.touched">
+        Invalid email format
+      </mat-error>
+
+    </mat-form-field>
+
+
+    <!-- Address -->
+    <mat-form-field appearance="outline" class="full-span">
+      <mat-label>Address</mat-label>
+
+      <textarea
+        matInput
+        name="address"
+        rows="3"
+        [(ngModel)]="address">
+      </textarea>
+
+    </mat-form-field>
+
+
+    <!-- Buttons -->
+    <div class="save-btn-wrapper">
+
+      <button
+        mat-flat-button
+        type="submit"
+        style="background-color: rgba(12, 125, 161, 1);"
+      >
+        Update Contact
+      </button>
+
+      
+
+    </div>
+
+  </div>
+</form>

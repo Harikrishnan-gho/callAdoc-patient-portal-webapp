@@ -1,0 +1,39 @@
+<div class="p30">
+    <div class="d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">{{ allergyId ? 'Edit Allergy' : 'Add Allergy' }}</h5>
+    </div>
+
+    <p class="text-muted">
+        {{ allergyId ? 'Update your allergy details for safer consultations' : 'Add your allergy details for safer consultations' }}
+    </p>
+
+    <div class="form-col">
+        <mat-form-field appearance="outline">
+            <mat-label>Allergy Name</mat-label>
+            <input matInput required [(ngModel)]="allergyName">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Reaction (What happens)</mat-label>
+            <input matInput required [(ngModel)]="reaction">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Diagnosed By / Institution</mat-label>
+            <input matInput [(ngModel)]="diagnosedBy">
+        </mat-form-field>
+
+        <mat-radio-group [(ngModel)]="severity" aria-labelledby="severity-label" class="radio-row" required>
+            <mat-radio-button value="mild">Mild</mat-radio-button>
+            <mat-radio-button value="moderate">Moderate</mat-radio-button>
+            <mat-radio-button value="severe">Severe</mat-radio-button>
+        </mat-radio-group>
+    </div>
+
+    <mat-dialog-actions align="end">
+        <button mat-button mat-dialog-close>Cancel</button>
+        <button class="allergyBtn" (click)="save()" cdkFocusInitial>
+            {{ allergyId ? 'Update Allergy' : 'Save Allergy' }}
+        </button>
+    </mat-dialog-actions>
+</div>

@@ -1,0 +1,193 @@
+<div class="p30">
+    <div class="d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">Add Medication</h5>
+    </div>
+
+    <p class="text-muted">
+        Add or upload your prescriped medications for record-keeping and follow-up care.
+    </p>
+
+    @if (!isEdit) {
+    <mat-radio-group class="mt-2" [(ngModel)]="uploadType">
+        <mat-radio-button value="prescription">
+            Upload Prescription
+        </mat-radio-button>
+        <mat-radio-button value="medication">
+            Upload Medication
+        </mat-radio-button>
+    </mat-radio-group>
+    }
+
+
+    @if(uploadType==='prescription'){
+
+
+    <div class="mt-3">
+        <label>
+            Upload Doctor's Prescription
+        </label>
+
+        <div class="upload-box mt-2" (click)="fileInput.click()">
+            <input type="file" #fileInput hidden accept="image/*,application/pdf" (change)="onFileSelected($event)" />
+
+            <mat-icon class="doc-icon">description</mat-icon>
+
+            <button matButton type="button" (click)="$event.stopPropagation(); fileInput.click()">
+                <mat-icon>upload</mat-icon>
+                Upload File
+            </button>
+            <p class="text-muted fs-6">(File Supported : PDF,JPEG,DCM)</p>
+
+            <span class="file-name text-muted">
+                {{ selectedFileName }}
+            </span>
+        </div>
+
+        @if (files?.length) {
+        <div class="mt-3">
+            <label class="fw-semibold">Uploaded Files</label>
+
+            <div class="d-flex gap-2 flex-wrap mt-2">
+                @for (file of files; track file) {
+                <div class="file-card position-relative">
+                    <button type="button" class="delete-btn" (click)="deleteFile(file); $event.stopPropagation()"
+                        aria-label="Delete file">
+                        ✕
+                    </button>
+
+                    <a [href]="file['DownloadUrl']" target="_blank" rel="noopener noreferrer">
+                        <img [src]="file['_url']" class="file-preview" />
+                    </a>
+
+                </div>
+                }
+            </div>
+        </div>
+
+        }
+
+        <div class="form-col mt-4">
+            <label>
+                Date of Prescription <span class="required">*</span>
+            </label>
+            <div class="date-row">
+                <mat-form-field appearance="outline">
+                    <mat-label>DD</mat-label>
+                    <input matInput type="number" min="1" max="31" placeholder="DD" [(ngModel)]="day" required />
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>MM</mat-label>
+                    <mat-select [(ngModel)]="month">
+                        <mat-option *ngFor="let m of months" [value]="m.value">
+                            {{ m.label }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>YYYY</mat-label>
+                    <input matInput type="number" min="1900" max="2100" placeholder="YYYY" [(ngModel)]="year"
+                        required />
+                </mat-form-field>
+            </div>
+
+
+            <mat-form-field appearance="outline">
+                <mat-label>Hospital Name</mat-label>
+                <input matInput required [(ngModel)]="name">
+            </mat-form-field>
+
+        </div>
+        <mat-dialog-actions align="end">
+            <button mat-button mat-dialog-close>Cancel</button>
+            <button class="addButton" (click)="savePrescription()">
+                {{ isEdit ? 'Update Prescription' : 'Add Prescription' }}
+            </button>
+        </mat-dialog-actions>
+    </div>
+    }
+
+    @if(uploadType==='medication'){
+    <div class="mt-3">
+        <label>
+            Add Medication Details
+        </label>
+
+        <div class="upload-box mt-2" (click)="fileInput.click()">
+            <input type="file" #fileInput hidden accept="image/*,application/pdf" (change)="onFileSelected($event)" />
+
+            <mat-icon class="doc-icon">description</mat-icon>
+
+            <button matButton type="button" (click)="$event.stopPropagation(); fileInput.click()">
+                <mat-icon>upload</mat-icon>
+                Upload File
+            </button>
+            <p class="text-muted fs-6">(File Supported : PDF,JPEG,DCM)</p>
+
+            <span class="file-name text-muted">
+                {{ selectedFileName }}
+            </span>
+        </div>
+
+        @if (files?.length) {
+        <div class="mt-3">
+            <label class="fw-semibold">Uploaded Files</label>
+
+            <div class="d-flex gap-2 flex-wrap mt-2">
+                @for (file of files; track file) {
+                <div class="file-card position-relative">
+                    <button type="button" class="delete-btn" (click)="deleteFile(file); $event.stopPropagation()"
+                        aria-label="Delete file">
+                        ✕
+                    </button>
+
+                    <a [href]="file['DownloadUrl']" target="_blank" rel="noopener noreferrer">
+                        <img [src]="file['_url']" class="file-preview" />
+                    </a>
+
+                </div>
+                }
+            </div>
+        </div>
+
+        }
+
+        <div class="form-col mt-4">
+            <mat-form-field appearance="outline">
+                <mat-label>Medication Name</mat-label>
+                <input matInput required [(ngModel)]="name">
+            </mat-form-field>
+            <label>
+                Start Date <span class="required">*</span>
+            </label>
+            <div class="date-row">
+                <mat-form-field appearance="outline">
+                    <mat-label>DD</mat-label>
+                    <input matInput type="number" min="1" max="31" placeholder="DD" [(ngModel)]="day" />
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>MM</mat-label>
+                    <mat-select [(ngModel)]="month">
+                        <mat-option *ngFor="let m of months" [value]="m.value">
+                            {{ m.label }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>YYYY</mat-label>
+                    <input matInput type="number" min="1900" max="2100" placeholder="YYYY" [(ngModel)]="year" />
+                </mat-form-field>
+            </div>
+        </div>
+        <mat-dialog-actions align="end">
+            <button mat-button mat-dialog-close>Cancel</button>
+            <button class="addButton" cdkFocusInitial (click)="saveMedication()">
+                {{ isEdit ? 'Update Medication' : 'Add Medication' }}
+            </button>
+        </mat-dialog-actions>
+    </div>
+    }
+</div>

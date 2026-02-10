@@ -1,0 +1,73 @@
+<!-- navbar -->
+<div class="d-flex align-items-center main-heading mx-3">
+    <div class="backIcon d-flex align-items-center gap-2 heading" (click)="account()">
+        <mat-icon>arrow_back</mat-icon>
+        <p class="mb-0 fw-semibold">Profile</p>
+    </div>
+</div>
+<h4 class="mt-4 text-center text-md-start ">Linked Accounts</h4>
+<p class="text-center text-md-start text-secondary">
+    Link and manage your Apollo patient accounts easily.
+</p>
+
+@for (item of personalDetails; track item) {
+
+<div class="d-flex secondaryAcc p-3 border-round mt-4 mx-3">
+
+    <div class="d-flex gap-4">
+        <div>
+            <img class="profile-img" [src]="item._url || defaultImage" alt="Profile" />
+        </div>
+
+        <div>
+            <h5>{{ item.Patient }}</h5>
+
+            @if (item.AccountPreference === 'Primary') {
+            <span class="d-flex account-primary px-2">
+                <mat-icon class="verified pt-1">verified</mat-icon>
+                <span>Primary</span>
+            </span>
+            }
+        </div>
+    </div>
+
+    <!-- Only for Secondary -->
+    @if (item.AccountPreference === 'Secondary') {
+
+    <div class="p-4">
+
+        <button mat-icon-button [matMenuTriggerFor]="menuRef">
+            <mat-icon>more_horiz</mat-icon>
+        </button>
+
+        <!-- Menu -->
+        <mat-menu #menuRef="matMenu">
+
+            <button mat-menu-item (click)="switchAccount(item)">
+
+                <mat-icon>star_border</mat-icon>
+                <span>Set as Primary</span>
+
+            </button>
+
+        </mat-menu>
+
+    </div>
+
+    }
+
+</div>
+
+}
+
+<!-- link an account -->
+<div class="linkAccount border-round mt-3 mx-3 p-2">
+    <div class="d-flex gap-2  ">
+        <span>
+            <img src="link-icon.svg" alt="">
+        </span>
+        <span>
+            Link account
+        </span>
+    </div>
+</div>

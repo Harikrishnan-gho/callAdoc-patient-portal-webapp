@@ -1,0 +1,118 @@
+.medical-files {
+  max-width: 100%;
+}
+
+.file-card {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin-bottom: 10px;
+  transition: box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.file-card:hover {
+    color: rgb(12, 121, 165); 
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+
+.file-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  background: #f5f7fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.file-icon mat-icon {
+  font-size: 26px;
+  color: #3f51b5;
+}
+
+.file-info {
+  max-width: 400px;
+}
+
+.file-name {
+  margin: 0;
+  font-weight: 500;
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.file-meta {
+  margin: 0;
+  font-size: 12px;
+  color: #777;
+}
+
+.file-actions button {
+  margin-left: 6px;
+}
+
+.no-files {
+  text-align: center;
+  color: #888;
+  padding: 30px 0;
+}
+
+.no-files mat-icon {
+ 
+  margin-bottom: 8px;
+}
+.actions {
+  display: flex;
+  justify-content: flex-end; 
+  gap: 12px;
+  
+}
+
+.upload-box {
+  border: 2px dashed #cfd8dc;
+  border-radius: 8px;
+  padding: 24px;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+
+.upload-box:hover {
+  border-color: #3f51b5;
+}
+
+.doc-icon {
+   color: #3f51b5;
+}
+
+.loader-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000; 
+}
+.uploadButton{
+     padding: 10px 16px;
+    border-radius: 6px;
+    background-color: #0c79a5;
+    color: #ffffff;
+    border: none;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.2;
+    cursor: pointer; 
+}
+.uploadButton:disabled {
+  background-color: #cfd8dc;
+  color: #78909c;
+  cursor: not-allowed;
+  opacity: 0.65;
+  pointer-events: none;
+}

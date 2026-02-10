@@ -1,0 +1,378 @@
+<style>
+  .sidebar {
+    width: 220px;
+    min-width: 260px;
+    height: 100vh;
+    position: sticky;
+    z-index: 1020;
+    top: 0;
+    overflow-y: auto;
+    background-color: #f8f9fa;
+    border-right: 1px solid #dee2e6;
+  }
+
+  .sidebar .nav mat-icon,
+  .sidebar .nav .item-text {
+    color: rgb(12, 121, 165) !important;
+  }
+
+  .sidebar .selected {
+    background-color: rgb(12, 121, 165) !important;
+    color: white !important;
+    border-radius: 6px;
+  }
+
+  .sidebar .selected mat-icon,
+  .sidebar .selected .item-text {
+    color: white !important;
+  }
+
+
+  .sidebar tr {
+    cursor: pointer;
+    transition: 0.2s;
+  }
+
+  .sidebar tr:hover {
+    background: #f1f1f1;
+  }
+
+  .logo {
+    width: 120px;
+  }
+
+  .sidebar td {
+    padding: 10px 12px;
+    vertical-align: middle;
+  }
+
+  .sidebar mat-icon {
+    font-size: 22px;
+  }
+
+  .sidebar td.item-text {
+    font-weight: 600 !important;
+  }
+
+  .top-icons {
+    background: transparent;
+  }
+
+  .icon-wrapper {
+    background-color: white;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+
+  .userInfo {
+    background-color: white;
+    height: 46px;
+    padding: 0 12px;
+    border-radius: 20px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    width: auto;
+    white-space: nowrap;
+  }
+
+  .icon-wrapper {
+    cursor: pointer;
+
+  }
+
+  .icon-wrapper:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+
+  }
+
+
+
+  .content-wrapper {
+    padding: 10px;
+    margin: 10px;
+    border-radius: 8px;
+    min-height: calc(100vh - 120px);
+    box-sizing: border-box;
+  }
+
+  .profile-pic {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .profile-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .default-icon {
+    font-size: 1.8rem;
+    color: #333;
+  }
+
+
+
+  @media (max-width: 991px) and (min-width: 768px) {
+    .sidebar {
+      width: 80px;
+      min-width: 80px;
+      height: 100vh;
+      position: sticky;
+      top: 0;
+    }
+
+    .logo {
+      width: 60px;
+      height: 15px;
+      padding-right: 5px;
+    }
+
+    .sidebar .item-text {
+      display: none;
+    }
+
+    .sidebar td {
+      text-align: center !important;
+    }
+
+    .content-wrapper {
+      padding: 5px;
+      margin: 5px;
+    }
+  }
+
+  @media (max-width: 575px) {
+    .content-wrapper {
+      padding: 12px;
+      margin: 10px 5px;
+    }
+  }
+
+  .offcanvas-body td {
+    padding: 15px 12px;
+  }
+
+
+  .center-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 1px;
+    box-sizing: border-box;
+  }
+
+  .content-box {
+    width: 100%;
+    max-width: 1300px;
+    height: 100%;
+    padding: 13px;
+    box-sizing: border-box;
+    background-color: white;
+  }
+
+  .notification-item {
+    white-space: normal;
+    line-height: 1.4;
+    padding: 10px 12px;
+  }
+
+  .calendar-icon {
+    color: #0c79a5;
+    /* hospital blue */
+    font-size: 22px;
+    margin-top: 2px;
+  }
+
+  .notification-text {
+    flex: 1;
+  }
+
+  .notification-message {
+    margin: 0;
+    font-size: 13px;
+    color: #333;
+
+    /* clamp long text */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+    .bookButton {
+    padding: 10px 16px;
+    border-radius: 6px;
+    background-color: #0c79a5;
+    color: #ffffff;
+    border: none;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.2;
+    cursor: pointer;
+  }
+</style>
+
+@if (showNavbar) {
+<div class="d-flex">
+
+  <nav class="sidebar p-3 d-none d-md-block">
+    <div class="text-center mt-2 mb-5">
+      <img class="logo" src="logo/calladoc-logo.png" />
+    </div>
+
+    <table class="w-100">
+      @for (item of menuItems; track item) {
+      <tr class="nav" [ngClass]="{ 'selected' : selectedMenu === item.name }" (click)="onMenuClick(item)">
+
+        <td class="text-center">
+          <mat-icon>{{ item.Icon }}</mat-icon>
+        </td>
+        <td class="item-text">{{ item.name }}</td>
+
+      </tr>
+      }
+    </table>
+  </nav>
+
+
+  <!-- Main Content -->
+  <div class="flex-grow-1 bg-light">
+    <!-- Top Navbar -->
+    <nav class="navbar navbar-light bg-light px-3 py-3 sticky-top shadow-sm">
+      <div class="d-flex align-items-center w-100 justify-content-between">
+
+        <!-- Left: Mobile menu toggle or title -->
+        <div class="d-flex align-items-center gap-2">
+          <!-- Mobile menu toggle -->
+          <button class="btn btn-outline-secondary d-md-none" data-bs-toggle="offcanvas"
+            data-bs-target="#mobileSidebar">
+            <i class="bi bi-list"></i>
+          </button>
+          <div class="fs-5 fw-semibold"> {{selectedMenu}}</div>
+          <!-- Optional Title -->
+        </div>
+
+        <!-- Right: Icons -->
+        <div class="d-flex align-items-center gap-2">
+          <button (click)="bookAppointment()" class="bookButton" >
+            Book Appointment
+          </button>
+          <button mat-icon-button [matMenuTriggerFor]="notificationMenu">
+            <mat-icon>notifications</mat-icon>
+          </button>
+          <button mat-icon-button (click)="goToEmergency()">
+            <mat-icon>back_hand</mat-icon>
+
+          </button>
+
+          <mat-menu #notificationMenu="matMenu" class="notification-menu">
+            @if (notifications.length > 0) {
+            @for (notif of notifications; track $index) {
+            <button mat-menu-item class="notification-item">
+
+              <div class="d-flex align-items-start gap-2 w-100">
+                <mat-icon class="calendar-icon">event</mat-icon>
+                <div class="notification-text">
+                  <p class="notification-message">
+                    {{ notif.message }}
+                  </p>
+                </div>
+
+              </div>
+
+            </button>
+            }
+            } @else {
+            <button mat-menu-item disabled>No new notifications</button>
+            }
+          </mat-menu>
+
+
+          <!-- <div (click)="openEmailPopup()" class="icon-wrapper">
+            <i class="bi bi-envelope-fill fs-5 text-dark"></i>
+          </div>
+          <app-email-popup #emailPopup></app-email-popup> -->
+
+          <div (click)="naviagteToProfile()" class="userInfo d-flex items-center gap-3">
+            <div class="profile-pic">
+              @if (userInfo?._url) {
+              <img [src]="userInfo._url" alt="Profile" class="profile-img">
+              } @else {
+              <i class="bi bi-person-circle default-icon"></i>
+              }
+            </div>
+            <div class="flex flex-col lh-1">
+              <p class="font-semibold fs-6 m-0">
+                {{ userInfo?.FirstName }} {{ userInfo?.LastName }}
+              </p>
+            </div>
+          </div>
+          <div (click)="logout()" class="icon-wrapper ">
+            <i class="bi bi-box-arrow-right fs-5 text-danger"></i>
+          </div>
+        </div>
+
+      </div>
+    </nav>
+    <div class="content-wrapper ">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
+
+<div class="offcanvas offcanvas-start" id="mobileSidebar">
+  <div class="offcanvas-header">
+    <img src="apollo-logo.png" width="100" />
+    <button class="btn-close" data-bs-dismiss="offcanvas"></button>
+  </div>
+
+  <div class="offcanvas-body">
+    <table class="w-100">
+      @for (item of menuItems; track item) {
+      <tr class="nav" [ngClass]="{ 'selected' : selectedMenu === item.name }" (click)="onMobileMenuClick(item)">
+        <td><mat-icon>{{ item.Icon }}</mat-icon></td>
+        <td>{{ item.name }}</td>
+      </tr>
+      }
+    </table>
+  </div>
+</div>
+
+}
+@if (!showNavbar)
+{
+@if (isjoin)
+{
+<div class="center-container">
+  <div class="content-box ">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+}
+
+@if (!isjoin){
+
+<router-outlet></router-outlet>
+}
+}

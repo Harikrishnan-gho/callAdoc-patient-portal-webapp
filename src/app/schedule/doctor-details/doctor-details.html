@@ -1,0 +1,176 @@
+<style>
+   .doctor-card {
+      width: 100%;
+      max-width: 300px;
+      height: 250px;
+      padding: 16px;
+   }
+
+   .doctor-card mat-card-footer {
+      margin-top: auto;
+   }
+
+   .doctor-img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+   }
+
+   .fallback-img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: #e0e0e0;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+   }
+
+   .fallback-img mat-icon {
+
+      color: #777;
+   }
+
+   mat-card-title {
+      font-size: 16px;
+      font-weight: 600;
+   }
+
+   .designation {
+      font-size: 14px;
+      color: #666;
+      margin: 0;
+   }
+
+   .available-slots {
+      display: inline-block;
+      background: #e8f5e9;
+      color: #2e7d32;
+      font-size: 12px;
+      font-weight: 500;
+      padding: 4px 10px;
+      border-radius: 12px;
+   }
+
+   .star-yellow {
+      color: rgb(229, 229, 16);
+   }
+
+   .doctor-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+   }
+
+   .info-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+   }
+
+   .info-item mat-icon {
+      font-size: 20px;
+      color: #1976d2;
+   }
+
+   .specialInterest {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+   }
+
+   .specialInterest mat-icon {
+      color: #1976d2;
+   }
+
+   
+</style>
+
+<div class="container">
+<div class="row p10">
+   <div class="col-sm-4  mb-3">
+
+      <mat-card appearance="outlined" class="doctor-card text-center">
+
+         <div class="mb-3 d-flex justify-content-center">
+            @if (docinfo._url) {
+            <img [src]="docinfo._url" alt="Doctor" class="doctor-img" />
+            } @else {
+            <div class="fallback-img">
+               <mat-icon>person</mat-icon>
+            </div>
+            }
+         </div>
+
+         <mat-card-header class="justify-content-center p-0 mb-2">
+            <mat-card-title>{{ docinfo.Doctor }}</mat-card-title>
+         </mat-card-header>
+
+         <mat-card-content class="p-0">
+            <p class="designation">{{ docinfo.Designation }}</p>
+         </mat-card-content>
+
+
+         <mat-card-footer>
+            <div class="d-flex align-items-center justify-content-center gap-1">
+               <mat-icon class="star-yellow">star</mat-icon>
+               <span>{{ docinfo.Rating }}</span>
+            </div>
+            <p class="available-slots">{{ docinfo.AvailableSlots }} slots available</p>
+
+         </mat-card-footer>
+
+      </mat-card>
+
+   </div>
+   <div class="col-sm-8">
+      @if (doctorDetails) {
+      <div class="doctor-grid">
+         <div class="info-item">
+            <mat-icon>school</mat-icon>
+            {{ doctorDetails.Qualification || '-' }}
+         </div>
+
+         <div class="info-item">
+            <mat-icon>work</mat-icon>
+            {{ doctorDetails.Experience || '-' }}
+         </div>
+
+         <div class="info-item">
+            <mat-icon>person</mat-icon>
+            {{ doctorDetails.Gender || '-' }}
+         </div>
+
+         <div class="info-item">
+            <mat-icon>language</mat-icon>
+            {{ doctorDetails.Languages || '-' }}
+         </div>
+
+         <div class="info-item">
+            <mat-icon>local_hospital</mat-icon>
+            {{ doctorDetails.Hospital || '-' }}
+         </div>
+
+         <div class="info-item">
+            <mat-icon>schedule</mat-icon>
+            {{ doctorDetails.WorkingHours || '-' }}
+         </div>
+      </div>
+      }
+      <div class="mt-3">
+         <p class="fw-semibold fs-5">Special Interests</p>
+         <div class="specialInterest">
+            @for(interests of specialInterests; track interests){
+            <div>
+               <mat-icon>check_circle</mat-icon>
+               {{ interests['SpecialInterests'] }}
+            </div>
+            }
+         </div>
+
+      </div>
+   </div>
+</div>
+</div>

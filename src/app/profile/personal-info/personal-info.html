@@ -1,0 +1,106 @@
+<!-- navbar -->
+<div class="d-flex align-items-center main-heading mx-3">
+    <div class="backIcon d-flex align-items-center gap-2 heading" (click)="account()">
+        <mat-icon>arrow_back</mat-icon>
+        <p class="mb-0 fw-semibold">Profile</p>
+    </div>
+</div>
+<div class="d-flex personal-info  p-2">
+    <div class="pt-4 pl-3">
+        <h4>My Profile</h4>
+        <p>Manage your account details</p>
+    </div>
+    <div class="profile-wrapper mx-5">
+        <img class="profile-img" [src]="photo || defaultImage" alt="Profile" />
+        <!-- Edit icon -->
+        <div class="edit-icon" (click)="fileInput.click()">
+            <mat-icon>edit</mat-icon>
+        </div>
+        <!-- Hidden file input -->
+        <input type="file" #fileInput accept="image/*" hidden />
+    </div>
+</div>
+<!-- input form field -->
+<div class="row mt-3">
+    <div class="col-12  col-md-6">
+        <mat-form-field class="w-100" appearance="outline">
+            <mat-label>First Name</mat-label>
+            <input matInput [(ngModel)]="name">
+        </mat-form-field>
+    </div>
+
+    <div class="col-12 col-md-6">
+        <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Mobile Number</mat-label>
+            <input matInput [(ngModel)]="phone" name="Phone">
+        </mat-form-field>
+    </div>
+</div>
+<div class="row mt-3">
+    <div class="col-12 col-md-6 mb-2">
+        <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Blood Group</mat-label>
+            <mat-select [(ngModel)]="bloodGroup">
+                <mat-option value="A+">A+</mat-option>
+                <mat-option value="B+">B+</mat-option>
+                <mat-option value="O+">O+</mat-option>
+                <mat-option value="AB+">AB+</mat-option>
+                <mat-option value="A-">A-</mat-option>
+                <mat-option value="B-">B-</mat-option>
+                <mat-option value="O-">O-</mat-option>
+                <mat-option value="AB-">AB-</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+    <div class="col-12 col-md-6">
+        <mat-radio-group [(ngModel)]="gender">
+            <mat-label>Gender</mat-label>
+            <br>
+            <mat-radio-button value="male">Male</mat-radio-button>
+            <mat-radio-button value="female">Female</mat-radio-button>
+            <mat-radio-button value="other">Other</mat-radio-button>
+        </mat-radio-group>
+
+    </div>
+
+</div>
+<div class="row ">
+    <div class="col-12 col-md-6">
+        <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Date of Birth</mat-label>
+            <input matInput [(ngModel)]="dob">
+        </mat-form-field>
+
+
+    </div>
+    <div class="col-12 col-md-6">
+        <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Marital Status</mat-label>
+            <mat-select [(ngModel)]="maritalStatus">
+                <mat-option value="Single">Single</mat-option>
+                <mat-option value="Married">Married</mat-option>
+                <mat-option value="Prefer Not to Say">Prefer Not to Say</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+</div>
+<div class="row ">
+    <div class="col-12 col-md-6">
+        <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Address</mat-label>
+            <textarea matInput [(ngModel)]="address" rows="3">
+  </textarea>
+        </mat-form-field>
+    </div>
+    <div class="col-12 col-md-6">
+        <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Occupation</mat-label>
+            <input matInput [(ngModel)]="job">
+        </mat-form-field>
+    </div>
+</div>
+
+<div class="d-flex save">
+    <button class=" save-btn px-5 py-2 border-round" (click)="updateProfile()">Save changes</button>
+</div>

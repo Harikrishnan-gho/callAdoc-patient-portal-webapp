@@ -1,0 +1,42 @@
+<div class="d-flex justify-content-end">
+    <button class="addMedicationBtn" (click)="addMedication()">
+        <mat-icon>add</mat-icon>
+        Add Medication
+    </button>
+</div>
+
+<div class="mt-3">
+    <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" class="border-round">
+        <mat-tab label="Medications">
+            <div class="medications p10">
+                @for(med of medications;track med){
+                <div class="MedicationCard">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-items-center gap-2">
+                            <h5 class="mb-0">{{ med['MedicationName'] }}</h5>
+                            <mat-chip>{{ med['StartDate'] }}</mat-chip>
+                        </div>
+
+                        <div class="d-flex gap-1">
+                            <button mat-icon-button color="primary"
+                                (click)="editMedication(med)">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                            <button mat-icon-button color="warn"
+                                (click)="deleteMedication(med['ID'],med['MedicationName'])">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="mt-2">
+                        <a [href]="med['Downloadurl']" target="_blank" rel="noopener noreferrer">
+                            <img [src]="med['Downloadurl']" alt="Medication" class="medication-img" />
+                        </a>
+                    </div>
+                </div>
+                }
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+</div>
