@@ -104,34 +104,49 @@ export class LoginComponent implements OnInit, AfterViewInit {
     this.otpInputs?.first?.nativeElement.focus();
     this.startTimer();
   }
+   moveToNext(event: any, index: number) {
 
-  submitOtp(): void {
-    const enteredOtp = this.otp.join('');
-    if (!/^\d{6}$/.test(enteredOtp)) {
-      this.srv.openDialog('OTP', 'i', 'Please enter a valid 6-digit OTP');
+    const input = event.target.value;
+
+
+    if (!/^[0-9]$/.test(input)) {
+      this.otp[index] = '';
       return;
     }
 
-    this.tv = [
-      { T: 'dk1', V: this.usr.id },
-      { T: 'dk2', V: enteredOtp },
-      { T: 'c1', V: 'P' },
-      { T: 'c10', V: '93' },
-    ];
-
-    this.srv.getdata('reviewer', this.tv).pipe(
-      catchError(err => { throw err; })
-    ).subscribe(r => {
-      if (r.Status === 1) {
-        const u = r.Data[0][0];
-        this.srv.setsession('tkn', u['Token']);
-        this.srv.setsession('id', u['id']);
-        this.router.navigate(['/dash']);
-      } else {
-        this.srv.openDialog('OTP', 'e', r.Info);
-      }
-    });
+    // Move to next box
+    if (input && index < this.otpInputs.length - 1) {
+      this.otpInputs.toArray()[index + 1].nativeElement.focus();
+    }
   }
+
+  // submitOtp(): void {
+  //   const enteredOtp = this.otp.join('');
+  //   if (!/^\d{6}$/.test(enteredOtp)) {
+  //     this.srv.openDialog('OTP', 'i', 'Please enter a valid 6-digit OTP');
+  //     return;
+  //   }
+
+  //   this.tv = [
+  //     { T: 'dk1', V: this.usr.id },
+  //     { T: 'dk2', V: enteredOtp },
+  //     { T: 'c1', V: 'P' },
+  //     { T: 'c10', V: '93' },
+  //   ];
+
+  //   this.srv.getdata('reviewer', this.tv).pipe(
+  //     catchError(err => { throw err; })
+  //   ).subscribe(r => {
+  //     if (r.Status === 1) {
+  //       const u = r.Data[0][0];
+  //       this.srv.setsession('tkn', u['Token']);
+  //       this.srv.setsession('id', u['id']);
+  //       this.router.navigate(['/dash']);
+  //     } else {
+  //       this.srv.openDialog('OTP', 'e', r.Info);
+  //     }
+  //   });
+  // }
 
 
   clearuser(): void {
@@ -143,57 +158,61 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
 
 
-  submitnewpwd(): void {
-    if (this.usr.pwd !== this.usr.fname) {
-      this.srv.openDialog(
-        'New Password',
-        's',
-        'Password and confirm password should be same'
-      );
-      return;
-    }
+  // submitnewpwd(): void {
+  //   if (this.usr.pwd !== this.usr.fname) {
+  //     this.srv.openDialog(
+  //       'New Password',
+  //       's',
+  //       'Password and confirm password should be same'
+  //     );
+  //     return;
+  //   }
 
-    this.tv = [
-      { T: 'dk1', V: this.usr.id },
-      { T: 'dk2', V: this.usr.pwd },
-      { T: 'c1', V: 'P' },
-      { T: 'c10', V: '95' },
-    ];
+  //   this.tv = [
+  //     { T: 'dk1', V: this.usr.id },
+  //     { T: 'dk2', V: this.usr.pwd },
+  //     { T: 'c1', V: 'P' },
+  //     { T: 'c10', V: '95' },
+  //   ];
 
-    this.srv.getdata('reviewer', this.tv).pipe(
-      catchError(err => { throw err; })
-    ).subscribe(r => {
-      if (r.Status === 1) {
-        this.srv.openDialog('New Password', 's', r.Info);
-        this.mode = 'L';
-        this.clearuser();
-      }
-    });
-  }
+  //   this.srv.getdata('reviewer', this.tv).pipe(
+  //     catchError(err => { throw err; })
+  //   ).subscribe(r => {
+  //     if (r.Status === 1) {
+  //       this.srv.openDialog('New Password', 's', r.Info);
+  //       this.mode = 'L';
+  //       this.clearuser();
+  //     }
+  //   });
+  // }
 
 
   loginclick(): void {
-    this.srv.clearsession();
+    // this.srv.clearsession();
 
-    this.tv = [
-      { T: 'dk1', V: this.usr.id },
-      { T: 'dk2', V: this.usr.pwd },
-      { T: 'c10', V: '9' },
-    ];
+    // this.tv = [
+    //   { T: 'dk1', V: this.usr.id },
+    //   { T: 'dk2', V: this.usr.pwd },
+    //   { T: 'c10', V: '9' },
+    // ];
 
-    this.srv.getdata('patient', this.tv).pipe(
-      catchError(err => { throw err; })
-    ).subscribe(r => {
-      if (r.Status === 1) {
-        const u = r.Data[0][0];
-        this.srv.setsession('tkn', u['Token']);
-        this.srv.setsession('id', u['id']);
+    // this.srv.getdata('patient', this.tv).pipe(
+    //   catchError(err => { throw err; })
+    // ).subscribe(r => {
+    //   if (r.Status === 1) {
+    //     const u = r.Data[0][0];
+    //     this.srv.setsession('tkn', u['Token']);
+    //     this.srv.setsession('id', u['id']);
 
-        this.router.navigate(['/dash']);
-      } else {
-        this.srv.openDialog('Login', 'w', r.Info);
-      }
-    });
+    //     this.router.navigate(['/dash']);
+    //   } else {
+    //     this.srv.openDialog('Login', 'w', r.Info);
+    //   }
+    // });
+    this.mode='O'
+  }
+  goBacktoLogin(){
+    this.mode='L'
   }
 
   signupclick(): void {

@@ -1,24 +1,24 @@
-<div class="login-container">
+<div class="login-container gap-2 ">
     <div class="left-panel">
         <div class="login-form">
 
             <div class="logo">
-                <img src="logo/calladoc-logo.png" alt="Logo">
+                <img class="logo-img" src="logo/calladoc-logo.png" alt="Logo">
             </div>
 
-            <div class="main-title">Welcome To CallAdoc</div>
-            <div class="sub-title">
-                A trusted digital health companion for residents and visitors in Oman.
-            </div>
+
 
             <!-- LOGIN MODE -->
+
             @if (mode == "L") {
+            <div class="main-title text-center">Login</div>
+            <div class="sub-title text-center">
+                Welcome back! Please enter your details.
+            </div>
             <mat-form-field class="w100" appearance="outline">
-                <mat-label>Phone</mat-label>
+                <mat-label>Email</mat-label>
 
-                <span class="country-code" matPrefix>+968&nbsp;</span>
-
-                <input matInput type="text" [(ngModel)]="usr.id" placeholder="XXXXXXXX" maxlength="8">
+                <input matInput type="text" placeholder="Enter your email">
             </mat-form-field>
 
 
@@ -26,22 +26,73 @@
                 <mat-label>Password</mat-label>
                 <input matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="usr.pwd">
                 <button mat-icon-button matSuffix type="button" (click)="hide = !hide">
-                    <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+                    <mat-icon> {{ hide ? 'lock' : 'lock_open' }}</mat-icon>
                 </button>
             </mat-form-field>
+            <p class="forgotPassword">Forgot Password?</p>
 
             <button class="loginBtn w100 mt20" (click)="loginclick()">Login</button>
 
 
-            <div class="mt20">
-                Don't have an account...?
-                <div class="pt10">
-                    <button mat-stroked-button (click)="actn(1)">Create Account</button>
-                </div>
+            <div class="mt20 text-center">
+                <span class="text-secondary"> Don't have an account...? </span> <button class="createBtn">Create new
+                    Account</button>
+
+
             </div>
             }
 
-            @if (mode == "F") {
+             <!-- OTP MODE -->
+@if (mode == "O") {
+
+  <div class="main-title text-center">Verify OTP</div>
+
+  <div class="sub-title1 text-center my-3">
+    We sent an OTP to
+    <span class="sub-title-mail">shareekmuhammed34@gmail.com</span> <br>
+    Enter it below to continue.
+  </div>
+
+  <div class="otp-inputs">
+
+    @for (digit of otp; let i = $index; track i) {
+
+      <input
+        #otpInput
+        class="otp-box"
+        type="text"
+        maxlength="1"
+        inputmode="numeric"
+        autocomplete="one-time-code"
+        [(ngModel)]="otp[i]"
+        (input)="moveToNext($event, i)"
+      />
+
+    }
+
+  </div> 
+<div class="d-flex justify-content-between align-items-center flex-wrap resend-container">
+  <span class="text-secondary">
+    Resend available:
+    <span class="forgotPassword">Resend OTP</span>
+  </span>
+
+  <span class="timer">00 : 59 Sec</span>
+</div>
+
+  <div class="howToContinue mt-4 ">
+    <button class="loginBtn1  mt20 ">
+      Verify 
+    </button>
+  </div>
+  <div class="back-btn text-center d-flex gap-1" (click)="goBacktoLogin()">
+                <mat-icon>arrow_back</mat-icon>
+                <span>Back to login</span>
+            </div>
+
+}
+
+            <!-- @if (mode == "F") {
             <h6>Get password for Trusted name in Medical Opinion</h6>
 
             <mat-form-field class="w100" appearance="outline">
@@ -74,13 +125,12 @@
                 Already have an account?
                 <a class="forgot-link" (click)="actn(2)">Sign In</a>
             </div>
-            }
+            } -->
 
-            @if(mode=="P")
+            <!-- @if(mode=="P")
             {
 
             <div class="logo-title-row">
-                <!-- <img class="logo-img" src="logo.png" alt="Logo"> -->
                 <h6>Create new password for Trusted name in Medical Opinion</h6>
             </div>
 
@@ -111,15 +161,13 @@
                 <div class=" p10 right"> <button matButton="" (click)="actn(3)" mat-stroked-button>Token expired try
                         again ! </button></div>
             </div>
-            }
+            } -->
 
 
 
-            <!-- OTP MODE -->
-            <!-- @if (mode == "O") {
-            <h6>Enter your 6-digit code {{dbmsg}}</h6>
+            <!-- properly closes @if -->
 
-            <div class="otp-inputs">
+            <!-- <div class="otp-inputs">
                 @for (r of otp; track r[0]; let i = $index) {
                 <mat-form-field>
                     <input #otpInput matInput maxlength="1" [(ngModel)]="otp[i]" (input)="onInput($event, i)"
@@ -136,11 +184,13 @@
                 <button class="resend-btn" [disabled]="timer>0" (click)="resendOtp()">
                     Resend {{ timer > 0 ? "(" + timer + "s)" : "" }}
                 </button>
-            </div>
-            } -->
+            </div> -->
+            
+
+
 
             <!-- SIGNUP MODE -->
-            @if (mode == "S") {
+            <!-- @if (mode == "S") {
             <h6>Create a New Account</h6>
 
             <mat-form-field class="w100" appearance="outline">
@@ -163,10 +213,6 @@
                 </mat-select>
             </mat-form-field>
 
-            <!-- <mat-form-field class="w100" appearance="outline">
-                <mat-label>Phone</mat-label>
-                <input matInput type="text" [(ngModel)]="usr.ph">
-            </mat-form-field> -->
 
             <mat-form-field class="w100" appearance="outline">
                 <mat-label>Phone</mat-label>
@@ -186,24 +232,34 @@
                 Already have an account?
                 <button mat-stroked-button (click)="actn(2)">Sign In</button>
             </div>
-            }
+            } -->
 
         </div>
     </div>
 
 
+    <div class="right-panel  mobile-hide border-round ">
+        <div class="">
 
-    <div class="right-panel mobile-hide">
-        <div class="right-content">
-            <p class="right-text">
-                As a healthcare beacon in Oman, we set new quality standards, with facilities spanning Muscat
+            <div class="right-content text-center">
+                <p>Welcome Back! <br>
+                    Connect instantly with your doctor on
+                    <span class="calladoc-title">Call a Doc</span>
+                </p>
+            </div>
+
+            <p class="right-subContent ">
+                Get trusted medical advice anytime, anywhere. Consult certified doctors through secure video or voice
+                calls and manage your health without hospital visits.
             </p>
-            <img src="login-photo.png" class="right-image" alt="side image">
+            <div class="text-center">
+                <img class="calladoc-img" src="login-page/calladoc-img.svg" alt="login">
+            </div>
 
         </div>
 
-
     </div>
+
 
 
 </div>
