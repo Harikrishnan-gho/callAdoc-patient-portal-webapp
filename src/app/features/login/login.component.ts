@@ -157,6 +157,10 @@ export class LoginComponent implements OnInit, AfterViewInit {
     this.srv.openDialog('Login', 'success', 'this is message');
   }
 
+    goToSignUp(){
+    this.router.navigate(['/signup'])
+  }
+
 
   // submitnewpwd(): void {
   //   if (this.usr.pwd !== this.usr.fname) {

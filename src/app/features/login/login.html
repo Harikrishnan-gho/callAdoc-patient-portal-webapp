@@ -29,68 +29,74 @@
                     <mat-icon> {{ hide ? 'lock' : 'lock_open' }}</mat-icon>
                 </button>
             </mat-form-field>
+            <!-- <div class="d-flex utpContent">
+                                <input matInput type="checkbox">
+
+                    <span>Use OTP for quick login</span>
             <p class="forgotPassword">Forgot Password?</p>
+
+            </div> -->
+            <div class="d-flex otpContent">
+                <label class="d-flex align-items-center gap-2">
+                    <input type="checkbox" class="checkbox">
+                    <span>Use OTP for quick login</span>
+                </label>
+                <p class="forgotPassword mb-0">Forgot Password?</p>
+            </div>
 
             <button class="loginBtn w100 mt20" (click)="loginclick()">Login</button>
 
 
             <div class="mt20 text-center">
-                <span class="text-secondary"> Don't have an account...? </span> <button class="createBtn">Create new
+                <span class="text-secondary"> Don't have an account...? </span> <button class="createBtn"
+                    (click)="goToSignUp()">Create new
                     Account</button>
 
 
             </div>
             }
 
-             <!-- OTP MODE -->
-@if (mode == "O") {
+            <!-- OTP MODE -->
+            @if (mode == "O") {
 
-  <div class="main-title text-center">Verify OTP</div>
+            <div class="main-title text-center">Verify OTP</div>
 
-  <div class="sub-title1 text-center my-3">
-    We sent an OTP to
-    <span class="sub-title-mail">shareekmuhammed34@gmail.com</span> <br>
-    Enter it below to continue.
-  </div>
+            <div class="sub-title1 text-center my-3">
+                We sent an OTP to
+                <span class="sub-title-mail">shareekmuhammed34@gmail.com</span> <br>
+                Enter it below to continue.
+            </div>
 
-  <div class="otp-inputs">
+            <div class="otp-inputs">
 
-    @for (digit of otp; let i = $index; track i) {
+                @for (digit of otp; let i = $index; track i) {
 
-      <input
-        #otpInput
-        class="otp-box"
-        type="text"
-        maxlength="1"
-        inputmode="numeric"
-        autocomplete="one-time-code"
-        [(ngModel)]="otp[i]"
-        (input)="moveToNext($event, i)"
-      />
+                <input #otpInput class="otp-box" type="text" maxlength="1" inputmode="numeric"
+                    autocomplete="one-time-code" [(ngModel)]="otp[i]" (input)="moveToNext($event, i)" />
 
-    }
+                }
 
-  </div> 
-<div class="d-flex justify-content-between align-items-center flex-wrap resend-container">
-  <span class="text-secondary">
-    Resend available:
-    <span class="forgotPassword">Resend OTP</span>
-  </span>
+            </div>
+            <div class="d-flex justify-content-between align-items-center flex-wrap resend-container">
+                <span class="text-secondary">
+                    Resend available:
+                    <span class="forgotPassword">Resend OTP</span>
+                </span>
 
-  <span class="timer">00 : 59 Sec</span>
-</div>
+                <span class="timer">00 : 59 Sec</span>
+            </div>
 
-  <div class="howToContinue mt-4 ">
-    <button class="loginBtn1  mt20 ">
-      Verify 
-    </button>
-  </div>
-  <div class="back-btn text-center d-flex gap-1" (click)="goBacktoLogin()">
+            <div class="howToContinue mt-4 ">
+                <button class="loginBtn1  mt20 ">
+                    Verify
+                </button>
+            </div>
+            <div class="back-btn text-center d-flex gap-1" (click)="goBacktoLogin()">
                 <mat-icon>arrow_back</mat-icon>
                 <span>Back to login</span>
             </div>
 
-}
+            }
 
             <!-- @if (mode == "F") {
             <h6>Get password for Trusted name in Medical Opinion</h6>
@@ -185,7 +191,7 @@
                     Resend {{ timer > 0 ? "(" + timer + "s)" : "" }}
                 </button>
             </div> -->
-            
+
 
 
 

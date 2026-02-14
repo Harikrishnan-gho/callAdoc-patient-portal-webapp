@@ -17,7 +17,9 @@
     color: black;
 
 }
-
+.calladoc-title{
+    color: rgba(1, 244, 196, 1);
+}
 .otp-box {
   width: 45px;
   height: 45px;
@@ -242,7 +244,9 @@
     color: rgba(40, 71, 96, 1);
     text-decoration: underline;
 }
-
+.otpContent{
+    justify-content: space-between;
+}
 .mt10 {
     margin-top: 10px;
 }

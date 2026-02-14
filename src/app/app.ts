@@ -28,7 +28,7 @@ export class App {
   footerLink = 'Global Health Opinion';
 
   showNavbar: boolean = true;
-  hiddenRoutes: string[] = ['/', '/login', '/join','/bid/','/broadcasted-case'];
+  hiddenRoutes: string[] = ['/', '/login', '/join','/bid/','/broadcasted-case','/signup'];
   isjoin: boolean = false;
 
   srv = inject(GHOService);
