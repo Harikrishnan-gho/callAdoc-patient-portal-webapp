@@ -1,1 +1,145 @@
-<p>sign-up works!</p>
+<div class="login-container gap-2 ">
+    <div class="left-panel">
+        <div class="login-form">
+
+            <div class="logo">
+                <img class="logo-img" src="logo/calladoc-logo.png" alt="Logo">
+            </div>
+
+            <!-- SIGNUP MODE -->
+            @if (mode === 'S') {
+
+            <div class="main-title text-center">Create a New Account</div>
+
+            <div class="sub-title text-center py-1">
+                Sign up to talk to trusted doctors and get medical advice whenever you need it.
+            </div>
+
+            <div class="text-center">
+
+                <!-- Step 1 : Personal Details -->
+                @if (step === 1) {
+
+                <mat-form-field class="w-75" appearance="outline">
+                    <mat-label>Full Name</mat-label>
+                    <input matInput type="text">
+                    <button mat-icon-button matSuffix type="button">
+                        <mat-icon>person</mat-icon>
+                    </button>
+                </mat-form-field>
+
+                <mat-form-field class="w-75" appearance="outline">
+                    <mat-label>Email</mat-label>
+                    <input matInput type="email">
+                    <button mat-icon-button matSuffix type="button">
+                        <mat-icon>email</mat-icon>
+                    </button>
+                </mat-form-field>
+
+                <mat-form-field class="w-75" appearance="outline">
+                    <mat-label>Password</mat-label>
+                    <input matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="usr.pwd">
+
+                    <button mat-icon-button matSuffix type="button" (click)="hide = !hide">
+
+                        <mat-icon>
+                            {{ hide ? 'lock' : 'lock_open' }}
+                        </mat-icon>
+
+                    </button>
+                </mat-form-field>
+
+                <button class="w-75 mt20 loginBtn" (click)="nextStep()">
+
+                    Continue
+                </button>
+
+                }
+
+                <!-- Step 2 : Citizen Details -->
+                @if (step === 2) {
+
+                <mat-form-field class="w-75" appearance="outline">
+                    <mat-label>Citizen Id</mat-label>
+                    <input matInput type="text">
+                    <button mat-icon-button matSuffix type="button">
+                        <mat-icon>person</mat-icon>
+                    </button>
+                </mat-form-field>
+
+                <mat-form-field class="w-75" appearance="outline">
+                    <mat-label>Expiry Date</mat-label>
+                    <input matInput type="email">
+                    <button mat-icon-button matSuffix type="button">
+                        <mat-icon>email</mat-icon>
+                    </button>
+                </mat-form-field>
+
+                <mat-form-field class="w-75" appearance="outline">
+                    <mat-label>UAE Pass</mat-label>
+                    <input matInput [type]="hide ? 'password' : 'text'">
+                    <button mat-icon-button matSuffix type="button">
+                        <mat-icon>email</mat-icon>
+                    </button>
+                </mat-form-field>
+
+                <button class="w-75 mt20 loginBtn">
+
+                    Sign Up
+                </button>
+
+                <div class="w-75 mt20 d-flex  backBtn" (click)="prevStep()">
+                    <mat-icon>arrow_back</mat-icon>
+                    <span> Back</span>
+                </div>
+
+                }
+
+                <div class="mt-3 text-center">
+                    <span class="text-secondary">
+                        Already have an account?
+                    </span>
+
+                    <button class="createBtn" (click)="goToLogin()">
+
+                        Login
+                    </button>
+                </div>
+
+            </div>
+
+            }
+
+        </div>
+
+    </div>
+
+
+    <div class="right-panel  mobile-hide border-round ">
+        <div class="">
+
+            <div class="right-content text-center">
+                <p>Create your account to <br>
+                    <span class="calladoc-title">consult doctors</span>
+                    anytime
+                </p>
+            </div>
+
+            <p class="right-subContent">
+                Sign up in minutes to access certified
+                doctors, book instant consultations, and keep your health records secure in one place.</p>
+
+            <p class="text-center text-white">✓ Secure & confidential consultations ✓ Verified medical professionals ✓
+                Available 24/7
+            </p>
+            <div class="text-center">
+                <img class="calladoc-img" src="login-page/doctors.svg" alt="login">
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+</div>

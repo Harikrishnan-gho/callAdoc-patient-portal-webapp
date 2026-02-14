@@ -15,6 +15,11 @@ export const routes: Routes = [
         pathMatch: 'full',
         loadComponent: () => { return import('./features/login/login.component').then((m) => m.LoginComponent) },
     },
+    {
+        path: 'signup',
+        pathMatch: 'full',
+        loadComponent: () => { return import('./features/sign-up/sign-up').then((m) => m.SignUp) },
+    },
 
     {
         path: 'dash',
