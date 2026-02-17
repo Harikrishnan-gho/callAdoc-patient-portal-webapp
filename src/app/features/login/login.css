@@ -83,6 +83,7 @@
     color: rgba(40, 71, 96, 1);
     text-align: end;
     text-decoration: underline;
+    cursor: pointer;
 }
 .resend-container {
     font-family: Poppins;
@@ -238,6 +239,12 @@
     line-height: 1.2;
     cursor: pointer;
 }
+.forgotPassword.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none; 
+}
+
 .createBtn{
     border: none;
     background-color: transparent;

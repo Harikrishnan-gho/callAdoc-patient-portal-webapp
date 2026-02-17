@@ -24,7 +24,7 @@ export class GHOService {
   constructor(private ss: SessionService, public rt: Router) { }
   tv: tags[] = [];
   res: ghoresult = new ghoresult();
-  url: string = "https://ghoapps.com/apo/iin";
+  url: string = "https://ghoapps.com/cdoc/iin";
   saveSession(T: string, V: string) {
     this.ss.set(T, V);
   }
