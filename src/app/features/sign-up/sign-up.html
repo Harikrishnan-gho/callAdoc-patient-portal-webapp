@@ -6,7 +6,6 @@
                 <img class="logo-img" src="logo/calladoc-logo.png" alt="Logo">
             </div>
 
-            <!-- SIGNUP MODE -->
             @if (mode === 'S') {
 
             <div class="main-title text-center">Create a New Account</div>
@@ -17,71 +16,113 @@
 
             <div class="text-center">
 
-                <!-- Step 1 : Personal Details -->
                 @if (step === 1) {
+                <form #userForm="ngForm" (ngSubmit)="nextStep(userForm)">
+                    <mat-form-field class="w-75" appearance="outline">
+                        <mat-label>Name</mat-label>
+                        <input matInput type="text" [(ngModel)]="usr.fullname" name="name" #name="ngModel" required>
 
-                <mat-form-field class="w-75" appearance="outline">
-                    <mat-label>Full Name</mat-label>
-                    <input matInput type="text">
-                    <button mat-icon-button matSuffix type="button">
-                        <mat-icon>person</mat-icon>
+                        <mat-error *ngIf="name.invalid && name.touched">
+                            Name is required
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="w-75" appearance="outline">
+                        <mat-label>Phone</mat-label>
+
+                        <span matPrefix class="px-2">+971&nbsp;</span>
+
+                        <input matInput type="tel" [(ngModel)]="usr.phone" name="phone" maxlength="9" #phone="ngModel"
+                            required pattern="[0-9]{9}">
+
+                        <mat-error *ngIf="phone.errors?.['required']">
+                            Phone is required
+                        </mat-error>
+
+                        <mat-error *ngIf="phone.errors?.['pattern']">
+                            Enter valid 9 digit number
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="w-75" appearance="outline">
+                        <mat-label>Email</mat-label>
+
+                        <input matInput type="email" [(ngModel)]="usr.email" name="email" #email="ngModel" required
+                            email>
+
+                        <mat-error *ngIf="email.invalid && email.touched">
+                            Enter valid email
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="w-75" appearance="outline">
+                        <mat-label>Password</mat-label>
+
+                        <input matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="usr.pwd" name="pwd"
+                            #pwd="ngModel" required minlength="6">
+
+                        <mat-error *ngIf="pwd.errors?.['required']">
+                            Password required
+                        </mat-error>
+
+                        <mat-error *ngIf="pwd.errors?.['minlength']">
+                            Minimum 6 characters required
+                        </mat-error>
+                    </mat-form-field>
+
+
+                    <button type="submit" class="w-75 mt20 loginBtn">
+                        Continue
                     </button>
-                </mat-form-field>
-
-                <mat-form-field class="w-75" appearance="outline">
-                    <mat-label>Email</mat-label>
-                    <input matInput type="email">
-                    <button mat-icon-button matSuffix type="button">
-                        <mat-icon>email</mat-icon>
-                    </button>
-                </mat-form-field>
-
-                <mat-form-field class="w-75" appearance="outline">
-                    <mat-label>Password</mat-label>
-                    <input matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="usr.pwd">
-
-                    <button mat-icon-button matSuffix type="button" (click)="hide = !hide">
-
-                        <mat-icon>
-                            {{ hide ? 'lock' : 'lock_open' }}
-                        </mat-icon>
-
-                    </button>
-                </mat-form-field>
-
-                <button class="w-75 mt20 loginBtn" (click)="nextStep()">
-
-                    Continue
-                </button>
+                </form>
 
                 }
 
-                <!-- Step 2 : Citizen Details -->
                 @if (step === 2) {
 
+                <div>
+                    <mat-form-field class="w-75" appearance="outline">
+                        <mat-label>Upload Government-Issued ID*</mat-label>
+
+                        <input matInput type="text" [value]="selectedGovFileName" placeholder="Choose file..."
+                            readonly />
+
+                        <button mat-icon-button matSuffix type="button" (click)="govFileInput.click()">
+                            <mat-icon>upload</mat-icon>
+                        </button>
+                    </mat-form-field>
+
+                    <input #govFileInput type="file" hidden (change)="onGovFileSelected($event)" />
+                </div>
+
+
                 <mat-form-field class="w-75" appearance="outline">
-                    <mat-label>Citizen Id</mat-label>
-                    <input matInput type="text">
+                    <mat-label>Expiry Date*</mat-label>
+
+                    <input matInput type="date" [(ngModel)]="usr.expiryDate" name="expiryDate" required />
+
                     <button mat-icon-button matSuffix type="button">
-                        <mat-icon>person</mat-icon>
+                        <mat-icon>event</mat-icon>
                     </button>
                 </mat-form-field>
 
-                <mat-form-field class="w-75" appearance="outline">
-                    <mat-label>Expiry Date</mat-label>
-                    <input matInput type="email">
-                    <button mat-icon-button matSuffix type="button">
-                        <mat-icon>email</mat-icon>
-                    </button>
-                </mat-form-field>
 
-                <mat-form-field class="w-75" appearance="outline">
-                    <mat-label>UAE Pass</mat-label>
-                    <input matInput [type]="hide ? 'password' : 'text'">
-                    <button mat-icon-button matSuffix type="button">
-                        <mat-icon>email</mat-icon>
-                    </button>
-                </mat-form-field>
+                <div>
+                    <mat-form-field class="w-75" appearance="outline">
+                        <mat-label>UAE Pass*</mat-label>
+
+                        <input matInput type="text" [value]="selectedPassFileName" placeholder="Choose file..."
+                            readonly />
+
+                        <button mat-icon-button matSuffix type="button" (click)="passFileInput.click()">
+                            <mat-icon>upload</mat-icon>
+                        </button>
+                    </mat-form-field>
+
+                    <input #passFileInput type="file" hidden (change)="onPassFileSelected($event)" />
+                </div>
+
+
 
                 <button class="w-75 mt20 loginBtn">
 

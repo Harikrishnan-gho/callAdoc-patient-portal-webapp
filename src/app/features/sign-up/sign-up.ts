@@ -9,6 +9,7 @@ import { GHOService } from '../../services/ghosrvs';
 import { GHOUtitity } from '../../services/utilities';
 import { ghoresult, Lists, tags, user } from '../../model/ghomodel';
 import { Router } from '@angular/router';
+import { catchError } from 'rxjs';
 
 interface oj {
   [key: string]: string;
@@ -29,7 +30,7 @@ interface oj {
 })
 export class SignUp {
 
-    srv = inject(GHOService);
+  srv = inject(GHOService);
   utl = inject(GHOUtitity);
 
   userid: string = '';
@@ -43,7 +44,7 @@ export class SignUp {
   data: [][] = [];
 
   cntrys: Lists[] = [];
-  mode: string = 'S'; 
+  mode: string = 'S';
   step: number = 1;
   usr: user = new user();
 
@@ -55,11 +56,15 @@ export class SignUp {
   hide: boolean = true;
   hideConfirmPassword: boolean = true;
 
-  router=inject(Router)
+  selectedGovFile: File | null = null;
+  selectedPassFile: File | null = null;
+
+  selectedGovFileName: string = "";
+  selectedPassFileName: string = "";
+
+  router = inject(Router)
 
   @ViewChildren('otpInput') otpInputs!: QueryList<ElementRef>;
-
-
 
   onInput(event: Event, index: number): void {
     const input = event.target as HTMLInputElement;
@@ -88,12 +93,28 @@ export class SignUp {
     }, 1000);
   }
 
+  onGovFileSelected(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      this.selectedGovFile = file;
+      this.selectedGovFileName = file.name;
+    }
+  }
+
+  onPassFileSelected(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      this.selectedPassFile = file;
+      this.selectedPassFileName = file.name;
+    }
+  }
+
   resendOtp(): void {
     this.otp = Array(6).fill('');
     this.otpInputs?.first?.nativeElement.focus();
     this.startTimer();
   }
-   moveToNext(event: any, index: number) {
+  moveToNext(event: any, index: number) {
 
     const input = event.target.value;
 
@@ -103,13 +124,12 @@ export class SignUp {
       return;
     }
 
-    // Move to next box
     if (input && index < this.otpInputs.length - 1) {
       this.otpInputs.toArray()[index + 1].nativeElement.focus();
     }
   }
 
-    clearuser(): void {
+  clearuser(): void {
     this.usr = new user();
   }
 
@@ -117,16 +137,40 @@ export class SignUp {
     this.srv.openDialog('Login', 'success', 'this is message');
   }
 
-  goToLogin(){
+  goToLogin() {
     this.router.navigate(['/login'])
   }
-  nextStep() {
-  this.step = 2;
-}
 
-prevStep() {
-  this.step = 1;
-}
+  nextStep(form: any) {
+    if (form.invalid) {
+      form.control.markAllAsTouched();
+      return;
+    }
 
+    this.tv = [
+      { T: 'c1', V: this.usr.fullname },
+      { T: 'c2', V: this.usr.phone },
+      { T: 'c3', V: this.usr.email },
+      { T: 'c4', V: this.usr.pwd },
+      { T: 'c10', V: '8' },
+    ];
 
+    this.srv.getdata('patient', this.tv).pipe(
+      catchError(err => { throw err; })
+    ).subscribe(r => {
+      if (r.Status === 1) {
+        console.log(r)
+        const u = r.Data[0][0];
+        this.srv.setsession('id', u['Id']);
+
+        this.step = 2;
+      } else {
+        this.srv.openDialog('OTP', 'e', r.Info);
+      }
+    });
+  }
+
+  prevStep() {
+    this.step = 1;
+  }
 }
