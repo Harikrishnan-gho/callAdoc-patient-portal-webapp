@@ -1,0 +1,11 @@
+.card-content{
+    padding: 20px 30px;
+    border-radius: 8px;
+}
+
+.card-wrapper{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-radius: 10px;
+}

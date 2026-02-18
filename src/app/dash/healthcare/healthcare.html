@@ -1,0 +1,11 @@
+<div>
+    <p class="fw-semibold">Health & Wellness Care</p>
+</div>
+<div class="card-wrapper">
+    @for(health of healthcare;track health){
+    <div [style.background-color]="health.color" class="card-content d-flex gap-4">
+        <img src={{health.icon}} alt="">
+        <p [style.color]="health.text" class="pt-3">{{health.title}}</p>
+    </div>
+    }
+</div>

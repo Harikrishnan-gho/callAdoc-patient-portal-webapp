@@ -1,0 +1,36 @@
+.appointments-wrapper {
+  border: 1px solid #dcdcdc;
+  border-radius: 10px;
+  overflow: hidden;
+  background: white;
+}
+
+.appointment-item {
+  padding: 16px;
+}
+
+.card-btn {
+  width: 100%;
+  margin-top: 15px;
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 6px;
+}
+
+.verify-icon {
+  font-size: 18px;
+  color: #4caf50;
+}
+
+.user-img {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.doctor-name{
+    color: var(--primary);
+}

@@ -1,0 +1,70 @@
+
+
+.user-card {
+    border-radius: 0;
+    box-shadow: none;
+    padding: 12px;
+    background-color: #F2F2F2;
+
+}
+
+/* User Image */
+.user-img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+/* Name */
+.user-name {
+    font-weight: 600;
+    font-size: 16px;
+}
+
+/* Email */
+.user-email {
+    font-size: 13px;
+}
+
+.progress-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+}
+
+/* Increase progress bar width */
+.progress-bar-custom {
+    flex: 1;
+    height: 8px;
+    border-radius: 6px;
+}
+
+/* Progress text */
+.progress-text {
+    font-size: 13px;
+    white-space: nowrap;
+    font-weight: 500;
+}
+
+/* Footer */
+.card-footer-custom {
+    display: flex;
+    justify-content: center;
+    padding: 8px 0 4px;
+}
+
+/* Profile Button */
+.profile-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 500;
+    color: var(--primary);
+}
+
+/* Arrow icon */
+.arrow-icon {
+    font-size: 18px;
+}
