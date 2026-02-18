@@ -11,50 +11,85 @@
             <!-- LOGIN MODE -->
 
             @if (mode == "L") {
-            <div class="main-title text-center">Login</div>
-            <div class="sub-title text-center">
-                Welcome back! Please enter your details.
-            </div>
-            <mat-form-field class="w100" appearance="outline">
-                <mat-label>Email</mat-label>
 
-                <input matInput type="text" placeholder="Enter your email">
-            </mat-form-field>
+            <form #loginForm="ngForm" (ngSubmit)="loginclick(loginForm)">
+                <div class="main-title text-center">Login</div>
+                <div class="sub-title text-center">
+                    Welcome back! Please enter your details.
+                </div>
+                <!-- EMAIL / PHONE -->
+                <mat-form-field class="w100" appearance="outline">
+                    <mat-label>Email / Phone</mat-label>
+                    <input matInput type="text" name="email" [(ngModel)]="loginData" #email="ngModel"
+                        placeholder="Enter email or phone" required />
+                    <mat-error *ngIf="email.invalid && email.touched">
+                        Email / Phone is required
+                    </mat-error>
+
+                </mat-form-field>
+                <!-- PASSWORD -->
+                <mat-form-field class="w100" appearance="outline">
+
+                    <mat-label>Password</mat-label>
+
+                    <input matInput [type]="hide ? 'password' : 'text'" name="password" [(ngModel)]="password" 
+                        #pwd="ngModel" [readonly]="otpLogin" [required]="!otpLogin" minlength="6" [disabled]="otpLogin" />
+
+                    <button mat-icon-button matSuffix type="button" (click)="hide = !hide" [disabled]="otpLogin">
+                        <mat-icon>
+                            {{ hide ? 'lock' : 'lock_open' }}
+                        </mat-icon>
+                    </button>
+                    <mat-error *ngIf="pwd.invalid && pwd.touched">
+                        <span *ngIf="pwd.errors?.['required']">
+                            Password is required
+                        </span>
+                        <span *ngIf="pwd.errors?.['minlength']">
+                            Minimum 6 characters
+                        </span>
+                    </mat-error>
+                </mat-form-field>
+
+                <!-- OTP -->
+                <div class="d-flex otpContent">
+
+                    <label class="d-flex align-items-center gap-2">
+
+                        <input type="checkbox" name="otp" [(ngModel)]="otpLogin" class="checkbox" />
+
+                        <span>Use OTP for quick login</span>
+
+                    </label>
+                    <a class="forgotPassword mb-0" [class.disabled]="otpLogin" [attr.tabindex]="otpLogin ? -1 : 0"
+                        (click)="!otpLogin && onForgotPassword($event)">
+                        Forgot Password?
+                    </a>
+                </div>
 
 
-            <mat-form-field class="w100" appearance="outline">
-                <mat-label>Password</mat-label>
-                <input matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="usr.pwd">
-                <button mat-icon-button matSuffix type="button" (click)="hide = !hide">
-                    <mat-icon> {{ hide ? 'lock' : 'lock_open' }}</mat-icon>
+                <!-- LOGIN BUTTON -->
+                <button class="loginBtn w100 mt20" type="submit" [disabled]="loginForm.invalid && !otpLogin">
+                    {{ otpLogin ? 'Continue with OTP' : 'Login' }}
                 </button>
-            </mat-form-field>
-            <!-- <div class="d-flex utpContent">
-                                <input matInput type="checkbox">
-
-                    <span>Use OTP for quick login</span>
-            <p class="forgotPassword">Forgot Password?</p>
-
-            </div> -->
-            <div class="d-flex otpContent">
-                <label class="d-flex align-items-center gap-2">
-                    <input type="checkbox" class="checkbox">
-                    <span>Use OTP for quick login</span>
-                </label>
-                <p class="forgotPassword mb-0">Forgot Password?</p>
-            </div>
-
-            <button class="loginBtn w100 mt20" (click)="loginclick()">Login</button>
 
 
-            <div class="mt20 text-center">
-                <span class="text-secondary"> Don't have an account...? </span> <button class="createBtn"
-                    (click)="goToSignUp()">Create new
-                    Account</button>
+                <!-- SIGNUP -->
+                <div class="mt20 text-center">
 
+                    <span class="text-secondary">
+                        Don't have an account...?
+                    </span>
 
-            </div>
+                    <button class="createBtn" type="button" (click)="goToSignUp()">
+                        Create new Account
+                    </button>
+
+                </div>
+
+            </form>
+
             }
+
 
             <!-- OTP MODE -->
             @if (mode == "O") {
@@ -62,8 +97,9 @@
             <div class="main-title text-center">Verify OTP</div>
 
             <div class="sub-title1 text-center my-3">
-                We sent an OTP to
-                <span class="sub-title-mail">shareekmuhammed34@gmail.com</span> <br>
+                We sent an OTP to  {{msg}}
+                <!-- <span class="sub-title-mail"> shareekmuhammed34@gmail.com </span> -->
+                 <br>
                 Enter it below to continue.
             </div>
 
@@ -87,7 +123,7 @@
             </div>
 
             <div class="howToContinue mt-4 ">
-                <button class="loginBtn1  mt20 ">
+                <button class="loginBtn1  mt20" (click)="verifyOtp()">
                     Verify
                 </button>
             </div>
@@ -98,40 +134,42 @@
 
             }
 
-            <!-- @if (mode == "F") {
-            <h6>Get password for Trusted name in Medical Opinion</h6>
-
-            <mat-form-field class="w100" appearance="outline">
+            @if (mode == "F") {
+            <div class="fw-bold text-center">Get password for Trusted name in Medical Opinion</div>
+                <div class=" mt-2">
+                 Please enter your email.
+                </div>
+            <mat-form-field class="w100 mt-4" appearance="outline">
                 <mat-label>Email</mat-label>
                 <input matInput type="text" [(ngModel)]="usr.id">
             </mat-form-field>
 
-            <div class="d-flex justify-content-center">
-                <p class="text-primary fw-semibold">OR</p>
+            <!-- <div class="d-flex justify-content-center">
+                <p class="fw-semibold" style="color: rgba(40, 71, 96, 1);;">OR</p>
             </div>
 
 
             <mat-form-field class="w100" appearance="outline">
                 <mat-label>Phone</mat-label>
                 <input matInput type="text" [(ngModel)]="usr.ph">
-            </mat-form-field>
+            </mat-form-field> -->
 
-            <mat-form-field class="w100" appearance="outline">
+            <!-- <mat-form-field class="w-75" appearance="outline">
                 <mat-label>Country</mat-label>
                 <mat-select [(ngModel)]="usr.cntry">
                     @for (c of cntrys; track c) {
                     <mat-option [value]="c.D">{{c.T}}</mat-option>
                     }
                 </mat-select>
-            </mat-form-field>
+            </mat-form-field> -->
 
-            <button class="w100 mt10" mat-flat-button (click)="forgot()">Get Password Reset Instructions</button>
+            <button class="loginBtn w100 mt20"  (click)="forgot()">Send OTP</button>
 
             <div class="mt20">
                 Already have an account?
-                <a class="forgot-link" (click)="actn(2)">Sign In</a>
+                <a class="forgotPassword" (click)="actn(2)">Sign In</a>
             </div>
-            } -->
+            }
 
             <!-- @if(mode=="P")
             {

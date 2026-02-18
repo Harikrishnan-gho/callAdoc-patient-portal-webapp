@@ -41,11 +41,18 @@ interface oj {
 })
 export class LoginComponent implements OnInit, AfterViewInit {
   protected readonly title = signal('Global Second Opinion Network');
+  newPatientId: any;
+  patientId: any;
+  petientDetails: any[];
+  password: string;
+  msg: any;
 
-  constructor(private router: Router, private rt: ActivatedRoute) {}
+  constructor(private router: Router, private rt: ActivatedRoute) { }
 
   srv = inject(GHOService);
   utl = inject(GHOUtitity);
+  patientDetails: any[];
+  private service = inject(GHOService);
 
   userid: string = '';
   pw: string = '';
@@ -58,7 +65,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   data: [][] = [];
 
   cntrys: Lists[] = [];
-  mode: string = 'L'; 
+  mode: string = 'L';
   usr: user = new user();
 
   timer: number = 30;
@@ -69,7 +76,12 @@ export class LoginComponent implements OnInit, AfterViewInit {
   hide: boolean = true;
   hideConfirmPassword: boolean = true;
 
+  otpLogin: boolean = false;
+  loginData = ''
+
+
   @ViewChildren('otpInput') otpInputs!: QueryList<ElementRef>;
+
 
 
   onInput(event: Event, index: number): void {
@@ -90,6 +102,18 @@ export class LoginComponent implements OnInit, AfterViewInit {
     }
   }
 
+    ngOnInit(): void {
+    this.srv.clearsession();
+    this.rt.queryParamMap.subscribe(params => {
+      this.clearuser();
+      this.usr.id = params.get('id') || '';
+      this.patientId=this.service.getsession("id")
+
+      if (this.usr.id) this.mode = 'P';
+    });
+    this.getcntry();
+  }
+
   startTimer(): void {
     clearInterval(this.intervalId);
     this.timer = 30;
@@ -104,7 +128,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     this.otpInputs?.first?.nativeElement.focus();
     this.startTimer();
   }
-   moveToNext(event: any, index: number) {
+  moveToNext(event: any, index: number) {
 
     const input = event.target.value;
 
@@ -119,6 +143,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
       this.otpInputs.toArray()[index + 1].nativeElement.focus();
     }
   }
+
+
 
   // submitOtp(): void {
   //   const enteredOtp = this.otp.join('');
@@ -157,7 +183,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     this.srv.openDialog('Login', 'success', 'this is message');
   }
 
-    goToSignUp(){
+  goToSignUp() {
     this.router.navigate(['/signup'])
   }
 
@@ -190,33 +216,214 @@ export class LoginComponent implements OnInit, AfterViewInit {
   //   });
   // }
 
-
-  loginclick(): void {
-    // this.srv.clearsession();
-
-    // this.tv = [
-    //   { T: 'dk1', V: this.usr.id },
-    //   { T: 'dk2', V: this.usr.pwd },
-    //   { T: 'c10', V: '9' },
-    // ];
-
-    // this.srv.getdata('patient', this.tv).pipe(
-    //   catchError(err => { throw err; })
-    // ).subscribe(r => {
-    //   if (r.Status === 1) {
-    //     const u = r.Data[0][0];
-    //     this.srv.setsession('tkn', u['Token']);
-    //     this.srv.setsession('id', u['id']);
-
-    //     this.router.navigate(['/dash']);
-    //   } else {
-    //     this.srv.openDialog('Login', 'w', r.Info);
-    //   }
-    // });
-    this.mode='O'
+  onOtpChange(event: any) {
+    this.otpLogin = event.target.checked;
   }
-  goBacktoLogin(){
-    this.mode='L'
+
+  onForgotPassword(event: Event) {
+
+    event.preventDefault();
+
+    if (this.otpLogin) {
+      return;
+    }
+
+    this.mode = 'F';
+  }
+
+
+  
+  loginclick(form: any) {
+
+    // Validate form
+    if (form.invalid && !this.otpLogin) {
+      form.control.markAllAsTouched();
+      return;
+    }
+
+
+    if (this.otpLogin) {
+      const emailOrPhone = this.loginData?.trim();
+      if (!emailOrPhone) {
+        this.srv.openDialog(
+          'Login',
+          'w',
+          'Please enter Email'
+        );
+        return;
+      }
+
+      this.tv = [
+        { T: 'dk1', V: emailOrPhone },
+        { T: 'dk2', V: 'OTP' },
+        { T: 'c10', V: '9' }
+      ];
+
+      this.srv.getdata('patient', this.tv)
+        .pipe(
+          catchError(err => {
+
+            console.error('Login API Error:', err);
+
+            this.srv.openDialog(
+              'Login Error',
+              'e',
+              'Unable to login. Please try again later.'
+            );
+
+            throw err;
+          })
+        )
+        .subscribe((r: any) => {
+
+          console.log('Login Response:', r);
+          // console.log('patientid',this.patientId);
+          
+          if (r?.Status === 1 && r?.Data?.length) {
+            this.patientDetails = [...r.Data[0]];
+            this.msg = r.Data[0][0].msg;
+            this.patientId=r.Data[0][0].id;
+            const u = r.Data[0][0];
+            this.srv.setsession('tkn', u['Token']);
+            this.srv.setsession('id', u['id']);
+          console.log('patientid',this.patientId);
+
+            this.mode = 'O';
+          }
+
+          else {
+
+            this.srv.openDialog(
+              'Login Failed',
+              'w',
+              'Invalid Email / Phone or Password'
+            );
+
+          }
+
+        });
+
+
+      return;
+    }
+
+
+    //  normal login
+
+    if (form.invalid) {
+      return;
+    }
+
+
+    const emailOrPhone = this.loginData?.trim();
+    const pwd = this.password?.trim();
+
+    if (!emailOrPhone || !pwd) {
+      this.srv.openDialog(
+        'Login',
+        'w',
+        'Please enter Email and Password'
+      );
+      return;
+    }
+
+
+    this.tv = [
+      { T: 'dk1', V: emailOrPhone },
+      { T: 'dk2', V: pwd },
+      { T: 'c10', V: '9' }
+    ];
+
+    this.srv.getdata('patient', this.tv)
+      .pipe(
+        catchError(err => {
+
+          console.error('Login API Error:', err);
+
+          this.srv.openDialog(
+            'Login Error',
+            'e',
+            'Unable to login. Please try again later.'
+          );
+
+          throw err;
+        })
+      )
+      .subscribe((r: any) => {
+
+        console.log('Login Response:', r);
+        if (r?.Status === 1 && r?.Data?.length) {
+          this.patientDetails = [...r.Data[0]];
+          const u = r.Data[0][0];
+          this.srv.setsession('tkn', u['Token']);
+          this.srv.setsession('id', u['id']);
+
+          this.password = '';
+
+          this.router.navigate(['/dash'])
+        }
+        else {
+
+          this.srv.openDialog(
+            'Login Failed',
+            'w',
+            'Invalid Email / Phone or Password'
+          );
+
+        }
+
+      });
+  }
+
+  // verify otp section
+
+  verifyOtp() {
+    this.tv = [
+      { T: 'dk1', V: this.patientId },
+      { T: 'dk2', V: this.otp.join('') },
+      { T: 'c10', V: '10' }
+    ];
+
+    this.srv.getdata('patient', this.tv)
+      .pipe(
+        catchError(err => {
+
+          console.error('Login API Error:', err);
+
+          this.srv.openDialog(
+            'Login Error',
+            'e',
+            'Unable to login. Please try again later.'
+          );
+
+          throw err;
+        })
+      )
+      .subscribe((r: any) => {
+
+        if (r?.Status === 1 && r?.Data?.length) {
+          this.petientDetails = [...r.Data[0]];
+
+          this.router.navigate(['/dash'])
+        }
+
+        // ---------- FAILED ----------
+        else {
+
+          this.srv.openDialog(
+            'Login Failed',
+            'w',
+            'Invalid OTP'
+          );
+
+        }
+
+      });
+  }
+
+
+  goBacktoLogin() {
+    this.mode = 'L'
   }
 
   signupclick(): void {
@@ -233,9 +440,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
       catchError(err => { throw err; })
     ).subscribe(r => {
       if (r.Status === 1) {
-         const msg = r.Data[0][0]?.msg;
-        this.srv.openDialog('Signup', 's',msg);
-        this.mode = 'L'; 
+        const msg = r.Data[0][0]?.msg;
+        this.srv.openDialog('Signup', 's', msg);
+        this.mode = 'L';
       } else {
         this.srv.openDialog('Signup', 'w', r.Info);
       }
@@ -280,15 +487,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     });
   }
 
-  ngOnInit(): void {
-    this.srv.clearsession();
-    this.rt.queryParamMap.subscribe(params => {
-      this.clearuser();
-      this.usr.id = params.get('id') || '';
-      if (this.usr.id) this.mode = 'P';
-    });
-    this.getcntry();
-  }
+
 
   ngAfterViewInit(): void {
     if (this.mode === 'O' && this.otpInputs?.length) {
