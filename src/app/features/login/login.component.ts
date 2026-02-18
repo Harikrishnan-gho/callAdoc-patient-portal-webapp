@@ -49,10 +49,12 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
   constructor(private router: Router, private rt: ActivatedRoute) { }
 
-  srv = inject(GHOService);
+
   utl = inject(GHOUtitity);
   patientDetails: any[];
   private service = inject(GHOService);
+  private srv = inject(GHOService);
+
 
   userid: string = '';
   pw: string = '';
@@ -102,12 +104,12 @@ export class LoginComponent implements OnInit, AfterViewInit {
     }
   }
 
-    ngOnInit(): void {
+  ngOnInit(): void {
     this.srv.clearsession();
     this.rt.queryParamMap.subscribe(params => {
       this.clearuser();
       this.usr.id = params.get('id') || '';
-      this.patientId=this.service.getsession("id")
+      this.patientId = this.service.getsession("id")
 
       if (this.usr.id) this.mode = 'P';
     });
@@ -232,7 +234,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
 
 
-  
+
   loginclick(form: any) {
 
     // Validate form
@@ -278,15 +280,15 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
           console.log('Login Response:', r);
           // console.log('patientid',this.patientId);
-          
+
           if (r?.Status === 1 && r?.Data?.length) {
             this.patientDetails = [...r.Data[0]];
             this.msg = r.Data[0][0].msg;
-            this.patientId=r.Data[0][0].id;
+            this.patientId = r.Data[0][0].id;
             const u = r.Data[0][0];
             this.srv.setsession('tkn', u['Token']);
             this.srv.setsession('id', u['id']);
-          console.log('patientid',this.patientId);
+
 
             this.mode = 'O';
           }
@@ -359,6 +361,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
           this.srv.setsession('id', u['id']);
 
           this.password = '';
+          const msg = r.Data[0][0].msg;
+          this.srv.openDialog('Success', 's', msg);
 
           this.router.navigate(['/dash'])
         }
@@ -403,6 +407,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
         if (r?.Status === 1 && r?.Data?.length) {
           this.petientDetails = [...r.Data[0]];
+          const msg = r.Data[0][0].msg;
+          this.srv.openDialog('Success', 's', msg);
 
           this.router.navigate(['/dash'])
         }
