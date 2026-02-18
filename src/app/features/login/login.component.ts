@@ -52,6 +52,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   srv = inject(GHOService);
   utl = inject(GHOUtitity);
   patientDetails: any[];
+  private service = inject(GHOService);
 
   userid: string = '';
   pw: string = '';
@@ -82,6 +83,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   @ViewChildren('otpInput') otpInputs!: QueryList<ElementRef>;
 
 
+
   onInput(event: Event, index: number): void {
     const input = event.target as HTMLInputElement;
     const value = input.value.replace(/[^0-9]/g, '').charAt(0);
@@ -98,6 +100,18 @@ export class LoginComponent implements OnInit, AfterViewInit {
     if (event.key === 'Backspace' && !input.value && index > 0) {
       this.otpInputs.toArray()[index - 1]?.nativeElement.focus();
     }
+  }
+
+    ngOnInit(): void {
+    this.srv.clearsession();
+    this.rt.queryParamMap.subscribe(params => {
+      this.clearuser();
+      this.usr.id = params.get('id') || '';
+      this.patientId=this.service.getsession("id")
+
+      if (this.usr.id) this.mode = 'P';
+    });
+    this.getcntry();
   }
 
   startTimer(): void {
@@ -217,6 +231,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
     this.mode = 'F';
   }
 
+
+  
   loginclick(form: any) {
 
     // Validate form
@@ -261,12 +277,16 @@ export class LoginComponent implements OnInit, AfterViewInit {
         .subscribe((r: any) => {
 
           console.log('Login Response:', r);
+          // console.log('patientid',this.patientId);
+          
           if (r?.Status === 1 && r?.Data?.length) {
             this.patientDetails = [...r.Data[0]];
             this.msg = r.Data[0][0].msg;
+            this.patientId=r.Data[0][0].id;
             const u = r.Data[0][0];
             this.srv.setsession('tkn', u['Token']);
             this.srv.setsession('id', u['id']);
+          console.log('patientid',this.patientId);
 
             this.mode = 'O';
           }
@@ -381,12 +401,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
       )
       .subscribe((r: any) => {
 
-        console.log('Login Response:', r);
         if (r?.Status === 1 && r?.Data?.length) {
           this.petientDetails = [...r.Data[0]];
-
-
-          this.password = '';
 
           this.router.navigate(['/dash'])
         }
@@ -471,15 +487,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     });
   }
 
-  ngOnInit(): void {
-    this.srv.clearsession();
-    this.rt.queryParamMap.subscribe(params => {
-      this.clearuser();
-      this.usr.id = params.get('id') || '';
-      if (this.usr.id) this.mode = 'P';
-    });
-    this.getcntry();
-  }
+
 
   ngAfterViewInit(): void {
     if (this.mode === 'O' && this.otpInputs?.length) {
