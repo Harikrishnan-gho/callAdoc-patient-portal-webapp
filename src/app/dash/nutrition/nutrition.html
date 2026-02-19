@@ -1,0 +1,57 @@
+<div class="row">
+  <div class="col-md-4" *ngFor="let pack of paginatedPackages">
+    <div class="card nutrition-card">
+
+      <img [src]="pack.image" class="card-img-top" />
+ <p class="package-title px-2 py-1">{{ pack.title }}</p>
+      <div class="card-body">
+       
+
+        <p class="text-dark"><strong>Who can avail</strong></p>
+        <p>{{ pack.whocanavail }}</p>
+
+        <div class="text-secondary feature-title"><strong>Features</strong></div>
+        <ul>
+          <li *ngFor="let feature of pack.features">
+            ✔ {{ feature }}
+          </li>
+        </ul>
+
+        <div class="price-grid">
+  <div class="price-box" *ngFor="let price of pack.prices">
+    <div class="amount">
+      {{ price.amount }} <span class="currency-btn text-secondary">AED</span>
+    </div>
+    <div class="duration">
+      / {{ price.duration }}
+    </div>
+  </div>
+</div>
+
+       
+
+        <button class="btn btn-primary w-100">
+          Purchase Now
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Pagination Buttons -->
+<div class="d-flex justify-content-center mt-3">
+  <button class="btn btn-outline-secondary me-2" (click)="prevPage()">
+    1
+  </button>
+
+  <!-- <button class="btn btn-outline-secondary me-2" (click)="prevPage()">
+    2
+  </button>
+  <button class="btn btn-outline-secondary me-2" (click)="nextPage()">
+    3
+  </button> -->
+  <button class="btn btn-outline-secondary" (click)="nextPage()">
+    2
+  </button>
+</div>

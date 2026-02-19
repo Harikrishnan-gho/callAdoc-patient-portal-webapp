@@ -25,6 +25,7 @@ import { SubscriptionHeader } from './subscription-header/subscription-header';
 import { Services } from './services/services';
 import { Banner } from './banner/banner';
 import { Healthcare } from './healthcare/healthcare';
+import { Nutrition } from './nutrition/nutrition';
 
 
 @Component({
@@ -33,7 +34,7 @@ import { Healthcare } from './healthcare/healthcare';
   standalone: true,
   styleUrl: './dash.css',
   imports: [CommonModule, MatTableModule, MatButtonModule, MatPaginatorModule,
-    MatFormFieldModule, MatIconModule, MatSelectModule,SubscriptionHeader,Banner,
+    MatFormFieldModule, MatIconModule, MatSelectModule,SubscriptionHeader,Banner,Nutrition,
     FormsModule, MatDividerModule,WelcomeSection,UserCard,UpcomingAppointments,Services,Healthcare,
     CustomDialog, GeneralPhysician, PharmacyDelivery, NursingServices, Physiotherapy, LabCollection],
 })
@@ -128,6 +129,11 @@ export class RevDash implements OnInit {
   getOrthopaedicDoctors(specialtyId: string) {
     this.router.navigate(['schedule/specialty', specialtyId]);
   }
+
+
+ 
 }
+  
+
 
 

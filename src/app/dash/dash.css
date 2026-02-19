@@ -73,6 +73,8 @@
   box-shadow: 0 10px 25px rgba(0,0,0,0.1);
 }
 
+
+
 @media (max-width: 768px) {
   .carousel { height: 200px; }
   .prev, .next { padding: 6px 10px; }
