@@ -111,10 +111,9 @@
     background-color: var(--bg-surface);
   }
 
- .nav-contents {
-  padding: 0 50px;
-}
-
+  .nav-contents {
+    padding: 0 50px;
+  }
 </style>
 
 @if (showNavbar) {
@@ -207,6 +206,13 @@
     </div>
 
   </nav>
+
+  <subscription-header *ngIf="isDashPage()"></subscription-header>
+  <div>
+    <services *ngIf="!isDashPage()"></services>
+  </div>
+
+
 
   <!-- ROUTER CONTENT -->
   <div class="content-wrapper">
