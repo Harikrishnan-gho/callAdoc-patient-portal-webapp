@@ -9,6 +9,8 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angu
 import { MatButtonModule } from '@angular/material/button';
 import { EmailPopup } from './email-popup/email-popup';
 import { MatMenuModule } from '@angular/material/menu';
+import { SubscriptionHeader } from './dash/subscription-header/subscription-header';
+import { Services } from './dash/services/services';
 
 export interface MenuItem {
   name: string;
@@ -18,7 +20,7 @@ export interface MenuItem {
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, MatIcon, CommonModule, MatDialogModule,
+  imports: [RouterOutlet, MatIcon, CommonModule, MatDialogModule, SubscriptionHeader,Services,
     MatButtonModule, EmailPopup, MatMenuModule],
   templateUrl: './app.html',
 })
@@ -42,6 +44,7 @@ export class App {
   selectedMenu: string = 'Dashboard';
   selectedTab: number | null = null;
   doctorId: string = '';
+  currentRoute: string = '';
 
   notifications = [
     { message: 'Your Appointment(REF#Ap0018) with DR. Sofia John has been successfully scheduled on Feb 04, 2026 2:00 PM' },
@@ -52,6 +55,7 @@ export class App {
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event: NavigationEnd) => {
       const currentUrl = event.urlAfterRedirects.split('?')[0];
+      this.currentRoute = currentUrl;
       this.showNavbar = !this.hiddenRoutes.includes(currentUrl);
       this.isjoin = (event.urlAfterRedirects === "/join");
       if (currentUrl.substring(0, 5) == "/bid/") this.showNavbar = false
@@ -68,7 +72,9 @@ export class App {
       localStorage.setItem("id", "");
     });
   }
-
+  isDashPage(): boolean {
+    return this.currentRoute === '/dash';
+  }
   goToEmergency() {
     this.router.navigate(['/emergenservices']);
   }

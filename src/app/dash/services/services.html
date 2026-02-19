@@ -1,5 +1,6 @@
 <div class="services-row">
-  <div *ngFor="let service of services" class="service-btn">
+  <div *ngFor="let service of services" class="service-btn" [routerLink]="service.link"
+    routerLinkActive="active-service" [routerLinkActiveOptions]="{ exact: true }" style="cursor: pointer;">
     <img [src]="service.icon" alt="{{ service.label }}" />
     <p class="mb-0">{{ service.label }}</p>
   </div>

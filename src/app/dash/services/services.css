@@ -18,7 +18,16 @@
     white-space: nowrap;
 }
 
-.service-btn:hover {
-    border-color: var(--primary);
-    background-color: rgba(0, 0, 0, 0.03);
+
+.active-service {
+    background-color: var(--primary);
+}
+
+.active-service p {
+    color: var(--bg-page);
+    font-weight: 600;
+}
+
+.active-service img {
+    filter: brightness(0) invert(1);
 }

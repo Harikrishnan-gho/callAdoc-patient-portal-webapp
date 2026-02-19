@@ -46,13 +46,19 @@ export class LoginComponent implements OnInit, AfterViewInit {
   petientDetails: any[];
   password: string;
   msg: any;
+  email: string;
+  msg1: any;
+  newPassword: string;
+  confirmPassword: string;
 
   constructor(private router: Router, private rt: ActivatedRoute) { }
 
-  srv = inject(GHOService);
+
   utl = inject(GHOUtitity);
   patientDetails: any[];
   private service = inject(GHOService);
+  private srv = inject(GHOService);
+
 
   userid: string = '';
   pw: string = '';
@@ -102,12 +108,12 @@ export class LoginComponent implements OnInit, AfterViewInit {
     }
   }
 
-    ngOnInit(): void {
+  ngOnInit(): void {
     this.srv.clearsession();
     this.rt.queryParamMap.subscribe(params => {
       this.clearuser();
       this.usr.id = params.get('id') || '';
-      this.patientId=this.service.getsession("id")
+      this.patientId = this.service.getsession("id")
 
       if (this.usr.id) this.mode = 'P';
     });
@@ -138,7 +144,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    // Move to next box
+    
     if (input && index < this.otpInputs.length - 1) {
       this.otpInputs.toArray()[index + 1].nativeElement.focus();
     }
@@ -188,33 +194,31 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
 
 
-  // submitnewpwd(): void {
-  //   if (this.usr.pwd !== this.usr.fname) {
-  //     this.srv.openDialog(
-  //       'New Password',
-  //       's',
-  //       'Password and confirm password should be same'
-  //     );
-  //     return;
-  //   }
+  submitnewpwd(): void {
+      this.patientId = this.service.getsession("id")
+    this.tv = [
+      { T: 'dk1', V: this.patientId },
+      { T: 'c1', V: this.newPassword },
+      { T: 'c2', V: this.confirmPassword },
+      { T: 'c10', V: '23' },
+    ];
+console.log('patientid from submit otp',this.patientId);
 
-  //   this.tv = [
-  //     { T: 'dk1', V: this.usr.id },
-  //     { T: 'dk2', V: this.usr.pwd },
-  //     { T: 'c1', V: 'P' },
-  //     { T: 'c10', V: '95' },
-  //   ];
-
-  //   this.srv.getdata('reviewer', this.tv).pipe(
-  //     catchError(err => { throw err; })
-  //   ).subscribe(r => {
-  //     if (r.Status === 1) {
-  //       this.srv.openDialog('New Password', 's', r.Info);
-  //       this.mode = 'L';
-  //       this.clearuser();
-  //     }
-  //   });
-  // }
+    this.srv.getdata('patient', this.tv).pipe(
+      catchError(err => { throw err; })
+    ).subscribe(r => {
+      const msg=r.Data[0][0].msg
+      console.log('new pssd',this.newPassword);
+      console.log('c pssd',this.confirmPassword);
+      
+      if (r.Status === 1) {
+        this.srv.openDialog('New Password', 's', msg);
+        this.mode = 'L';
+   
+        this.clearuser();
+      }
+    });
+  }
 
   onOtpChange(event: any) {
     this.otpLogin = event.target.checked;
@@ -232,10 +236,10 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
 
 
-  
+
   loginclick(form: any) {
 
-    // Validate form
+   
     if (form.invalid && !this.otpLogin) {
       form.control.markAllAsTouched();
       return;
@@ -278,15 +282,15 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
           console.log('Login Response:', r);
           // console.log('patientid',this.patientId);
-          
+
           if (r?.Status === 1 && r?.Data?.length) {
             this.patientDetails = [...r.Data[0]];
             this.msg = r.Data[0][0].msg;
-            this.patientId=r.Data[0][0].id;
+            this.patientId = r.Data[0][0].id;
             const u = r.Data[0][0];
             this.srv.setsession('tkn', u['Token']);
             this.srv.setsession('id', u['id']);
-          console.log('patientid',this.patientId);
+
 
             this.mode = 'O';
           }
@@ -359,6 +363,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
           this.srv.setsession('id', u['id']);
 
           this.password = '';
+          const msg = r.Data[0][0].msg;
+          this.srv.openDialog('Success', 's', msg);
 
           this.router.navigate(['/dash'])
         }
@@ -384,6 +390,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
       { T: 'c10', V: '10' }
     ];
 
+
     this.srv.getdata('patient', this.tv)
       .pipe(
         catchError(err => {
@@ -403,11 +410,12 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
         if (r?.Status === 1 && r?.Data?.length) {
           this.petientDetails = [...r.Data[0]];
-
+          const msg = r.Data[0][0].msg;
+          this.srv.openDialog('Success', 's', msg);
           this.router.navigate(['/dash'])
         }
 
-        // ---------- FAILED ----------
+      
         else {
 
           this.srv.openDialog(
@@ -420,6 +428,115 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
       });
   }
+
+  // forgot section
+
+  forgotClick() {
+    if (!this.email) {
+      this.srv.openDialog(
+        'Login',
+        'w',
+        'Please enter Email'
+      );
+      return;
+    }
+
+    this.tv = [
+      { T: 'dk1', V: this.email},
+      { T: 'c10', V: '21' }
+    ];
+
+    this.srv.getdata('patient', this.tv)
+      .pipe(
+        catchError(err => {
+
+          console.error('Login API Error:', err);
+
+          this.srv.openDialog(
+            'Login Error',
+            'e',
+            'Unable to login. Please try again later.'
+          );
+
+          throw err;
+        })
+      )
+      .subscribe((r: any) => {
+        console.log('Login Response:', r);
+        if (r?.Status === 1 && r?.Data?.length) {
+          this.patientDetails = [...r.Data[0]];
+ const u = r.Data[0][0];
+          this.srv.setsession('tkn', u['Token']);
+          this.srv.setsession('id', u['id']);
+          this.email = '';
+           this.msg1 = r.Data[0][0].msg;
+         this.mode = 'OF';
+        }
+        else {
+
+          this.srv.openDialog(
+            'Reset Failed',
+            'w',
+            'Invalid Email'
+          );
+
+        }
+
+      });
+  }
+
+verifyOtpForgot(){
+
+  this.patientId = this.service.getsession("id")
+    this.tv = [
+        { T: 'dk1', V: this.patientId},
+        { T: 'dk2', V: this.otp.join('') },
+        { T: 'c10', V: '22' }
+      ];
+          console.log('patientid frm verity page',this.patientId);
+
+      this.srv.getdata('patient', this.tv)
+        .pipe(
+          catchError(err => {
+
+            console.error('Login API Error:', err);
+
+            this.srv.openDialog(
+              'Login Error',
+              'e',
+              'Unable to verify. Please try again later.'
+            );
+
+            throw err;
+          })
+        )
+        .subscribe((r: any) => {
+
+          console.log('Login Response:', r);
+
+          if (r?.Status === 1 && r?.Data?.length) {
+            this.patientDetails = [...r.Data[0]];
+            this.msg = r.Data[0][0].msg;
+            // this.patientId = r.Data[0][0].id;
+            this.mode = 'P';
+          }
+
+          else {
+
+            this.srv.openDialog(
+              'Login Failed',
+              'w',
+              'Invalid OTP'
+            );
+
+          }
+
+        });
+
+
+      return;
+    }
+
 
 
   goBacktoLogin() {
@@ -449,26 +566,26 @@ export class LoginComponent implements OnInit, AfterViewInit {
     });
   }
 
-  forgot(): void {
-    this.tv = [
-      { T: 'dk1', V: this.usr.id },
-      { T: 'dk2', V: this.usr.ph },
-      { T: 'c1', V: this.usr.cntry },
-      { T: 'c10', V: '94' },
-    ];
+  // forgot(): void {
+  //   this.tv = [
+  //     { T: 'dk1', V: this.usr.id },
+  //     { T: 'dk2', V: this.usr.ph },
+  //     { T: 'c1', V: this.usr.cntry },
+  //     { T: 'c10', V: '94' },
+  //   ];
 
-    this.srv.getdata('reviewer', this.tv).pipe(
-      catchError(err => { throw err; })
-    ).subscribe(r => {
-      if (r.Status === 1) {
-        const message = r.Data?.[0]?.[0]?.msg;
-        this.srv.openDialog('New Password', 'success', message);
-        this.mode = 'L';
-      } else {
-        this.srv.openDialog('New Password', 'warning', r.Info);
-      }
-    });
-  }
+  //   this.srv.getdata('reviewer', this.tv).pipe(
+  //     catchError(err => { throw err; })
+  //   ).subscribe(r => {
+  //     if (r.Status === 1) {
+  //       const message = r.Data?.[0]?.[0]?.msg;
+  //       this.srv.openDialog('New Password', 'success', message);
+  //       this.mode = 'L';
+  //     } else {
+  //       this.srv.openDialog('New Password', 'warning', r.Info);
+  //     }
+  //   });
+  // }
 
   actn(a: number): void {
     this.clearuser();

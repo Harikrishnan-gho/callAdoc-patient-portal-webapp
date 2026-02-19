@@ -33,6 +33,11 @@ export const routes: Routes = [
         loadComponent: () => { return import('./schedule/schedule').then((m) => m.Schedule) },
     },
     {
+        path: 'dietplan',
+        pathMatch: 'full',
+        loadComponent: () => { return import('./diet-plans/diet-plans').then((m) => m.DietPlans) },
+    },
+    {
         path: 'schedule/specialty/:id',
         loadComponent: () =>
             import('./schedule/schedule').then(m => m.Schedule)

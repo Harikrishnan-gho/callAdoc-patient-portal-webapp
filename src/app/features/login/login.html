@@ -17,7 +17,7 @@
                 <div class="sub-title text-center">
                     Welcome back! Please enter your details.
                 </div>
-                <!-- EMAIL / PHONE -->
+
                 <mat-form-field class="w100" appearance="outline">
                     <mat-label>Email / Phone</mat-label>
                     <input matInput type="text" name="email" [(ngModel)]="loginData" #email="ngModel"
@@ -27,13 +27,14 @@
                     </mat-error>
 
                 </mat-form-field>
-                <!-- PASSWORD -->
+
                 <mat-form-field class="w100" appearance="outline">
 
                     <mat-label>Password</mat-label>
 
-                    <input matInput [type]="hide ? 'password' : 'text'" name="password" [(ngModel)]="password" 
-                        #pwd="ngModel" [readonly]="otpLogin" [required]="!otpLogin" minlength="6" [disabled]="otpLogin" />
+                    <input matInput [type]="hide ? 'password' : 'text'" name="password" [(ngModel)]="password"
+                        #pwd="ngModel" [readonly]="otpLogin" [required]="!otpLogin" minlength="6"
+                        [disabled]="otpLogin" />
 
                     <button mat-icon-button matSuffix type="button" (click)="hide = !hide" [disabled]="otpLogin">
                         <mat-icon>
@@ -50,7 +51,7 @@
                     </mat-error>
                 </mat-form-field>
 
-                <!-- OTP -->
+
                 <div class="d-flex otpContent">
 
                     <label class="d-flex align-items-center gap-2">
@@ -67,13 +68,13 @@
                 </div>
 
 
-                <!-- LOGIN BUTTON -->
+
                 <button class="loginBtn w100 mt20" type="submit" [disabled]="loginForm.invalid && !otpLogin">
                     {{ otpLogin ? 'Continue with OTP' : 'Login' }}
                 </button>
 
 
-                <!-- SIGNUP -->
+
                 <div class="mt20 text-center">
 
                     <span class="text-secondary">
@@ -97,9 +98,9 @@
             <div class="main-title text-center">Verify OTP</div>
 
             <div class="sub-title1 text-center my-3">
-                We sent an OTP to  {{msg}}
+                We sent an OTP to {{msg}}
                 <!-- <span class="sub-title-mail"> shareekmuhammed34@gmail.com </span> -->
-                 <br>
+                <br>
                 Enter it below to continue.
             </div>
 
@@ -136,12 +137,12 @@
 
             @if (mode == "F") {
             <div class="fw-bold text-center">Get password for Trusted name in Medical Opinion</div>
-                <div class=" mt-2">
-                 Please enter your email.
-                </div>
+            <div class=" mt-2">
+                Please enter your email.
+            </div>
             <mat-form-field class="w100 mt-4" appearance="outline">
                 <mat-label>Email</mat-label>
-                <input matInput type="text" [(ngModel)]="usr.id">
+                <input matInput type="text" [(ngModel)]="email">
             </mat-form-field>
 
             <!-- <div class="d-flex justify-content-center">
@@ -163,7 +164,7 @@
                 </mat-select>
             </mat-form-field> -->
 
-            <button class="loginBtn w100 mt20"  (click)="forgot()">Send OTP</button>
+            <button class="loginBtn w100 mt20" (click)="forgotClick()">Send OTP</button>
 
             <div class="mt20">
                 Already have an account?
@@ -171,41 +172,103 @@
             </div>
             }
 
-            <!-- @if(mode=="P")
-            {
+            <!-- OTP MODE -->
+            @if (mode == "OF") {
 
-            <div class="logo-title-row">
-                <h6>Create new password for Trusted name in Medical Opinion</h6>
+            <div class="main-title text-center">Verify OTP</div>
+
+            <div class="sub-title1 text-center my-3">
+                We sent an OTP to {{msg1}}
+                <!-- <span class="sub-title-mail"> shareekmuhammed34@gmail.com </span> -->
+                <br>
+                Enter it below to continue.
             </div>
 
-            <div class=" p10"></div>
-            <div class="">
-                <div class="">
-                    <mat-form-field class="w100" appearance="outline">
-                        <mat-label>New Password</mat-label>
-                        <input [type]="hide ? 'password' : 'text'" matInput type="password" [(ngModel)]="usr.pwd">
-                        <button mat-icon-button matSuffix type="button" (click)="hide = !hide">
-                            <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
-                        </button>
-                    </mat-form-field>
+            <div class="otp-inputs">
+
+                @for (digit of otp; let i = $index; track i) {
+
+                <input #otpInput class="otp-box" type="text" maxlength="1" inputmode="numeric"
+                    autocomplete="one-time-code" [(ngModel)]="otp[i]" (input)="moveToNext($event, i)" />
+
+                }
+
+            </div>
+            <div class="d-flex justify-content-between align-items-center flex-wrap resend-container">
+                <span class="text-secondary">
+                    Resend available:
+                    <span class="forgotPassword">Resend OTP</span>
+                </span>
+
+                <span class="timer">00 : 59 Sec</span>
+            </div>
+
+            <div class="howToContinue mt-4 ">
+                <button class="loginBtn1  mt20" (click)="verifyOtpForgot()">
+                    Verify & continue
+                </button>
+            </div>
+            <div class="back-btn text-center d-flex gap-1" (click)="goBacktoLogin()">
+                <mat-icon>arrow_back</mat-icon>
+                <span>Back to login</span>
+            </div>
+
+            }
+
+            @if (mode == "P") {
+
+            <div class="password-container text-center">
+
+                <div class="main-title text-center">
+                    Create New Password
                 </div>
 
-                <div class="">
-                    <mat-form-field class="w100" appearance="outline">
-                        <mat-label>Confirm Password</mat-label>
-                        <input [type]="hideConfirmPassword ? 'password' : 'text'" matInput type="password"
-                            [(ngModel)]="usr.fname">
-                        <button mat-icon-button matSuffix type="button"
-                            (click)="hideConfirmPassword = !hideConfirmPassword">
-                            <mat-icon>{{ hideConfirmPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
-                        </button>
-                    </mat-form-field>
+                <div class="sub-title text-center">
+                    Please set a strong password for your account.
                 </div>
-                <button matButton="filled" (click)="submitnewpwd()">Submit</button>
-                <div class=" p10 right"> <button matButton="" (click)="actn(3)" mat-stroked-button>Token expired try
-                        again ! </button></div>
+
+
+                <mat-form-field class="w-75 " appearance="outline">
+                    <mat-label>New Password</mat-label>
+
+                    <input matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="newPassword" name="newPassword"
+                        minlength="6" required>
+
+                    <button mat-icon-button matSuffix type="button" (click)="hide = !hide">
+
+                        <mat-icon>
+                            {{ hide ? 'lock' : 'lock_open' }}
+                        </mat-icon>
+
+                    </button>
+                </mat-form-field>
+
+                <mat-form-field class="w-75" appearance="outline">
+                    <mat-label>Confirm Password</mat-label>
+
+                    <input matInput [type]="hideConfirmPassword ? 'password' : 'text'" [(ngModel)]="confirmPassword"
+                        name="confirmPassword" required>
+
+                    <button mat-icon-button matSuffix type="button"
+                        (click)="hideConfirmPassword = !hideConfirmPassword">
+
+                        <mat-icon>
+                            {{ hideConfirmPassword ? 'lock' : 'lock_open' }}
+                        </mat-icon>
+
+                    </button>
+                </mat-form-field>
+
+       
+                <button class="loginBtn w-75 mt20" (click)="submitnewpwd()">
+
+                    Submit
+                </button>
+
             </div>
-            } -->
+
+            }
+
 
 
 
