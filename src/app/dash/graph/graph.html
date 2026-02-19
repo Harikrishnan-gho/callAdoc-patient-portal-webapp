@@ -1,0 +1,10 @@
+<div class="graph-wrapper">
+    <div class="p-2">
+        <img src="dashboard/calorie.svg" alt="">
+        <span class="small text-muted p-2">Calorie Balance</span>
+    </div>
+    <div id="chart">
+        <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart" [plotOptions]="chartOptions.plotOptions"
+            [labels]="chartOptions.labels" [fill]="chartOptions.fill"></apx-chart>
+    </div>
+</div>

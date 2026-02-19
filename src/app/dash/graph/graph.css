@@ -1,0 +1,12 @@
+.graph-wrapper{
+    height: 220px;
+    margin-top: 50px;
+    border: 2px solid #a79d9d33;
+    border-radius: 10px;
+}
+
+#chart {
+    width: 300px; 
+    height: 180px;
+}
+
