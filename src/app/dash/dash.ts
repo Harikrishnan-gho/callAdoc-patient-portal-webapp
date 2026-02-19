@@ -25,6 +25,7 @@ import { SubscriptionHeader } from './subscription-header/subscription-header';
 import { Services } from './services/services';
 import { Banner } from './banner/banner';
 import { Healthcare } from './healthcare/healthcare';
+import { Graph } from './graph/graph';
 import { Nutrition } from './nutrition/nutrition';
 
 
@@ -34,7 +35,7 @@ import { Nutrition } from './nutrition/nutrition';
   standalone: true,
   styleUrl: './dash.css',
   imports: [CommonModule, MatTableModule, MatButtonModule, MatPaginatorModule,
-    MatFormFieldModule, MatIconModule, MatSelectModule,SubscriptionHeader,Banner,Nutrition,
+    MatFormFieldModule, MatIconModule, MatSelectModule,SubscriptionHeader,Banner,Nutrition,Graph,
     FormsModule, MatDividerModule,WelcomeSection,UserCard,UpcomingAppointments,Services,Healthcare,
     CustomDialog, GeneralPhysician, PharmacyDelivery, NursingServices, Physiotherapy, LabCollection],
 })

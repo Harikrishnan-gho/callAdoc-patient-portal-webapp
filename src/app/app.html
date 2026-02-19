@@ -114,6 +114,21 @@
   .nav-contents {
     padding: 0 50px;
   }
+
+  .home-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: small;
+    color: var(--primary);
+    border: 1px solid #CFCFCF;
+    border-radius: 8px;
+    padding: 10px 16px;
+
+    background: transparent;
+    cursor: pointer;
+    white-space: nowrap;
+}
 </style>
 
 @if (showNavbar) {
@@ -208,8 +223,9 @@
   </nav>
 
   <subscription-header *ngIf="isDashPage()"></subscription-header>
-  <div>
-    <services *ngIf="!isDashPage()"></services>
+  <div  *ngIf="!isDashPage()" class="d-flex justify-content-center py-4 gap-2">
+    <img src="dashboard/home.svg" alt="" class="home-btn">
+    <services></services>
   </div>
 
 

@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 
 @Component({
   selector: 'services',
-  imports: [CommonModule],
+  imports: [CommonModule,RouterModule],
   templateUrl: './services.html',
   styleUrl: './services.css',
 })
@@ -19,7 +20,7 @@ export class Services {
     {
       label: "Diet Plans",
       icon: 'dashboard/diet.svg',
-      link: '#'
+      link: '/dietplan'
     },
     {
       label: "Vitals",
