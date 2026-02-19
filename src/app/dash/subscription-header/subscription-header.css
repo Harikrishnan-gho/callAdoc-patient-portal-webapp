@@ -1,0 +1,21 @@
+.sub-btn {
+    background-color: black;
+    color: var(--bg-page);
+    border-radius: 10px;
+    padding: 5px 40px;
+}
+
+.subscription-wrapper {
+    background-color: rgb(240, 240, 240);
+    justify-content: center;
+}
+
+a {
+    color: black;
+    font-weight: 800;
+}
+
+.subscription-content {
+    justify-content: center;
+    padding: 10px;
+}

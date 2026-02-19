@@ -19,7 +19,7 @@ export interface MenuItem {
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, MatIcon, CommonModule, MatDialogModule,
-    MatButtonModule,EmailPopup,MatMenuModule],
+    MatButtonModule, EmailPopup, MatMenuModule],
   templateUrl: './app.html',
 })
 export class App {
@@ -28,7 +28,7 @@ export class App {
   footerLink = 'Global Health Opinion';
 
   showNavbar: boolean = true;
-  hiddenRoutes: string[] = ['/', '/login', '/join','/bid/','/broadcasted-case','/signup'];
+  hiddenRoutes: string[] = ['/', '/login', '/join', '/bid/', '/broadcasted-case', '/signup'];
   isjoin: boolean = false;
 
   srv = inject(GHOService);
@@ -43,7 +43,7 @@ export class App {
   selectedTab: number | null = null;
   doctorId: string = '';
 
-    notifications = [
+  notifications = [
     { message: 'Your Appointment(REF#Ap0018) with DR. Sofia John has been successfully scheduled on Feb 04, 2026 2:00 PM' },
   ];
 
@@ -54,7 +54,7 @@ export class App {
       const currentUrl = event.urlAfterRedirects.split('?')[0];
       this.showNavbar = !this.hiddenRoutes.includes(currentUrl);
       this.isjoin = (event.urlAfterRedirects === "/join");
-      if (currentUrl.substring(0,5) == "/bid/")  this.showNavbar  = false
+      if (currentUrl.substring(0, 5) == "/bid/") this.showNavbar = false
 
       if (this.showNavbar) {
         this.getmenu();
@@ -68,18 +68,18 @@ export class App {
       localStorage.setItem("id", "");
     });
   }
-  
+
   goToEmergency() {
-  this.router.navigate(['/emergenservices']);
-}
+    this.router.navigate(['/emergenservices']);
+  }
 
   naviagteToProfile() {
     this.router.navigate([`/profile`]);
 
   }
   bookAppointment() {
-  this.router.navigate(['/schedule']);
-}
+    this.router.navigate(['/schedule']);
+  }
 
   ngOnInit(): void {
     this.doctorId = this.srv.getsession('id');
@@ -101,7 +101,7 @@ export class App {
   @ViewChild('emailPopup') emailPopup!: EmailPopup;
 
   openEmailPopup() {
-    this.emailPopup.openPopup(); 
+    this.emailPopup.openPopup();
   }
 
 
@@ -119,7 +119,9 @@ export class App {
       }
     });
   }
-
+  changeLang(lang: string) {
+    console.log("Selected Language:", lang);
+  }
   // Desktop sidebar menu click
   onMenuClick(item: any) {
 
@@ -251,5 +253,5 @@ export class ConfirmDialogComponent {
   }
 
 
-  
+
 }

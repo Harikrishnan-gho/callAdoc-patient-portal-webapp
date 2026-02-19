@@ -19,6 +19,12 @@ import { NursingServices } from '../home-care/nursing-services/nursing-services'
 import { Physiotherapy } from '../home-care/physiotherapy/physiotherapy';
 import { LabCollection } from '../home-care/lab-collection/lab-collection';
 import { WelcomeSection } from '../welcome-section/welcome-section';
+import { UserCard } from './user-card/user-card';
+import { UpcomingAppointments } from './upcoming-appointments/upcoming-appointments';
+import { SubscriptionHeader } from './subscription-header/subscription-header';
+import { Services } from './services/services';
+import { Banner } from './banner/banner';
+import { Healthcare } from './healthcare/healthcare';
 
 
 @Component({
@@ -27,8 +33,8 @@ import { WelcomeSection } from '../welcome-section/welcome-section';
   standalone: true,
   styleUrl: './dash.css',
   imports: [CommonModule, MatTableModule, MatButtonModule, MatPaginatorModule,
-    MatFormFieldModule, MatIconModule, MatSelectModule,
-    FormsModule, MatDividerModule,WelcomeSection,
+    MatFormFieldModule, MatIconModule, MatSelectModule,SubscriptionHeader,Banner,
+    FormsModule, MatDividerModule,WelcomeSection,UserCard,UpcomingAppointments,Services,Healthcare,
     CustomDialog, GeneralPhysician, PharmacyDelivery, NursingServices, Physiotherapy, LabCollection],
 })
 export class RevDash implements OnInit {
