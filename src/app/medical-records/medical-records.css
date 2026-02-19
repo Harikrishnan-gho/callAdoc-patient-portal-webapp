@@ -1,4 +1,4 @@
-.medical-files {
+/* .medical-files {
   max-width: 100%;
 }
 
@@ -115,4 +115,72 @@
   cursor: not-allowed;
   opacity: 0.65;
   pointer-events: none;
+} */
+
+.record-btn{
+  background-color: rgba(70, 94, 151, 0.1);
+  color: rgba(70, 94, 151, 1);
+  cursor: pointer;
+}
+.shared-btn{
+  cursor: pointer;
+}
+.navbarHead{
+ justify-content: space-between;
+  align-items: center;
+}
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.search-box input {
+  border: none;
+  outline: none;
+  width: 100%;
+}
+.navfilters {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid #ddd;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: 0.2s;
+  font-size: small;
+}
+.search{
+  background-color: transparent;
+}
+.navfilters:hover {
+  background: #f3f5ff;
+  border-color: #3f51b5;
+}
+
+/* Upload */
+.navUpload {
+  background: var(--primary);
+  color: white;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: 0.2s;
+   font-size: small;
+}
+.files-title{
+  font-size: small;
+  font-weight: 600;
+  padding: 1.5%;
+  color: rgba(40, 71, 96, 1);
+  background-color: #cad9e4;
+}
+.file-content{
+  padding: 1.2%;
+  font-size: 13px;
+  color: rgba(40, 71, 96, 1);
+}
+.navUpload:hover {
+  background: #2c3ea5;
 }

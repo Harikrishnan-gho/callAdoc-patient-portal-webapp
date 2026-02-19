@@ -15,7 +15,7 @@ export class Services {
     {
       label: "Medical Records",
       icon: 'dashboard/calender.svg',
-      link: '#'
+      link: '/medicalrecords'
     },
     {
       label: "Diet Plans",
