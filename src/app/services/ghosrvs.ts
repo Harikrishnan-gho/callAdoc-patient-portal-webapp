@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { ghoiin, tags, ghoresult } from '../model/ghomodel'
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { SessionService } from './SessionService';
-import { catchError, Observable } from 'rxjs';
+import { catchError, firstValueFrom, Observable } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogAlert } from '../features/dialog/dialog';
 import { Router } from '@angular/router';
@@ -151,4 +151,43 @@ export class GHOService {
       return 0;
     }
   }
+
+//   async uploadFile(fileId: string, file: File): Promise<boolean> {
+
+//   try {
+
+//     const getRes = await firstValueFrom(
+//       this.awsfileuploadinfo(fileId, file.type)
+//     );
+
+//     const uploadUrl = getRes?.Url;
+
+//     if (!uploadUrl) {
+//       this.openDialog('Error', 'e', 'Upload URL missing');
+//       return false;
+//     }
+
+//     const response = await fetch(uploadUrl, {
+//       method: 'PUT',
+//       headers: {
+//         'Content-Type': file.type
+//       },
+//       body: file
+//     });
+
+//     return response.ok;
+
+//   } catch (err) {
+
+//     console.error(err);
+
+//     this.openDialog(
+//       'Error',
+//       'e',
+//       'File upload failed'
+//     );
+
+//     return false;
+//   }
+// }
 }
