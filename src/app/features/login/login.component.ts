@@ -144,7 +144,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    // Move to next box
+    
     if (input && index < this.otpInputs.length - 1) {
       this.otpInputs.toArray()[index + 1].nativeElement.focus();
     }
@@ -239,7 +239,7 @@ console.log('patientid from submit otp',this.patientId);
 
   loginclick(form: any) {
 
-    // Validate form
+   
     if (form.invalid && !this.otpLogin) {
       form.control.markAllAsTouched();
       return;
@@ -415,7 +415,7 @@ console.log('patientid from submit otp',this.patientId);
           this.router.navigate(['/dash'])
         }
 
-        // ---------- FAILED ----------
+      
         else {
 
           this.srv.openDialog(
@@ -462,7 +462,6 @@ console.log('patientid from submit otp',this.patientId);
         })
       )
       .subscribe((r: any) => {
-
         console.log('Login Response:', r);
         if (r?.Status === 1 && r?.Data?.length) {
           this.patientDetails = [...r.Data[0]];
@@ -471,8 +470,6 @@ console.log('patientid from submit otp',this.patientId);
           this.srv.setsession('id', u['id']);
           this.email = '';
            this.msg1 = r.Data[0][0].msg;
-          // this.srv.openDialog('Success', 's', msg1);
-
          this.mode = 'OF';
         }
         else {

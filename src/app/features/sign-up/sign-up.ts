@@ -62,9 +62,22 @@ export class SignUp {
   selectedGovFileName: string = "";
   selectedPassFileName: string = "";
 
+  selectedUAEPass: File | null = null;
+  selectedUAEPassFile: File | null = null;
+
+  selectedUAEPassName: string = "";
+  selectedUAEPassFileName: string = "";
+
   router = inject(Router)
+  private service = inject(GHOService);
 
   @ViewChildren('otpInput') otpInputs!: QueryList<ElementRef>;
+  isLoadingFileUpload: boolean;
+  patientId: any;
+  recordID: any;
+  fileId: '';
+  fileType: '';
+  fileUploadId: '';
 
   onInput(event: Event, index: number): void {
     const input = event.target as HTMLInputElement;
@@ -93,21 +106,25 @@ export class SignUp {
     }, 1000);
   }
 
-  onGovFileSelected(event: any) {
+  onGovtFileSelected(event: any) {
     const file = event.target.files[0];
     if (file) {
       this.selectedGovFile = file;
       this.selectedGovFileName = file.name;
+    }
+    else{
+      this.selectedGovFile=null;
     }
   }
 
   onPassFileSelected(event: any) {
     const file = event.target.files[0];
     if (file) {
-      this.selectedPassFile = file;
-      this.selectedPassFileName = file.name;
+      this.selectedUAEPass = file;
+      this.selectedUAEPassName = file.name;
     }
   }
+
 
   resendOtp(): void {
     this.otp = Array(6).fill('');
@@ -173,4 +190,190 @@ export class SignUp {
   prevStep() {
     this.step = 1;
   }
-}
+
+  // upload files
+
+  isImage(fileName: string): boolean {
+    return /\.(jpg|jpeg|png)$/i.test(fileName);
+  }
+
+ uploadGovtFile(){
+  if(!this.selectedGovFile){
+    this.srv.openDialog('Warning', 'w', 'Please select a file first');
+      return;
+  }
+
+  this.isLoadingFileUpload=true;
+  this.patientId = this.service.getsession("id")
+
+  const tv =[
+      { T: 'dk1', V: this.patientId },
+      { T: 'dk2', V: "" },
+      { T: 'c1', V: "3" },
+      { T: 'c2', V: this.selectedGovFileName },
+      { T: 'c3', V: this.selectedGovFile.size.toString() },
+      { T: 'c10', V: '1' }
+  ]
+ this.srv.getdata('fileupload',tv).subscribe({
+      next: (fileRes: any) =>{
+        if (fileRes.Status !==1) {
+          this.srv.openDialog('Error','e','Filed to save the file info');
+          return;
+        }
+
+        this.fileId = fileRes.Data[0][0].FileID;
+        this.fileType = fileRes.Data[0][0].FileType;
+        this.fileUploadId = fileRes.Data[0][0].id;
+
+        this.uploadActualFile();
+
+      },
+      error: () => {
+        this.srv.openDialog('Error', 'e', 'Error saving file info');
+      }
+
+    });
+ }
+
+ uploadUAEPass(){
+  if(!this.selectedUAEPass){
+    this.srv.openDialog('Warning', 'w', 'Please select a file first');
+      return;
+  }
+
+  this.isLoadingFileUpload=true;
+  this.patientId = this.service.getsession("id")
+
+  const tv =[
+    { T: 'dk1', V: this.patientId },
+      { T: 'dk2', V: "" },
+      { T: 'c1', V: "3" },
+      { T: 'c2', V: this.selectedUAEPassFileName },
+      { T: 'c3', V: this.selectedUAEPass.size.toString() },
+      { T: 'c10', V: '1' }
+  ]
+ this.srv.getdata('fileupload',tv).subscribe({
+      next: (fileRes: any) =>{
+        if (fileRes.Status !==1) {
+          this.srv.openDialog('Error','e','Filed to save the file info');
+          return;
+        }
+
+        this.fileId = fileRes.Data[0][0].FileID;
+        this.fileType = fileRes.Data[0][0].FileType;
+        this.fileUploadId = fileRes.Data[0][0].id;
+
+       this.uploadActualUAEFile();
+
+      },
+      error: () => {
+        this.srv.openDialog('Error', 'e', 'Error saving file info');
+      }
+    });
+ }
+
+//  private uploadFileWithRecordId(){
+
+//   if(!this.recordID || !this.selectedGovFile) return;
+
+//    const tv = [
+//       { T: 'dk1', V: this.patientId},
+//       { T: 'dk2', V: this.recordID },
+//       { T: 'c1', V: '2' },
+//       { T: 'c2', V: this.selectedGovFileName },
+//       { T: 'c3', V: this.selectedGovFile.size.toString() },
+//       { T: 'c10', V: '1' }
+//     ];
+//     this.srv.getdata('fileupload',tv).subscribe({
+//       next: (fileRes: any) =>{
+//         if (fileRes.Status !==1) {
+//           this.srv.openDialog('Error','e','Filed to save the file info');
+//           return;
+//         }
+//         this.fileId = fileRes.Data[0][0].FileID;
+//         this.fileType = fileRes.Data[0][0].FileType;
+//         this.fileUploadId = fileRes.Data[0][0].id;
+
+//        this.uploadActualFile();
+
+//       },
+//       error: () => {
+//         this.srv.openDialog('Error', 'e', 'Error saving file info');
+//       }
+//     });
+//  }
+
+ private uploadActualFile(){
+   this.srv.uploadFile(this.fileId, this.fileType, this.selectedGovFile!)
+      .then(status => {
+
+        if (status === 2) {
+          const tv = [
+            { T: 'dk1', V:this.srv.getsession('id') },
+            { T: 'dk2', V: '3' },
+            { T: 'c1', V: this.fileUploadId },
+            { T: 'c2', V: status.toString() },
+            { T: 'c10', V: '4' }
+          ];
+
+          this.srv.getdata('fileupload', tv).subscribe({
+            complete: () => {
+              this.isLoadingFileUpload = false;
+            }
+          });
+          this.srv.openDialog('Success', 's', 'UAE Pass uploaded successfully!');
+        } else {
+          this.isLoadingFileUpload = false;
+        }
+
+        // this.srv.openDialog('Success', 's', 'ID uploaded successfully!');
+        // this.getUserMedicalRecords()
+      })
+      .catch(() => {
+        this.isLoadingFileUpload = false;
+        this.srv.openDialog('Error', 'e', 'File upload failed');
+      });
+  }
+
+  private uploadActualUAEFile(){
+   this.srv.uploadFile(this.fileId, this.fileType, this.selectedUAEPass!)
+      .then(status => {
+
+        if (status === 2) {
+          const tv = [
+            { T: 'dk1', V:this.srv.getsession('id') },
+            { T: 'dk2', V: '3' },
+            { T: 'c1', V: this.fileUploadId },
+            { T: 'c2', V: status.toString() },
+            { T: 'c10', V: '4' }
+          ];
+
+          this.srv.getdata('fileupload', tv).subscribe({
+            complete: () => {
+              this.isLoadingFileUpload = false;
+            }
+          });
+          this.srv.openDialog('Success', 's', 'ID uploaded successfully!');
+        } else {
+          this.isLoadingFileUpload = false;
+        }
+
+        // this.srv.openDialog('Success', 's', 'ID uploaded successfully!');
+        // this.getUserMedicalRecords()
+      })
+      .catch(() => {
+        this.isLoadingFileUpload = false;
+        this.srv.openDialog('Error', 'e', 'File upload failed');
+      });
+  }
+
+  signUp(){
+    if(!this.selectedGovFile || !this.selectedPassFile ){
+      this.srv.openDialog('Warning', 'w', 'Please upload documents');
+    }
+    this.router.navigate(['/dash'])
+  }
+
+ }
+
+

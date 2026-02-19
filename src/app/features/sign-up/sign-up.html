@@ -85,14 +85,14 @@
                         <mat-label>Upload Government-Issued ID*</mat-label>
 
                         <input matInput type="text" [value]="selectedGovFileName" placeholder="Choose file..."
-                            readonly />
+                            readonly  (click)="govFileInput.click()"/>
 
-                        <button mat-icon-button matSuffix type="button" (click)="govFileInput.click()">
+                        <button mat-icon-button matSuffix type="button" >
                             <mat-icon>upload</mat-icon>
                         </button>
-                    </mat-form-field>
-
-                    <input #govFileInput type="file" hidden (change)="onGovFileSelected($event)" />
+                       
+                    </mat-form-field> <button *ngIf="selectedGovFile" (click)="uploadGovtFile()">upload</button>
+                    <input #govFileInput type="file" hidden (change)="onGovtFileSelected($event)" />
                 </div>
 
 
@@ -111,20 +111,18 @@
                     <mat-form-field class="w-75" appearance="outline">
                         <mat-label>UAE Pass*</mat-label>
 
-                        <input matInput type="text" [value]="selectedPassFileName" placeholder="Choose file..."
+                        <input matInput type="text" [value]="selectedUAEPassName" placeholder="Choose file..."
                             readonly />
 
                         <button mat-icon-button matSuffix type="button" (click)="passFileInput.click()">
                             <mat-icon>upload</mat-icon>
                         </button>
-                    </mat-form-field>
+                    </mat-form-field> <button *ngIf="selectedUAEPass" (click)="uploadUAEPass()">upload</button>
 
                     <input #passFileInput type="file" hidden (change)="onPassFileSelected($event)" />
                 </div>
 
-
-
-                <button class="w-75 mt20 loginBtn">
+                <button class="w-75 mt20 loginBtn" (click)="signUp()">
 
                     Sign Up
                 </button>
