@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
+import { Meals } from './meals/meals';
 
 @Component({
   selector: 'app-diet-plans',
-  imports: [],
+  imports: [Meals],
   templateUrl: './diet-plans.html',
   styleUrl: './diet-plans.css',
 })
