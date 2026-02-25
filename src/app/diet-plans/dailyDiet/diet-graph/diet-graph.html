@@ -1,0 +1,25 @@
+<div class="graph-wrapper">
+    <div class="p-2">
+        <img src="dashboard/calorie.svg" alt="">
+        <span class="small text-muted p-2">Calorie Balance</span>
+        <p class="fw-semibold px-3 pt-1 pb-0">Today’s Diet Plan</p>
+        <p class="text-secondary subTtile1 px-1">Follow your prescribed meals and track your daily calorie intake.</p>
+    </div>
+    
+    <div id="chart">
+        <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart" [plotOptions]="chartOptions.plotOptions"
+            [labels]="chartOptions.labels" [fill]="chartOptions.fill"></apx-chart>
+    </div>
+    <div class="upload-card">
+  <div class="upload-left">
+    <p class="title">Not sure what you ate?</p>
+    <p class="subtitle">
+      Upload a photo and we’ll help you track it accurately.
+    </p>
+  </div>
+
+  <button class="upload-btn">
+    <mat-icon>file_upload</mat-icon>
+  </button>
+</div>
+</div>
