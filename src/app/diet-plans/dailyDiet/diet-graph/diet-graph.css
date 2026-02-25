@@ -1,0 +1,51 @@
+.graph-wrapper{
+    height: 310px;
+    margin-top: 50px;
+    border: 2px solid #a79d9d33;
+    border-radius: 10px;
+}
+
+#chart {
+    width: 300px; 
+    height: 180px;
+}
+.subTtile1{
+    font-size: smaller;
+}
+.upload-card {
+  background-color: #e9edf3;
+  padding: 20px 24px;
+  border-radius: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.upload-left .title {
+  font-weight: 600;
+  color: #2f4b7c;
+  margin: 0;
+  font-size: 16px;
+}
+
+.upload-left .subtitle {
+  margin: 6px 0 0;
+  font-size: 13px;
+  color: #5f6f8f;
+}
+
+.upload-btn {
+  background-color: #4b6299;
+  border: none;
+  border-radius: 10px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.upload-btn mat-icon {
+  color: white;
+}
