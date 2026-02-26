@@ -47,16 +47,16 @@
                             All
                         </button>
                     </mat-menu>
-                   <div class="navfilters border-round" [matMenuTriggerFor]="sortMenu">
-  <mat-icon>sort</mat-icon>
-  Sort
-</div>
+                    <div class="navfilters border-round" [matMenuTriggerFor]="sortMenu">
+                        <mat-icon>sort</mat-icon>
+                        Sort
+                    </div>
 
-<mat-menu #sortMenu="matMenu">
-  <button mat-menu-item (click)="sortBy('name')">Name</button>
-  <button mat-menu-item (click)="sortBy('date')">Date</button>
-  <button mat-menu-item (click)="sortBy('size')">Size</button>
-</mat-menu>
+                    <mat-menu #sortMenu="matMenu">
+                        <button mat-menu-item (click)="sortBy('name')">Name</button>
+                        <button mat-menu-item (click)="sortBy('date')">Date</button>
+                        <button mat-menu-item (click)="sortBy('size')">Size</button>
+                    </mat-menu>
                     <div class="navUpload border-round" (click)="fileInput.click()">
                         Upload Files
                     </div>

@@ -142,7 +142,6 @@ export class MedicalRecords {
     this.dataSource = new MatTableDataSource([]);
     this.getUserMedicalRecords();
     this.originalData = this.dataSource.data;
-    // search files
      this.dataSource.filterPredicate = (data: any, filter: string) => {
     return data.filename.toLowerCase().includes(filter) ||
            data.uploadedOn.toLowerCase().includes(filter);
@@ -183,8 +182,7 @@ filterByType(type: string) {
 }
 sortBy(type: string) {
 
-  const data = [...this.dataSource.data]; // clone array
-
+  const data = [...this.dataSource.data]; 
   if (type === 'name') {
     data.sort((a, b) =>
       a.filename.localeCompare(b.filename)
@@ -207,34 +205,6 @@ sortBy(type: string) {
   this.dataSource.data = data;
 }
 
-// date filter
-// filterByType(type: string) {
-
-//   if (type === 'all') {
-//     this.dataSource.data = this.originalData;
-//     return;
-//   }
-
-//   this.dataSource.data = this.originalData.filter(file => {
-//     if (type === 'pdf') {
-//         console.log('this is pdf');
-//       return file.filename.toLowerCase().endsWith('.pdf');
-   
-//     }
-
-//     if (type === 'doc') {
-//       return file.filename.toLowerCase().endsWith('.doc') ||
-//              file.filename.toLowerCase().endsWith('.docx');
-//     }
-
-//     if (type === 'image') {
-//         console.log('this is img');
-//       return file.filename.toLowerCase().match(/\.(jpg|jpeg|png|gif)$/);
-//     }
-
-//     return true;
-//   });
-// }
 filterByDate() {
 
   if (!this.selectedDate) {
