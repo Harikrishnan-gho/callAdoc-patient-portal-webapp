@@ -1,5 +1,5 @@
 <!-- navbar -->
-<div class="d-flex main-heading mx-3">
+<div class="container mx-5 d-flex main-heading mx-3">
   <div class="d-flex gap-2">
   </div>
   <div>
@@ -34,43 +34,45 @@
 <p class="text-center"> + 968 {{ item.Phone}}</p>
 }
 <!-- manage account -->
-<h5>Manage Account</h5>
-<div class="border-round mt-3 p-2">
-  <div class="d-flex gap-4 personal-info" (click)="goToPersonalInfo()">
-    <div class="d-flex p-2 gap-4">
-      <mat-icon class="p-1 text-secondary">person</mat-icon>
-      <div>
-        <h5 class="heading">Personal Information</h5>
-        <p class="text-secondary">Manage your account details</p>
+<div class="container">
+  <h5>Manage Account</h5>
+  <div class="border-round mt-3 p-2">
+    <div class="d-flex gap-4 personal-info" (click)="goToPersonalInfo()">
+      <div class="d-flex p-2 gap-4">
+        <mat-icon class="p-1 text-secondary">person</mat-icon>
+        <div>
+          <h5 class="heading">Personal Information</h5>
+          <p class="text-secondary">Manage your account details</p>
+        </div>
+      </div>
+      <div class="pt-4">
+        <mat-icon>chevron_right</mat-icon>
       </div>
     </div>
-    <div class="pt-4">
-      <mat-icon>chevron_right</mat-icon>
-
-    </div>
-  </div>
-  <mat-divider></mat-divider>
-  <div class="d-flex gap-4 personal-info" (click)="linkedAccount()">
-    <div class="d-flex p-2 gap-4">
-      <mat-icon class="my-2 mx-1 text-primary">link</mat-icon>
-      <div>
-        <h5 class="heading">Linked Accounts</h5>
-        <p class="text-secondary">Sync your accounts easily</p>
+    <!-- <mat-divider></mat-divider> -->
+    <!-- <div class="d-flex gap-4 personal-info" (click)="linkedAccount()">
+      <div class="d-flex p-2 gap-4">
+        <mat-icon class="my-2 mx-1 text-secondary">link</mat-icon>
+        <div>
+          <h5 class="heading">Linked Accounts</h5>
+          <p class="text-secondary">Sync your accounts easily</p>
+        </div>
       </div>
-    </div>
-    <div class="pt-4">
-      <mat-icon>chevron_right</mat-icon>
+      <div class="pt-4">
+        <mat-icon>chevron_right</mat-icon>
 
-    </div>
+      </div>
+    </div> -->
   </div>
 </div>
 
 <!-- Account control -->
-<h5 class="mt-4">Account Control</h5>
+<div class="container pb-5">
+  <h5 class=" mt-4">Account Control</h5>
 <div class="border-round mt-3 p-2">
-  <div class="d-flex gap-4 personal-info" (click)="logout()">
+  <div class="d-flex gap-4 personal-info" >
     <div class="d-flex p-2 gap-4">
-      <mat-icon class="my-2 mx-1">logout</mat-icon>
+      <mat-icon class="my-2 mx-1 text-secondary">logout</mat-icon>
       <div>
         <h5 class="heading">LogOut</h5>
         <p class="text-secondary">Sign out from your account safely.</p>
@@ -82,9 +84,9 @@
     </div>
   </div>
   <mat-divider></mat-divider>
-  <div class="d-flex gap-4 personal-info" (click)="openDialog(deleteDialog)">
+  <div class="d-flex gap-4 personal-info" >
     <div class="d-flex p-2 gap-4">
-      <mat-icon class="p-1 text-danger">delete</mat-icon>
+      <mat-icon class="p-1 text-secondary">delete</mat-icon>
       <div>
         <h5 class="heading">Delete Account</h5>
         <p class="text-secondary">Close your account permanently.</p>
@@ -105,7 +107,7 @@
         <p class="px-3">Are you sure you want to delete your account? This action cannot be undone.</p>
       </mat-dialog-content>
 
-      <mat-dialog-actions align="end">
+      <mat-dialog-actions align="end" >
         <button mat-button (click)="dialogRef.close()" class="px-3 py-2 border-round">Cancel</button>
         <button mat-raised-button color="warn" (click)="deleteAccount()" class=" delete-btn border-round px-3 py-2">
           Delete
@@ -114,4 +116,5 @@
     </div>
   </ng-template>
 
+</div>
 </div>

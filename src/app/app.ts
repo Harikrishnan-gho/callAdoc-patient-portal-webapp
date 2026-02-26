@@ -139,6 +139,9 @@ export class App {
       this.srv.navigate(item.link);
     }
   }
+  goToHome(){
+    this.router.navigate(['/dash'])
+  }
 
   // Mobile sidebar menu click
   onMobileMenuClick(item: any) {

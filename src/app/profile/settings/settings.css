@@ -8,10 +8,14 @@
 .personal-info {
     justify-content: space-between;
 }
+.profile-icons{
+    
+}
 .number{
     position: absolute;
     bottom: 12px;
-    left: 15px;
+    /* left: 5px; */
+    right: 10px;
     font-weight: 600;
     font-size: larger;
 }

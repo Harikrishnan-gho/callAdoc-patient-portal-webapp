@@ -1,11 +1,12 @@
 <!-- navbar -->
-<div class="d-flex align-items-center main-heading mx-3">
+<!-- <div class="d-flex align-items-center main-heading mx-3">
     <div class="backIcon d-flex align-items-center gap-2 heading" (click)="account()">
         <mat-icon>arrow_back</mat-icon>
         <p class="mb-0 fw-semibold">Profile</p>
     </div>
-</div>
-<div class="d-flex personal-info  p-2">
+</div> -->
+<div class="container">
+    <div class="d-flex personal-info  p-2">
     <div class="pt-4 pl-3">
         <h4>My Profile</h4>
         <p>Manage your account details</p>
@@ -20,8 +21,10 @@
         <input type="file" #fileInput accept="image/*" hidden />
     </div>
 </div>
+</div>
 <!-- input form field -->
-<div class="row mt-3">
+<div class="container">
+    <div class="row mt-3">
     <div class="col-12  col-md-6">
         <mat-form-field class="w-100" appearance="outline">
             <mat-label>First Name</mat-label>
@@ -36,7 +39,9 @@
         </mat-form-field>
     </div>
 </div>
-<div class="row mt-3">
+</div>
+<div class="container">
+    <div class="row mt-3">
     <div class="col-12 col-md-6 mb-2">
         <mat-form-field class="w-100" appearance="outline">
             <mat-label>Blood Group</mat-label>
@@ -65,7 +70,9 @@
     </div>
 
 </div>
-<div class="row ">
+</div>
+<div class="container">
+    <div class="row ">
     <div class="col-12 col-md-6">
         <mat-form-field class="w-100" appearance="outline">
             <mat-label>Date of Birth</mat-label>
@@ -85,7 +92,9 @@
         </mat-form-field>
     </div>
 </div>
-<div class="row ">
+</div>
+<div class="container">
+    <div class="row ">
     <div class="col-12 col-md-6">
         <mat-form-field class="w-100" appearance="outline">
             <mat-label>Address</mat-label>
@@ -100,7 +109,10 @@
         </mat-form-field>
     </div>
 </div>
+</div>
 
-<div class="d-flex save">
+<div class="container">
+    <div class="d-flex save">
     <button class=" save-btn px-5 py-2 border-round" (click)="updateProfile()">Save changes</button>
+</div>
 </div>

@@ -4,14 +4,17 @@
     }
 </style><!--
  navbar -->
-<div class="d-flex main-heading mx-3">
+<div class="container">
+    <div class=" d-flex main-heading mx-3">
     <div class="d-flex gap-2 heading" (click)="account()">
         <mat-icon class="" >arrow_back</mat-icon>
         <p>Account</p>
     </div>
 
 </div>
-<h4 class="mt-1">Settings</h4>
+</div>
+<div class="container">
+    <h4 class="mt-1">Settings</h4>
 <!-- profile img section -->
 @for( item of personalDetails;track item){
 <div class="d-flex settings-profile p-3 border-round mt-4 ">
@@ -32,7 +35,9 @@
     </div>
 </div>
 }
-<!-- Security & Privacy -->
+</div>
+<div class="container">
+    <!-- Security & Privacy -->
 <h5 class="mt-4">Security & Privacy</h5>
 <div class="border-round mt-3 p-2">
     <div class="d-flex gap-4 personal-info" (click)="ChangePassword()">
@@ -51,7 +56,7 @@
     <mat-divider></mat-divider>
     <div class="d-flex gap-4 personal-info">
         <div class="d-flex p-2 gap-4">
-            <img src="privacy.svg" alt="">
+            <img src="profile/privacy-policy.svg" class="profile-icons" alt="">
             <div>
                 <h5 class="heading">Privacy Policy</h5>
                 <p class="text-secondary">Review our data protection practices.</p>
@@ -121,4 +126,5 @@
 
         </div>
     </div>
+</div>
 </div>

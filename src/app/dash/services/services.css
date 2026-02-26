@@ -1,6 +1,7 @@
 .services-row {
     display: flex;
-    gap: 5px;
+    gap: 8px;
+    flex-wrap: wrap;   
 }
 
 .service-btn {
