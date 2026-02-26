@@ -1,18 +1,33 @@
 <div style="min-width: 400px;">
-  <table class="w100">
-    <tr>
+  <!-- <table class="w100">
+    <tr >
       <td class="pl30"><img src="calladoc-logo2.png" style="width: 50px; ">
       </td>
       <td>
-        <h5 mat-dialog-title>{{data.title}}</h5>
+        <h5 mat-dialog-title> {{data.title}} </h5>
       </td>
       <td class="right pr10 " >
         <mat-icon matButton mat-dialog-close >close</mat-icon>
       </td>
     </tr>
-  </table>
+  </table> -->
+  <div class="dialog-header">
 
-  <mat-dialog-content class="bt">
+  <!-- Left: Logo + Title -->
+  <div class="header-left">
+    <img src="calladoc-logo2.png" alt="Logo" class="logo">
+    <h5 mat-dialog-title class="title">{{ data.title }}</h5>
+  </div>
+
+  <!-- Right: Close Button -->
+  <button mat-icon-button mat-dialog-close class="close-btn">
+    <mat-icon>close</mat-icon>
+  </button>
+
+</div>
+
+
+  <!-- <mat-dialog-content class="bt">
     <div class="w100 center p10 ">
       @if(data.type=="success")
       {
@@ -28,10 +43,27 @@
     </div>
     <div class="center" [innerHTML]="data.message"></div>
 
-  </mat-dialog-content>
+  </mat-dialog-content> -->
+<mat-dialog-content class="dialog-content">
+
+  <div class="icon-wrapper" [ngClass]="data.type">
+    <mat-icon class="status-icon">
+      {{ getIcon(data.type) }}
+    </mat-icon>
+  </div>
+
+  <div class="message" [innerHTML]="data.message"></div>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" class="dialog-actions">
+  <button mat-flat-button color="primary" mat-dialog-close>
+    Close
+  </button>
+</mat-dialog-actions>
 
   
-  <mat-dialog-actions align="end">
+  <!-- <mat-dialog-actions align="end">
     <button matButton mat-dialog-close>Close</button>
-  </mat-dialog-actions>
+  </mat-dialog-actions> -->
 </div>

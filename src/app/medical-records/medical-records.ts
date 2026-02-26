@@ -27,7 +27,7 @@ import { HttpClient } from '@angular/common/http';
     MatFormFieldModule, CustomDialog, MatProgressSpinnerModule,
     MatInputModule, MatIconModule, MatButtonModule,
     MatDatepickerModule, MatPaginatorModule, MatMenuModule,
-    MatNativeDateModule, MatTableModule
+    MatNativeDateModule, MatTableModule 
   ],
   templateUrl: './medical-records.html',
   styleUrl: './medical-records.css',
@@ -61,6 +61,8 @@ export class MedicalRecords {
   private service = inject(GHOService);
   searchText: string = '';
   selectedDate: Date | null = null;
+  selectedType: String | null = null;
+  originalData: any = [];
 
   constructor(private sanitizer: DomSanitizer, private http: HttpClient) { }
 
@@ -68,9 +70,6 @@ export class MedicalRecords {
     console.log('Filter:', type);
   }
 
-  sortBy(type: string) {
-    console.log('Sort:', type);
-  }
 
   goToDetails(file: any) {
     this.selectedRecord = file;
@@ -126,14 +125,11 @@ export class MedicalRecords {
       filesize: '3.6 MB',
       uploadedOn: '24 Mar 2026'
     },
-
-
-
   ]
   dataSource!: MatTableDataSource<any>;
 
   openMedicalRecord(file: any) {
-    this.filename = file.DocumentName
+    this.filename = file.FileName
     this.medicalRecordId = file.ID
     this.showEditMedicalRecordPopup = true;
   }
@@ -145,7 +141,93 @@ export class MedicalRecords {
     this.userId = this.service.getsession("id");
     this.dataSource = new MatTableDataSource([]);
     this.getUserMedicalRecords();
+    this.originalData = this.dataSource.data;
+     this.dataSource.filterPredicate = (data: any, filter: string) => {
+    return data.filename.toLowerCase().includes(filter) ||
+           data.uploadedOn.toLowerCase().includes(filter);
+  };
   }
+// search filter
+  applySearch(event: Event) {
+  const filterValue = (event.target as HTMLInputElement).value;
+  this.dataSource.filter = filterValue.trim().toLowerCase();
+}
+
+filterByType(type: string) {
+
+  this.selectedType = type === 'all' ? null : type;
+
+  if (type === 'all') {
+    this.dataSource.data = this.originalData;
+    return;
+  }
+
+  this.dataSource.data = this.originalData.filter(record => {
+
+    const ext = record.actualFileName
+      ?.split('.')
+      .pop()
+      ?.toLowerCase();
+
+    if (!ext) return false;
+
+    if (type === 'pdf') return ext === 'pdf';
+
+    if (type === 'doc') return ['doc', 'docx'].includes(ext);
+
+    if (type === 'image') return ['jpg', 'jpeg', 'png', 'gif'].includes(ext);
+
+    return true;
+  });
+}
+sortBy(type: string) {
+
+  const data = [...this.dataSource.data]; 
+  if (type === 'name') {
+    data.sort((a, b) =>
+      a.filename.localeCompare(b.filename)
+    );
+  }
+
+  if (type === 'date') {
+    data.sort((a, b) =>
+      new Date(b.uploadedOn).getTime() -
+      new Date(a.uploadedOn).getTime()
+    );
+  }
+
+  if (type === 'size') {
+    data.sort((a, b) =>
+      Number(b.filesize) - Number(a.filesize)
+    );
+  }
+
+  this.dataSource.data = data;
+}
+
+filterByDate() {
+
+  if (!this.selectedDate) {
+    this.dataSource.data = this.originalData;
+    return;
+  }
+
+  const selected = new Date(this.selectedDate);
+
+  this.dataSource.data = this.originalData.filter(record => {
+
+    if (!record.uploadedOn) return false;
+
+    const recordDate = new Date(record.uploadedOn);
+
+    return (
+      recordDate.getFullYear() === selected.getFullYear() &&
+      recordDate.getMonth() === selected.getMonth() &&
+      recordDate.getDate() === selected.getDate()
+    );
+  });
+
+}
 
   getUserMedicalRecords() {
     const tv = [
@@ -168,6 +250,8 @@ export class MedicalRecords {
           }));
 
           this.dataSource.data = mappedData;
+          this.originalData = mappedData;
+
           if (this.selectedRecord) {
             const updated = mappedData.find(
               x => x.ID === this.selectedRecord.ID
@@ -190,10 +274,6 @@ export class MedicalRecords {
   isPdf(fileName: string): boolean {
     return /\.pdf$/i.test(fileName);
   }
-
-  // isDcm(fileName: string): boolean {
-  //   return /\.dcm$/i.test(fileName);
-  // }
 
   openRecord(record: any) {
     if (record?._url) {

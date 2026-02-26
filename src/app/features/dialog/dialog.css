@@ -1,0 +1,81 @@
+.dialog-header {
+  display: flex;
+   position: relative;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo {
+  width: 45px;
+}
+
+.title {
+  margin: 0;
+  font-weight: 600;
+}
+
+.close-btn {
+  color: #666;
+}
+.logo{
+    width: 25%;
+}
+.title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  font-weight: 600;
+}
+.dialog-content {
+  text-align: center;
+  padding: 24px 20px;
+}
+
+.icon-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.status-icon {
+  font-size: 60px;
+  height: 60px;
+  width: 60px;
+}
+
+/* Success */
+.icon-wrapper.success .status-icon {
+  color: #2e7d32;
+}
+
+/* Warning */
+.icon-wrapper.warning .status-icon {
+  color: #f9a825;
+}
+
+/* Error */
+.icon-wrapper.error .status-icon {
+  color: #c62828;
+}
+.icon-wrapper.info .status-icon {
+  color: #77b3eb;
+}
+
+.message {
+  font-size: 15px;
+  color: #444;
+  margin-top: 8px;
+}
+
+.dialog-actions {
+  padding: 12px 16px;
+}
