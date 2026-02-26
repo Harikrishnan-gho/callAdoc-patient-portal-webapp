@@ -48,44 +48,127 @@
                     <input type="file" #fileInput hidden (change)="onFileSelected($event)" />
                 </div>
             </div>
-            <!-- upload or shared files -->
-           
-            <div class="mt-4 border-round p-1 ">
-                
-                 <table mat-table [dataSource]="dataSource" class="file-table">
-                <ng-container matColumnDef="filename">
-                    <th mat-header-cell *matHeaderCellDef class="files-title">File Name</th>
-                    <td mat-cell *matCellDef="let file" class="file-content">
-                        {{ file.filename }} <br>
-                       <span class="text-secondary">{{ file.filesize }}</span>
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="uploadedOn">
-                    <th mat-header-cell *matHeaderCellDef class="files-title">Upload On</th>
-                    <td mat-cell *matCellDef="let file">
-                        {{ file.uploadedOn }}
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="actions">
-                    <th mat-header-cell *matHeaderCellDef class="files-title"></th>
-                    <td mat-cell *matCellDef="let file" >
-                       <div class="d-flex gap-3">
-                         <mat-icon class="action-icon">download</mat-icon>
-                        <mat-icon class="action-icon">edit</mat-icon>
-                        <mat-icon class="action-icon delete">delete</mat-icon>
-                       </div>
-                    </td>
-                </ng-container>
+            <!-- mymedical record -->
+            <mat-tab-group class="border-round p-2 mt-2 " mat-stretch-tabs="false" mat-align-tabs="start"
+                [(selectedIndex)]="selectedTabIndex">
 
-                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-            </table>
 
-           
-            </div>
-        }
+                <mat-tab label="All Files">
 
-        @if(mode == "S"){
+                    <table mat-table [dataSource]="dataSource" class="file-table">
+
+
+                        <ng-container matColumnDef="filename">
+                            <th mat-header-cell *matHeaderCellDef class="files-title">
+                                File Name
+                            </th>
+                            <td mat-cell *matCellDef="let file" class="file-content">
+                                {{ file.filename }} <br>
+                                <span class="text-secondary">{{ file.filesize }}</span>
+                            </td>
+                        </ng-container>
+
+                        <!-- Uploaded On Column -->
+                        <ng-container matColumnDef="uploadedOn">
+                            <th mat-header-cell *matHeaderCellDef class="files-title">
+                                Date
+                            </th>
+                            <td mat-cell *matCellDef="let file">
+                                {{ file.uploadedOn | date:'dd MMM yyyy' }}
+                            </td>
+                        </ng-container>
+
+                        <!-- Actions Column -->
+                        <ng-container matColumnDef="actions">
+                            <th mat-header-cell *matHeaderCellDef class="files-title actions-header">
+                            </th>
+
+                            <td mat-cell *matCellDef="let file" class="actions-cell">
+                                <div class="actions">
+
+                                    <button mat-icon-button (click)="downloadFile(file); $event.stopPropagation()">
+                                        <mat-icon>download</mat-icon>
+                                    </button>
+
+                                    <button mat-icon-button (click)="openMedicalRecord(file); $event.stopPropagation()">
+                                        <mat-icon>edit</mat-icon>
+                                    </button>
+                                    <!-- Edit Dialog -->
+                                    <app-custom-dialog [show]="showEditMedicalRecordPopup" heading="Rename File"
+                                        subheading="" [hideActions]="true" (close)="closeMedicalRecord()"
+                                        (click)="$event.stopPropagation()">
+                                        <div class="py-3">
+                                            <mat-form-field appearance="outline" class="w-100">
+                                                <mat-label>File Name</mat-label>
+                                                <input matInput [(ngModel)]="filename" name="filename" required>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="actions d-flex justify-content-end gap-3">
+                                            <button mat-stroked-button color="warn" type="button"
+                                                (click)="closeMedicalRecord()">
+                                                Cancel
+                                            </button>
+
+                                            <button (click)="editRecord()" mat-flat-button color="primary"
+                                                type="button">
+                                                Update
+                                            </button>
+                                        </div>
+                                    </app-custom-dialog>
+
+                                    <button mat-icon-button (click)="deleteRecord(file.ID); $event.stopPropagation()">
+                                        <mat-icon class="delete">delete</mat-icon>
+                                    </button>
+
+                                </div>
+                            </td>
+                        </ng-container>
+
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="goToDetails(row)"
+                            class="clickable-row" style="cursor:pointer">
+                        </tr>
+
+                    </table>
+
+                </mat-tab>
+
+                <mat-tab label="Details">
+
+                    <div *ngIf="selectedRecord; else noSelection" class="p-2">
+
+                        <p>{{ selectedRecord?.filename }}</p>
+                        <div *ngIf="selectedRecord?.URL" class="preview-wrapper">
+                            <img *ngIf="isImage(selectedRecord?.actualFileName)" [src]="selectedRecord?.URL"
+                                alt="Medical Record" class="preview-image" />
+
+
+                            <iframe *ngIf="isPdf(selectedRecord?.actualFileName)"
+                                [src]="getSafeUrl(selectedRecord?.URL)" width="100%" height="500px">
+                            </iframe>
+
+                        </div>
+                        <p class="my-2"><strong>File Size:</strong> {{ selectedRecord?.filesize }}</p>
+                        <p><strong>Uploaded On:</strong> {{ selectedRecord?.uploadedOn | date:'dd MMM yyyy'}} </p>
+
+                    </div>
+
+                    <ng-template #noSelection>
+                        <div class="text-center p-3 text-secondary my-4">
+                            Please select a file you need to know
+                        </div>
+                    </ng-template>
+
+                </mat-tab>
+
+            </mat-tab-group>
+
+            }
+
+            @if(mode == "S"){
             <div class="d-flex navbarHead">
                 <div class="search-box border-round px-2 w-50">
                     <mat-icon>search</mat-icon>
@@ -121,41 +204,41 @@
                 </div>
             </div>
             <!-- upload or shared files -->
-           
+
             <div class="mt-4 border-round p-1 ">
-                
-                 <table mat-table [dataSource]="dataSource" class="file-table">
-                <ng-container matColumnDef="filename">
-                    <th mat-header-cell *matHeaderCellDef class="files-title">File Name</th>
-                    <td mat-cell *matCellDef="let file" class="file-content">
-                        {{ file.filename }} <br>
-                       <span class="text-secondary">{{ file.filesize }}</span>
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="uploadedOn">
-                    <th mat-header-cell *matHeaderCellDef class="files-title">Upload On</th>
-                    <td mat-cell *matCellDef="let file">
-                        {{ file.uploadedOn }}
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="actions">
-                    <th mat-header-cell *matHeaderCellDef class="files-title"></th>
-                    <td mat-cell *matCellDef="let file" >
-                       <div class="d-flex gap-3">
-                         <mat-icon class="action-icon">download</mat-icon>
-                        <mat-icon class="action-icon">edit</mat-icon>
-                        <mat-icon class="action-icon delete">delete</mat-icon>
-                       </div>
-                    </td>
-                </ng-container>
 
-                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-            </table>
+                <table mat-table [dataSource]="dataSource" class="file-table">
+                    <ng-container matColumnDef="filename">
+                        <th mat-header-cell *matHeaderCellDef class="files-title">File Name</th>
+                        <td mat-cell *matCellDef="let file" class="file-content">
+                            {{ file.filename }} <br>
+                            <span class="text-secondary">{{ file.filesize }}</span>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="uploadedOn">
+                        <th mat-header-cell *matHeaderCellDef class="files-title">Upload On</th>
+                        <td mat-cell *matCellDef="let file">
+                            {{ file.uploadedOn }}
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="actions">
+                        <th mat-header-cell *matHeaderCellDef class="files-title"></th>
+                        <td mat-cell *matCellDef="let file">
+                            <div class="d-flex gap-3">
+                                <mat-icon class="action-icon">download</mat-icon>
+                                <mat-icon class="action-icon">edit</mat-icon>
+                                <mat-icon class="action-icon delete">delete</mat-icon>
+                            </div>
+                        </td>
+                    </ng-container>
 
-           
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+
+
             </div>
-        }
+            }
         </div>
 
 

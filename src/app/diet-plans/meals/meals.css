@@ -1,0 +1,103 @@
+.date-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border: 1px solid #d6d6d6;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  font-size: 14px;
+  color: #4b5563;
+}
+
+.calendar-icon {
+  font-size: 18px;
+  color: #6b7280;
+}
+.subTtile{
+    font-size: large;
+    font-weight: 600;
+}
+.doctor{
+    font-weight: 500;
+    color: rgb(64, 64, 150);
+    text-decoration: underline rgb(85, 85, 200);
+}
+.doctor:hover{
+    text-decoration: none;
+}
+.meal-card {
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 12px;
+   background: #f9f9f9;
+}
+
+.meal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.left {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.meal-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 8px;
+  object-fit: cover;
+  background: #acaeb0;
+}
+.meal-subtitle {
+  font-size: 13px;
+  color: #6b7280;
+}
+.verified {
+  color: #22c55e;
+  font-size: 18px;
+}
+.meal-title{
+  
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.arrow {
+  color: #6b7280;
+}
+
+.expanded-content {
+  margin-top: 10px;
+ 
+}
+
+.food-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.nice {
+  font-weight: 600;
+  margin: 8px 0 4px;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.link {
+  color: #2563eb;
+  cursor: pointer;
+  text-decoration: none;
+}

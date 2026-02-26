@@ -1,13 +1,13 @@
 <div style="min-width: 400px;">
   <table class="w100">
     <tr>
-      <td class="pl20"><img src="logo.png" style="width: 50px; ">
+      <td class="pl30"><img src="calladoc-logo2.png" style="width: 50px; ">
       </td>
       <td>
         <h5 mat-dialog-title>{{data.title}}</h5>
       </td>
-      <td class="right pr10">
-        <mat-icon matButton mat-dialog-close>close</mat-icon>
+      <td class="right pr10 " >
+        <mat-icon matButton mat-dialog-close >close</mat-icon>
       </td>
     </tr>
   </table>
@@ -29,6 +29,8 @@
     <div class="center" [innerHTML]="data.message"></div>
 
   </mat-dialog-content>
+
+  
   <mat-dialog-actions align="end">
     <button matButton mat-dialog-close>Close</button>
   </mat-dialog-actions>

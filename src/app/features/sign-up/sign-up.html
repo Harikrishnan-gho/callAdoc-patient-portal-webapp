@@ -78,7 +78,7 @@
 
                 }
 
-                @if (step === 2) {
+                @if (step === 1) {
 
                 <div>
                     <mat-form-field class="w-75" appearance="outline">
@@ -88,10 +88,12 @@
                             readonly  (click)="govFileInput.click()"/>
 
                         <button mat-icon-button matSuffix type="button" >
-                            <mat-icon>upload</mat-icon>
+                            <mat-icon class="">upload</mat-icon>
                         </button>
                        
-                    </mat-form-field> <button *ngIf="selectedGovFile" (click)="uploadGovtFile()">upload</button>
+                    </mat-form-field> 
+                    <!-- <button >upload</button> -->
+                     <mat-icon *ngIf="selectedGovFile" class="bg-primary" (click)="uploadGovtFile()">upload</mat-icon>
                     <input #govFileInput type="file" hidden (change)="onGovtFileSelected($event)" />
                 </div>
 
@@ -117,7 +119,9 @@
                         <button mat-icon-button matSuffix type="button" (click)="passFileInput.click()">
                             <mat-icon>upload</mat-icon>
                         </button>
-                    </mat-form-field> <button *ngIf="selectedUAEPass" (click)="uploadUAEPass()">upload</button>
+                    </mat-form-field> 
+                    <!-- <button>upload</button> -->
+                     <mat-icon  *ngIf="selectedUAEPass" (click)="uploadUAEPass()">upload</mat-icon>
 
                     <input #passFileInput type="file" hidden (change)="onPassFileSelected($event)" />
                 </div>

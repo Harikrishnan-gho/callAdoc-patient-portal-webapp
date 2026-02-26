@@ -101,7 +101,10 @@
     margin-left: 12%;
     
 }
-
+.upload-btn{
+    border-radius: 48%;
+    background-color:rgb(188, 215, 238) ;
+}
 
 
 /* RESPONSIVE */
