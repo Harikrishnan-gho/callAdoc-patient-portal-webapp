@@ -54,26 +54,26 @@ export class Profile {
   }
 
   // logout
-  logout() {
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      width: '500px',
-      maxWidth: '90vw',
-      panelClass: 'custom-dialog-container',
-      data: { title: 'Logout', message: 'Are you sure you want to logout?' }
-    });
+  // logout() {
+  //   const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+  //     width: '500px',
+  //     maxWidth: '90vw',
+  //     panelClass: 'custom-dialog-container',
+  //     data: { title: 'Logout', message: 'Are you sure you want to logout?' }
+  //   });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.srv.logout();
-      }
-    });
-  }
-  openDialog(template: TemplateRef<any>) {
-    this.dialogRef = this.dialog.open(template, {
-      width: '550px',
-      panelClass: 'custom-dialog',
-    });
-  }
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     if (result) {
+  //       this.srv.logout();
+  //     }
+  //   });
+  // }
+  // openDialog(template: TemplateRef<any>) {
+  //   this.dialogRef = this.dialog.open(template, {
+  //     width: '550px',
+  //     panelClass: 'custom-dialog',
+  //   });
+  // }
 
   // get details of profile
   getDetails() {

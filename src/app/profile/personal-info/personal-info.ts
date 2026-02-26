@@ -38,6 +38,7 @@ export class PersonalInfo implements OnInit {
   job = '';
   address = '';
   photo = '';
+  email = '';
 
   defaultImage =
     'https://png.pngtree.com/png-vector/20190710/ourmid/pngtree-user-vector-avatar-png-image_1541962.jpg';
@@ -46,6 +47,7 @@ export class PersonalInfo implements OnInit {
 
   patientId = this.srv.getsession('id');
   tv: { T: string; V: string }[] = [];
+
 
   ngOnInit(): void {
     this.getDetails();
@@ -83,6 +85,7 @@ export class PersonalInfo implements OnInit {
         this.job = details.Occupation ?? '';
         this.address = details.Address ?? '';
         this.photo = details._url || this.defaultImage;
+        this.email = details.Email ?? '';
       }
     });
   }
@@ -103,6 +106,20 @@ export class PersonalInfo implements OnInit {
       City: '',
       State: ''
     };
+    // const updatePayload = {
+    //   FirstName: this.name,
+    //   Phone: this.phone,
+    //   Gender: this.gender
+    //     ? this.gender.charAt(0).toUpperCase() + this.gender.slice(1)
+    //     : '',
+    //   BirthDate: this.dob ? this.dob : null,
+    //   BloodGroup: this.bloodGroup,
+    //   Occupation: this.job,
+    //   MaritalStatus: this.maritalStatus,
+    //   Address: this.address,
+    //   City: '',
+    //   State: ''
+    // };
 
     const payload = [
       { T: 'dk1', V: this.patientId },
