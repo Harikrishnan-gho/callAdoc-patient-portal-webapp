@@ -1,0 +1,10 @@
+.todayDiet-btn{
+  background-color: rgba(70, 94, 151, 0.1);
+  color: rgba(70, 94, 151, 1);
+  cursor: pointer;
+}
+.title{
+    font-size: 25px;
+    font: inter;
+   
+}

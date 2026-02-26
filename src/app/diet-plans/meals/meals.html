@@ -1,3 +1,95 @@
+<<<<<<< HEAD
+<div class="d-flex navbar">
+    <div>
+        <p class="subTtile px-3">Todays's Meal</p>
+        <p>Curated by <a class="doctor">Dr.Sruthi Suresh</a></p>
+    </div>
+    <div class="date-badge">
+        <span class="p-1 d-flex">
+            <mat-icon class="calendar-icon">calendar_today</mat-icon>
+            <span>{{ formattedDate }}</span>
+        </span>
+    </div>
+</div>
+<!-- meals -->
+ <!-- <mat-card class="meal-card">
+    <div class="meal-header" (click)="toggle()">
+        <div class="left">
+            <img class="meal-img" src="diet-plan/breakfast.png" alt="">
+            <div>
+            <div class="meal-title">
+                Breakfast
+                <mat-icon class="verified">verified</mat-icon>
+            </div>
+            <div class="meal-subtitle">
+                2 Food: <b>421</b> / 1428 kcal
+            </div>
+        </div>
+    </div>
+ <mat-icon class="arrow">
+      {{ expanded ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}
+    </mat-icon>
+    </div>
+
+
+     <div class="expanded-content" *ngIf="expanded">
+    <mat-divider></mat-divider>
+
+    <div class="food-row">
+      <mat-icon>restaurant</mat-icon>
+      <span>2 serving baked banana-nut oatmeal cups, 2 clementines</span>
+    </div>
+
+    <p class="nice">Nice job!</p>
+
+    <div class="footer">
+      <span>286 kcal added to today's intake.</span>
+      <a class="link">Mark as not taken</a>
+    </div>
+  </div>
+ </mat-card> -->
+
+ @for(pack of diet;track pack){
+     <mat-card class="meal-card" >
+    <div class="meal-header" (click)="toggle(pack)">
+        <div class="left">
+            <img class="meal-img" [src]="pack.img" alt="">
+            <div>
+            <div class="meal-title">
+                {{ pack.title}}
+                <mat-icon class="verified">verified</mat-icon>
+            </div>
+            <div class="meal-subtitle">
+                {{ pack.type}}: <b> {{ pack.cal}}</b> / {{ pack.tCal}}
+            </div>
+        </div>
+    </div>
+ <mat-icon class="arrow">
+      {{ expanded ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}
+    </mat-icon>
+    </div>
+
+@if (pack.expanded) {
+  <div class="expanded-content p-2">
+    <mat-divider></mat-divider>
+
+    <div class="food-row">
+      <mat-icon>restaurant</mat-icon>
+      <span>{{ pack.host }}</span>
+    </div>
+
+    <p class="nice">{{ pack.timeSpan }}</p>
+
+    <div class="footer">
+      <span>{{ pack.suggest }}</span>
+      <a class="link">{{ pack.mark }}</a>
+    </div>
+  </div>
+}
+
+ </mat-card>
+ }
+=======
 <div>
     <div>
         <h6 class="fw-semibold fs-5">🥑 Today’s Meal</h6>
@@ -7,3 +99,4 @@
     
 
 </div>
+>>>>>>> 314b6b2407e85cfd1b865e5fb47cf08e73626670
